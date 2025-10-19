@@ -1,8 +1,9 @@
 #include <iostream>
-#include "shader.h"
 #include "shaderClass.h"
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+#include <fstream>
+#include <sstream>
 
 using namespace std;
 
@@ -17,7 +18,7 @@ string get_file_contents(const char* filename){
         in.close();
         return(contents);
     }
-    throw(errno);
+    return "";
 }
 
 
@@ -60,7 +61,7 @@ Shader::Shader(const char * filenamevert, const char * filenamefrag) : fragFilen
     glAttachShader(ID, fragmentShader);
 
     glLinkProgram(ID);
-
+    
     glGetProgramiv(ID, GL_LINK_STATUS, &success);
     if (!success){
         glGetProgramInfoLog(ID, 512, NULL, infoLog);
@@ -70,6 +71,10 @@ Shader::Shader(const char * filenamevert, const char * filenamefrag) : fragFilen
     glDeleteShader(vertexShader);
     glDeleteShader(fragmentShader);
 };
+
+Shader::~Shader(){
+    glDeleteProgram(ID);
+}
 
 void Shader::Activate(){
     glUseProgram(ID);

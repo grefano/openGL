@@ -19,6 +19,7 @@ class Shader{
     public:
     GLuint ID;
     Shader(const char * filenamevert, const char * filenamefrag);
+    ~Shader();
     void Activate();
     void Delete();
 };
