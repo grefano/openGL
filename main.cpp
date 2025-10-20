@@ -7,7 +7,6 @@
 #include <glm-1.0.2/glm/glm.hpp>
 #include <glm-1.0.2/glm/gtc/matrix_transform.hpp>
 #include <glm-1.0.2/glm/gtc/type_ptr.hpp>
-#include <assert.h>
 
 #include "vao.h"
 #include "vbo.h"
@@ -77,34 +76,21 @@ int main(){
     Shader shd("shaders/default.vert", "shaders/default.frag");
     Shader shd2("shaders/default.vert", "shaders/default.frag");
     
+
+
+
     VAO VAO1;//, VAO2;
     VBO VBO1(vertices1, sizeof(vertices1));//, VBO2(vertices);
-    VAO1.Bind();
-    // VBO VBO1(vertices1, sizeof(vertices1));//, VBO2(vertices2, sizeof(vertices2));
+    Layout layout;
+    layout.push(GL_FLOAT,3);
+    layout.push(GL_FLOAT,3);
+    layout.push(GL_FLOAT,2);
+    VAO1.addBuffer(VBO1, layout);
+    
     EBO EBO1(indices, sizeof(indices));
     EBO1.Bind();
     
-    VAO1.LinkAttrib(VBO1, 0, 3, GL_FLOAT, 8*sizeof(float), (void*)0);
-    VAO1.LinkAttrib(VBO1, 1, 3, GL_FLOAT, 8*sizeof(float), (void*)(3*sizeof(float)));
-    VAO1.LinkAttrib(VBO1, 2, 2, GL_FLOAT, 8*sizeof(float), (void*)(6*sizeof(float)));
-    
-    VAO1.Unbind();
-    EBO1.Unbind();
 
-    
-
-    VAO VAO2;//, VAO2;
-    VBO VBO2(vertices2, sizeof(vertices2));//, VBO2(vertices);
-    VAO2.Bind();
-    EBO1.Bind();
-
-    VAO2.LinkAttrib(VBO2, 0, 3, GL_FLOAT, 8*sizeof(float), (void*)0);
-    VAO2.LinkAttrib(VBO2, 1, 3, GL_FLOAT, 8*sizeof(float), (void*)(3*sizeof(float)));
-    VAO2.LinkAttrib(VBO2, 2, 2, GL_FLOAT, 8*sizeof(float), (void*)(6*sizeof(float)));
-    
-    VAO2.Unbind();
-    EBO1.Unbind();
-    
     Texture texture("textures/teste.png");
     Texture texture2("textures/teste2.png");
     
@@ -132,14 +118,6 @@ int main(){
 
         VAO1.Bind();
         GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0));
-
-
-        shd.Activate();
-        glBindTexture(GL_TEXTURE_2D, texture.ID);
-        
-        VAO2.Bind();
-        GLCall(glDrawArrays(GL_TRIANGLES, 0, 3));
-
 
         glfwSwapBuffers(window);
         glfwPollEvents();

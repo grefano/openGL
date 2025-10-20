@@ -73,6 +73,7 @@ Shader::Shader(const char * filenamevert, const char * filenamefrag) : fragFilen
 };
 
 Shader::~Shader(){
+    std::cout << "deleted shader " << std::endl;
     glDeleteProgram(ID);
 }
 

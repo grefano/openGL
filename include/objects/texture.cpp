@@ -25,5 +25,6 @@ Texture::Texture(const char* filename){
 }
 
 Texture::~Texture(){
+    std::cout << "deleted texture " << std::endl;
     glDeleteTextures(1, &ID);
 }

@@ -2,6 +2,7 @@
 #include <iostream>
 #include <glad/glad.h>
 #include "renderer.h"
+#include <assert.h>
 
 void GLClearError(){
     while (glGetError() != GL_NO_ERROR);
