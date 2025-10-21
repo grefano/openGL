@@ -3,6 +3,8 @@
 #include <stb/stb_image.h>
 
 Texture::Texture(const char* filename){
+    stbi_set_flip_vertically_on_load(1);
+    
     int wImg, hImg, numColCh;
     unsigned char* bytes = stbi_load(filename, &wImg, &hImg, &numColCh, 0);
     

@@ -77,9 +77,12 @@ Shader::~Shader(){
     glDeleteProgram(ID);
 }
 
-void Shader::Activate(){
+void Shader::Bind() const{
     glUseProgram(ID);
+}
 
+void Shader::Unbind() const{
+    glUseProgram(0);
 }
 
 void Shader::Delete(){

@@ -36,11 +36,11 @@ void VAO::addBuffer(VBO& VBO, Layout& layout){
 
 
 
-void VAO::Bind(){
+void VAO::Bind() const{
     GLCall(glBindVertexArray(ID));
 }
 
-void VAO::Unbind(){
+void VAO::Unbind() const{
     GLCall(glBindVertexArray(0));
 }
 

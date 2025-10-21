@@ -143,7 +143,7 @@ int main(){
     
     GLuint tex0Uni = glGetUniformLocation(shd.ID, "tex0");
     // GLuint tex1Uni = glGetUniformLocation(shd.ID, "tex1");
-    GLCall(shd.Activate());
+    GLCall(shd.Bind());
     glUniform1i(tex0Uni, 0);
     unsigned int transformLoc = glGetUniformLocation(shd.ID, "transform");
     // glUniform1i(tex0Uni, 0);
@@ -155,7 +155,7 @@ int main(){
         glClearColor(0.2, .13f, 0.17f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
 
-        shd.Activate();
+        shd.Bind();
         glm::mat4 trans = glm::mat4(1.0f);
         trans = glm::translate(trans, glm::vec3(0.5f, 0.5f, 0.0f));
         trans = glm::rotate(trans, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));    

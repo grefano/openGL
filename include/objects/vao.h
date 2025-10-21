@@ -9,8 +9,8 @@ class VAO{
     ~VAO();
     void LinkAttrib(VBO& VBO, GLuint layout, GLuint num_components, GLenum type, GLsizeiptr stride, void* offset);
     void addBuffer(VBO& VBO, Layout& layout);
-    void Bind();
-    void Unbind();
+    void Bind() const;
+    void Unbind() const;
     void Delete();
 };
 
