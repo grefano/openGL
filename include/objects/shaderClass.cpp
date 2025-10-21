@@ -89,3 +89,11 @@ void Shader::Delete(){
     glDeleteProgram(ID);
 
 }
+GLint Shader::getUniformLocation(const std::string& name) const{
+    if (uniformLocationCache.find(name) != uniformLocationCache.end())
+        return uniformLocationCache[name];
+
+    GLint location = glGetUniformLocation(ID, name.c_str());
+    uniformLocationCache[name] = location;
+    return location;
+}

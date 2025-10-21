@@ -89,11 +89,12 @@ int main(){
     Texture texture("textures/teste.png");
     Texture texture2("textures/teste2.png");
     
-    GLuint tex0Uni = glGetUniformLocation(shd.ID, "tex0");
+
+    GLuint tex0Uni = shd.getUniformLocation("tex0");//glGetUniformLocation(shd.ID, "tex0");
     // GLuint tex1Uni = glGetUniformLocation(shd.ID, "tex1");
     shd.Bind();
     glUniform1i(tex0Uni, 0);
-    unsigned int transformLoc = glGetUniformLocation(shd.ID, "transform");
+    unsigned int transformLoc = shd.getUniformLocation("transform");//glGetUniformLocation(shd.ID, "transform");
     
     VAO1.Unbind();
     VBO1.Unbind();
