@@ -32,11 +32,21 @@ int main(){
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 
-    GLfloat vertices1[] = {
-        -100.0f, 100.0f, 0.0f,      0.8f, 0.3f, 0.16f,      0.0f, 0.0f,
-        -100.0f, -100.0f, 0.0f,     0.6f, 0.6f, 0.04f,      0.0f, 1.0f,
-        100.0f, -100.0f, 0.0f,      0.4f, 0.9f, 0.02f,      1.0f, 1.0f,
-        100.0f, 100.0f, 0.0f,       0.2f, 0.6f, 0.04f,      1.0f, 0.0f,
+    GLfloat squaresVertices[] = {
+        -100.0f, 100.0f, 0.0f,      0.8f, 0.3f, 0.16f,      0.0f, 0.0f,     0.0f,
+        -100.0f, -100.0f, 0.0f,     0.6f, 0.6f, 0.04f,      0.0f, 1.0f,     0.0f,
+        100.0f, -100.0f, 0.0f,      0.2f, 0.0f, 0.32f,      1.0f, 1.0f,     0.0f,
+        100.0f, 100.0f, 0.0f,       0.2f, 0.6f, 0.04f,      1.0f, 0.0f,     0.0f,
+
+        150.0f, 350.0f, 0.0f,       0.8f, 0.3f, 0.16f,      0.0f, 0.0f,     1.0f,
+        150.0f, 150.0f, 0.0f,       0.6f, 0.6f, 0.04f,      0.0f, 1.0f,     1.0f,
+        350.0f, 150.0f, 0.0f,       0.2f, 0.0f, 0.32f,      1.0f, 1.0f,     1.0f,
+        350.0f, 350.0f, 0.0f,       0.2f, 0.6f, 0.04f,      1.0f, 0.0f,     1.0f,
+
+        150.0f, 550.0f, 0.0f,       0.8f, 0.3f, 0.16f,      0.0f, 0.0f,     1.0f,
+        150.0f, 350.0f, 0.0f,       0.6f, 0.6f, 0.04f,      0.0f, 1.0f,     0.0f,
+        350.0f, 350.0f, 0.0f,       0.2f, 0.0f, 0.32f,      1.0f, 1.0f,     0.0f,
+        350.0f, 550.0f, 0.0f,       0.2f, 0.6f, 0.04f,      1.0f, 0.0f,     1.0f,
 
     };
     // GLfloat vertices1[] = {
@@ -48,8 +58,9 @@ int main(){
     // };
 
     GLuint indices[] = {
-        0, 1, 2,
-        0, 2, 3
+        0, 1, 2, 0, 2, 3,
+        4, 5, 6, 4, 6, 7,
+        8, 9, 10, 8, 10, 11,
     };
 
     
@@ -74,11 +85,12 @@ int main(){
 
     
     VAO VAO1;//, VAO2;
-    VBO VBO1(vertices1, sizeof(vertices1));//, VBO2(vertices);
+    VBO VBO1(squaresVertices, sizeof(squaresVertices));//, VBO2(vertices);
     Layout layout;
     layout.push(GL_FLOAT,3);
     layout.push(GL_FLOAT,3);
     layout.push(GL_FLOAT,2);
+    layout.push(GL_FLOAT,1);
     VAO1.addBuffer(VBO1, layout);
     
     EBO EBO1(indices, sizeof(indices));
@@ -90,10 +102,10 @@ int main(){
     Texture texture2("textures/teste2.png");
     
 
-    GLuint tex0Uni = shd.getUniformLocation("tex0");//glGetUniformLocation(shd.ID, "tex0");
+    // GLuint tex0Uni = shd.getUniformLocation("tex0");//glGetUniformLocation(shd.ID, "tex0");
     // GLuint tex1Uni = glGetUniformLocation(shd.ID, "tex1");
     shd.Bind();
-    glUniform1i(tex0Uni, 0);
+    // glUniform1i(tex0Uni, 0);
     unsigned int transformLoc = shd.getUniformLocation("transform");//glGetUniformLocation(shd.ID, "transform");
     
     VAO1.Unbind();
@@ -136,17 +148,31 @@ int main(){
         glClear(GL_COLOR_BUFFER_BIT);
         
 
-        shd.Bind();
 
+        shd.Bind();
+        // auto loc = glGetUniformLocation(shd.ID, "textures[0]");
+        // assert(loc);
+        // std::cout << "loc: " << loc << endl;
+        // glUniform1f(loc, 0.0f);
+        // loc = glGetUniformLocation(shd.ID, "textures[1]");
+        // assert(loc);
+        // std::cout << "loc: " << loc << endl;
+        // glUniform1f(loc, 1.0f);
+        int samplers[2] = {0, 1};
+        auto loc = glGetUniformLocation(shd.ID, "textures");   
+        glUniform1iv(loc, 2, samplers);
         glm::mat4 matModel = glm::translate(glm::mat4(1.0f), glm::vec3(translation.x, translation.y, 0.0f));
         glm::mat4 matResult = matProj * matModel;
         // trans = glm::rotate(trans, (float)glfwGetTime(), glm::vec3(0.0f, 0.0f, 1.0f));    
         // trans = glm::rotate(trans, (float)glfwGetTime() * -1.0f, glm::vec3(0.0f, 0.0f, 1.0f));    
         glUniformMatrix4fv(transformLoc,1, GL_FALSE, glm::value_ptr(matResult));
         
-        GLCall(glBindTexture(GL_TEXTURE_2D, texture2.ID));
+        // GLCall(glBindTexture(GL_TEXTURE_2D, texture2.ID));
         
-
+        glActiveTexture(GL_TEXTURE0);
+        GLCall(glBindTexture(GL_TEXTURE_2D, texture.ID));
+        glActiveTexture(GL_TEXTURE0 + 1);
+        GLCall(glBindTexture(GL_TEXTURE_2D, texture2.ID));
         renderer.draw(VAO1, EBO1, shd);
 
         // trans = glm::mat4(1.0f);

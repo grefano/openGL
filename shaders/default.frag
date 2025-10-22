@@ -3,12 +3,12 @@ out vec4 FragColor;
 
 in vec3 Color;
 in vec2 texCoord;
-//in float time;
-uniform sampler2D tex0;
-//uniform float time;
+in float texIndex;
+
+uniform sampler2D textures[2];
+
 void main()
 {
-   FragColor = texture(tex0, texCoord);
-   
-   //FragColor = vec4(Color, 1.0f);
+   int index = int(texIndex);
+   FragColor = texture(textures[index], texCoord);
 };
