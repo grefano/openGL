@@ -3,7 +3,7 @@
 #include "renderer.h"
 
 EBO::EBO(GLuint* indices, GLsizeiptr size){
-    count = size;
+    count = size;// / sizeof(GLuint);
     GLCall(glGenBuffers(1, &ID));
     GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ID));
     GLCall(glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, indices, GL_STATIC_DRAW));

@@ -25,3 +25,8 @@ void VBO::Unbind() const{
 void VBO::Delete(){
     glDeleteBuffers(1, &ID);
 }
+
+// void VBO::Update(Vertex& vertices){
+//     Bind();
+//     glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(vertices), vertices);
+// }

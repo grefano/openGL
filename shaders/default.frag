@@ -11,4 +11,5 @@ void main()
 {
    int index = int(texIndex);
    FragColor = texture(textures[index], texCoord);
+   FragColor = vec4(Color, 1.0);
 };

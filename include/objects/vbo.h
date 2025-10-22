@@ -1,7 +1,7 @@
 #pragma once
 
 #include <glad/glad.h>
-
+#include <vertex.h>
 class VBO{
     public:
     GLuint ID;
@@ -11,5 +11,6 @@ class VBO{
     void Bind() const;
     void Unbind() const;
     void Delete();
+    // void Update(Vertex& vertices);
 };
 
