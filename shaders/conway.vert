@@ -9,16 +9,12 @@ out vec3 Color;
 out vec2 texCoord;
 out float texIndex;
 
-uniform mat4 transform;
 
 
 void main()
 {
-   gl_Position = transform * vec4(aPos, 1.0);
-   //gl_Position = vec4(aPos, 1.0);
-
+   gl_Position = vec4(aPos, 1.0);
    Color = aColor;
    texCoord = aTex;
    texIndex = aTexIndex;
-   
 };
