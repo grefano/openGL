@@ -3,6 +3,7 @@
 #include <GLFW/glfw3.h>
 #include <stb/stb_image.h>
 #include <cmath>
+#include <memory>
 
 #include <glm-1.0.2/glm/glm.hpp>
 #include <glm-1.0.2/glm/gtc/matrix_transform.hpp>
@@ -20,75 +21,13 @@
 #include "texture.h"
 #include "vertex.h"
 
+#include "gameobjects.h"
+#include "gamesettings.h"
 
 using namespace std;
-
-const int gridSize = 8;
-
-glm::vec2 viewRes(320, 180);
-glm::vec2 windowRes(1280, 720);
+namespace obj = objects;
 
 
-void createQuad(std::vector<Vertex>& outObjVertices, std::vector<GLuint>& outVerticesOrder, int gridX, int gridY, int gridW, int gridH){
-    array<GLuint, 6> verticesOrder = {0, 1, 2, 0, 2, 3};
-    
-    outVerticesOrder.insert(outVerticesOrder.end(), verticesOrder.begin(), verticesOrder.end());
-
-    float xleft = gridX * gridSize;
-    float ytop = -gridY * gridSize;
-    float xright = xleft + gridW*gridSize;
-    float ybottom = ytop - gridH*gridSize;
-
-    Vertex v0;
-    v0.pos = {xleft, ytop, 0.0f};
-    v0.color = {0.8f, 0.3f, 0.16f};
-    v0.texcoord = {0.0f, 0.0f};
-    v0.texid = {0.0f};
-    outObjVertices.push_back(v0);
-
-    Vertex v1;
-    v1.pos = {xleft, ybottom, 0.0f};
-    v1.color = {0.6f, 0.6f, 0.04f};
-    v1.texcoord = {0.0f, 1.0f};
-    v1.texid = {0.0f};
-    outObjVertices.push_back(v1);
-
-    Vertex v2;
-    v2.pos = {xright, ybottom, 0.0f};
-    v2.color = {0.2f, 0.0f, 0.32f};
-    v2.texcoord = {1.0f, 1.0f};
-    v2.texid = {0.0f};
-    outObjVertices.push_back(v2);
-
-    Vertex v3;
-    v3.pos = {xright, ytop, 0.0f};
-    v3.color = { 0.2f, 0.6f, 0.04f};
-    v3.texcoord = {1.0f, 0.0f};
-    v3.texid = {0.0f};
-    outObjVertices.push_back(v3);
-
-}
-class Object{
-    protected:
-    std::vector<Vertex> m_vertices;
-    std::vector<GLuint> m_indices;
-
-    public:
-    std::vector<Vertex>& getVertices(){ return m_vertices; };
-    std::vector<GLuint>& getIndices(){ return m_indices; };
-
-    Object() = default;
-    Object(const Object& other){
-        cout << "Object foi copiado\0"; 
-    };
-};
-class ObjCollision : public Object{
-    public:
-    using Object::Object;
-    ObjCollision(int gridX, int gridY, int gridW, int gridH){
-        createQuad(m_vertices, m_indices, gridX, gridY, gridW, gridH);
-    }
-};
 
 class Vertices{
     std::vector<Vertex> m_vertices;
@@ -121,24 +60,21 @@ int main(){
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
 
-    Vertices vertices;
-    ObjCollision col1(2, 2, 1, 3);
-    vertices.addObj(col1);
-    ObjCollision col2(3, 3, 4, 3);
-    vertices.addObj(col2);
+    std::vector<Vertex> vertices;
+    std::vector<GLuint> indices;
 
+    std::vector<std::unique_ptr<Object>> objs;
+    objs.push_back(std::make_unique<obj::Collision>(2, 2, 1, 3));
+    objs.push_back(std::make_unique<obj::Player>(1, 3));
+    
+    for(auto& o : objs){
+        GLuint verticesSize = vertices.size();
+        for(GLuint i : o->getIndices()){
+            indices.push_back(verticesSize + i);
+        }
+        vertices.insert(vertices.end(), o->getVertices().begin(), o->getVertices().end());
+    }
 
-    for(Vertex v : vertices.getVertices()){
-        cout << "vertex: ";
-        cout << "pos: " << v.pos[0] << " " << v.pos[1] << " " << v.pos[2] << endl;
-        cout << "col: " << v.color[0] << " " << v.color[1] << " " << v.color[2] << endl;
-        cout << "texcoord: " << v.texcoord[0] << " " << v.texcoord[1] << endl;
-        cout << "texid: " << v.texid << endl;
-    }
-    cout << "indices: ";
-    for(GLuint v : vertices.getIndices()){
-        cout << v << " ";
-    }
 
     GLFWwindow* window = glfwCreateWindow(viewRes.x, viewRes.y, "teste", NULL, NULL);
     if (!window){
@@ -163,7 +99,7 @@ int main(){
     
     VAO VAO1;//, VAO2;
     // VBO VBO2(nullptr, sizeof(squaresVertices));//, VBO2(vertices);
-    VBO VBO1(nullptr, vertices.getVertices().size() * sizeof(Vertex));//, VBO2(vertices);
+    VBO VBO1(nullptr, vertices.size() * sizeof(Vertex));//, VBO2(vertices);
     Layout layout;
     layout.push(GL_FLOAT,3);
     layout.push(GL_FLOAT,3);
@@ -173,7 +109,7 @@ int main(){
 
 
     
-    EBO EBO1(vertices.getIndices().data(), vertices.getIndices().size() * sizeof(GLuint));
+    EBO EBO1(indices.data(), indices.size() * sizeof(GLuint));
     EBO1.Bind();
     
     
@@ -196,6 +132,9 @@ int main(){
     // glEnable(GL_DEPTH_TEST);
     // glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     cout << "count: " << EBO1.getCount() << endl;
+    float lastTime = glfwGetTime();
+    float dT = 0;
+    float curTime = 0;
     while (!glfwWindowShouldClose(window)){
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
@@ -215,30 +154,43 @@ int main(){
         glClearColor(0.2, .13f, 0.17f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         
+        curTime = glfwGetTime();
+        dT = curTime - lastTime;
+        lastTime = curTime; 
+
         shd.Bind();
         
         VAO1.Bind();
 
         VBO1.Bind();
-        GLCall(glBufferSubData(GL_ARRAY_BUFFER, 0, vertices.getVertices().size() * sizeof(Vertex), vertices.getVertices().data()));
-        
+
         
         int samplers[2] = {0, 1};
         auto loc = glGetUniformLocation(shd.ID, "textures");   
         glUniform1iv(loc, 2, samplers);
-        glm::mat4 matModel = glm::translate(glm::mat4(1.0f), glm::vec3(translation.x, translation.y, 0.0f));
-        glm::mat4 matResult = matProj * matModel;
-        
-        glUniformMatrix4fv(transformLoc,1, GL_FALSE, glm::value_ptr(matResult));
-        
         
         glActiveTexture(GL_TEXTURE0);
         GLCall(glBindTexture(GL_TEXTURE_2D, texture.ID));
         glActiveTexture(GL_TEXTURE0 + 1);
         GLCall(glBindTexture(GL_TEXTURE_2D, texture2.ID));
 
-        renderer.draw(VAO1, EBO1, shd);
+        for(auto& o : objs){
+            o->applyForce(translation);
+            o->update(dT);
+            
+            glm::mat4 matResult = matProj * (o->getModelMatrix());
+            
+            glUniformMatrix4fv(transformLoc,1, GL_FALSE, glm::value_ptr(matResult));
+            
 
+            
+            GLCall(glBufferSubData(GL_ARRAY_BUFFER, 0, o->getVertices().size() * sizeof(Vertex), o->getVertices().data()));
+
+            renderer.draw(VAO1, EBO1, shd);
+            
+        }    
+        
+        
 
 
 
