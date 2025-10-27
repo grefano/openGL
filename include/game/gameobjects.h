@@ -3,9 +3,10 @@
 #include <iostream>
 #include <vector>
 #include <glad/glad.h>
-
+#include <GLFW/glfw3.h>
 #include "vertex.h"
 
+#include "gamesettings.h"
 
 
 void createQuad(std::vector<Vertex>& outObjVertices, std::vector<GLuint>& outVerticesOrder, int gridX, int gridY, int gridW, int gridH);
@@ -19,6 +20,8 @@ class Object{
     glm::vec2 m_spd = glm::vec2(0.0f, 0.0f);
     glm::vec2 m_acc = glm::vec2(0.0f, 0.0f);
     glm::mat4 m_matModel;
+    float m_coef_atrito = 0.0f;
+    // GLFWwindow* m_window;
 
     public:
     std::vector<Vertex>& getVertices();
@@ -27,10 +30,10 @@ class Object{
     // void Object::applyForce(float x, float y);
     void applyForce(glm::vec2 vec);
 
-    void update(float dT);
-    glm::mat4 getModelMatrix();
+    virtual void update(float dT, GLFWwindow* window);
 
-    Object();
+    glm::mat4 getModelMatrix();
+    Object(float coef_atrito = 0.0f) : m_coef_atrito(coef_atrito), m_pos(viewRes.x/2, viewRes.y/2) {};
     Object(const Object& other);
 };
 namespace objects{
@@ -44,5 +47,8 @@ namespace objects{
         public:
         using Object::Object;
         Player(int gridX, int gridY);
+        void update(float dT, GLFWwindow* window) override;
+        void getInput(float dT, GLFWwindow* window);
+
     };
 }

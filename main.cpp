@@ -64,8 +64,9 @@ int main(){
     std::vector<GLuint> indices;
 
     std::vector<std::unique_ptr<Object>> objs;
-    objs.push_back(std::make_unique<obj::Collision>(2, 2, 1, 3));
-    objs.push_back(std::make_unique<obj::Player>(1, 3));
+    objs.push_back(std::make_unique<obj::Collision>(0, 0, 1, 3));
+    // std::unique_ptr<Object> player = std::make_unique<obj::Player>(1, 3);
+    objs.push_back(std::make_unique<obj::Player>(0, 0));
     
     for(auto& o : objs){
         GLuint verticesSize = vertices.size();
@@ -150,7 +151,10 @@ int main(){
         // ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io.Framerate, io.Framerate);
         ImGui::End();
 
+
         if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) glfwSetWindowShouldClose(window, true);
+
+        
         glClearColor(0.2, .13f, 0.17f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         
@@ -176,7 +180,7 @@ int main(){
 
         for(auto& o : objs){
             o->applyForce(translation);
-            o->update(dT);
+            o->update(dT, window);
             
             glm::mat4 matResult = matProj * (o->getModelMatrix());
             
