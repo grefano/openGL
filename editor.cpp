@@ -119,7 +119,6 @@ bool load_frame(const char* filename, unsigned char** out_data, int* out_width, 
 
     
      
-    // // auto data = std::make_unique<unsigned char[]>(av_frame->width * av_frame->height * 3);
     // unsigned char* data = new unsigned char[av_frame->width * av_frame->height * 3];
     // for(int x = 0; x < av_frame->width; ++x){
     //     for(int y = 0; y < av_frame->height; ++y){
@@ -182,8 +181,8 @@ int main(){
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-    (GL_TEXTURE_2D, 0, GL_RGB, frame_width, frame_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-    delete[] data;
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, frame_width, frame_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+    // delete[] data;
 
      while (!glfwWindowShouldClose(window)) {
 
