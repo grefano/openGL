@@ -116,19 +116,7 @@ bool load_frame(const char* filename, unsigned char** out_data, int* out_width, 
     int dest_linesize[4] = {av_frame->width * 4, 0, 0, 0};
     sws_scale(sws_scaler_context, av_frame->data, av_frame->linesize, 0, av_frame->height, dest, dest_linesize);
     sws_free_context(&sws_scaler_context);
-
     
-     
-    // unsigned char* data = new unsigned char[av_frame->width * av_frame->height * 3];
-    // for(int x = 0; x < av_frame->width; ++x){
-    //     for(int y = 0; y < av_frame->height; ++y){
-    //         data[y*av_frame->width * 3 + x * 3] = av_frame->data[0][y * av_frame->linesize[0] + x];
-    //         data[y*av_frame->width * 3 + x * 3 + 1] = av_frame->data[0][y * av_frame->linesize[0] + x];
-    //         data[y*av_frame->width * 3 + x * 3 + 2] = av_frame->data[0][y * av_frame->linesize[0] + x];
-    //     }
-
-    // }
-
     *out_width = av_frame->width;
     *out_height = av_frame->height;
     *out_data = data;
@@ -147,11 +135,18 @@ int main(){
         std::cout << "falha inicializando glfw" << std::endl;
         return -1;
     }
-
+    int frame_width, frame_height;
+    unsigned char* data;
+    if (!load_frame("teste.mp4", &data, &frame_width, &frame_height)){
+        std::cout << "nao carregou o frame" << std::endl;
+        return 0;
+    }
+    std::cout << "frame res " << frame_width << " " << frame_height << std::endl;
+    
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_COMPAT_PROFILE);
-    GLFWwindow* window = glfwCreateWindow(640, 360, "teste", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(frame_width, frame_height, "teste", NULL, NULL);
     if (!window){
         std::cout << "falha ao criar janela" << std::endl;
         glfwTerminate() ;
@@ -160,19 +155,10 @@ int main(){
     glfwMakeContextCurrent(window);
     
     gladLoadGL();
-    glViewport(0, 0, 640, 360);
+    glViewport(0, 0, frame_width, frame_height);
     
 
-    int frame_width, frame_height;
-    unsigned char* data;
-    if (!load_frame("teste.mp4", &data, &frame_width, &frame_height)){
-        std::cout << "nao carregou o frame" << std::endl;
-        return 0;
-    }
-    std::cout << "frame res " << frame_width << " " << frame_height << std::endl;
     GLuint tex;
-    int tex_width = 640;
-    int tex_height = 360;
     glGenTextures(1, &tex);
     glBindTexture(GL_TEXTURE_2D, tex);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
@@ -182,33 +168,28 @@ int main(){
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, frame_width, frame_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-    // delete[] data;
 
      while (!glfwWindowShouldClose(window)) {
 
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-
-        // Set up orphographic projection
-
-        int window_width, window_height;
-        glfwGetFramebufferSize(window, &window_width, &window_height);
+        // int window_width, window_height;
+        // glfwGetFramebufferSize(window, &window_width, &window_height);
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
 
-        glOrtho(0, window_width, window_height, 0, -1, 1);
+        glOrtho(0, frame_width, frame_height, 0, -1, 1);
         glMatrixMode(GL_MODELVIEW);
 
 
-        // Render whatever you want
         glEnable(GL_TEXTURE_2D);
         glBindTexture(GL_TEXTURE_2D, tex);
         glBegin(GL_QUADS);
-            glTexCoord2d(0,0); glVertex2i(200, 200);
-            glTexCoord2d(1,0); glVertex2i(200 + frame_width, 200);
-            glTexCoord2d(1,1); glVertex2i(200 + frame_width, 200 + frame_height);
-            glTexCoord2d(0,1); glVertex2i(200, 200 + frame_height);
+            glTexCoord2d(0,0); glVertex2i(0, 0);
+            glTexCoord2d(1,0); glVertex2i(frame_width, 0);
+            glTexCoord2d(1,1); glVertex2i(frame_width, frame_height);
+            glTexCoord2d(0,1); glVertex2i(0, frame_height);
         glEnd();
 
         glDisable(GL_TEXTURE_2D);
@@ -222,6 +203,7 @@ int main(){
 
     }
 
+    delete[] data;
 
     glfwDestroyWindow(window);
     glfwTerminate();
