@@ -1,14 +1,45 @@
+#pragma once
+#include <vector>
+#include <list>
+
 class Playback{
-    unsigned int time;
+    unsigned int m_time = 0;
+    
+    public:
+    bool m_playing = false;
+    void update(float dT);
+
 };
 
-class Track{
-    // volume, efeitos, sla
-};
-
+class Track;
 class Clip{
-    const char* filepath;
-    unsigned int vidStart;
-    unsigned int vidEnd;
-    Track track;
+    Track& m_track;
+    const char* m_filepath;
+    unsigned int m_vidStart;
+    unsigned int m_trackStart;
+    unsigned int m_trackEnd; 
+    
+    
+    public:
+    Clip(Track& track, const char* filepath, unsigned int vidStart, unsigned int trackStart, unsigned int trackEnd);
+    void split(unsigned int time);
+};
+class Track{
+    std::list<Clip> m_clips;
+    // volume, efeitos, sla
+    public:
+    Clip& create_clip(const char* filepath, unsigned int trackStart, unsigned int trackEnd, unsigned int vidStart);
+    
+};
+
+class Editor{
+    Playback m_playback;
+    std::vector<Track> m_tracks;
+    
+    public:
+    void create_track();
+    void set_playing();
+    void set_playing(bool state);
+    void update(float dT);
+    Track& get_track(unsigned int index);
 };

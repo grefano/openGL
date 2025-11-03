@@ -9,6 +9,7 @@
                 "${file}",
                 "src/glad.c",
                 "include/editor/**.o",
+                "include/editor/objects.cpp",
                 "-fdiagnostics-color=always",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe",

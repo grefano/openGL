@@ -7,6 +7,7 @@
 
 #include "editor/trackalloc.h"
 #include "editor/ffmpeg.h"
+#include "editor/objects.h"
 
 extern "C"{
     #include <libavcodec/avcodec.h>
@@ -31,7 +32,24 @@ void operator delete(void* memory, size_t size) noexcept{
     free(memory);
 }
 
+
 int main(){
+    Editor editor;
+    editor.create_track();
+
+    Track& track_selected = editor.get_track(0);
+    Clip& clip_selected = track_selected.create_clip("teste.mp4", 1000, 2000, 0);
+    clip_selected.split(1500);
+
+
+    int a = 0;
+    
+
+    
+
+
+    return 0;
+
     if (!glfwInit()){
         log("falha inicializando glfw");
         return -1;
@@ -72,6 +90,10 @@ int main(){
 
      while (!glfwWindowShouldClose(window)) {
 
+        if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS){
+            editor.set_playing();
+        }
+        editor.update(0.0001);
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
