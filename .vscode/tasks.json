@@ -8,7 +8,8 @@
                 "-g",
                 "${file}",
                 "src/glad.c",
-                "include/editor/**.o",
+                // "include/editor/**.o",
+                "include/editor/ffmpeg.cpp",
                 "include/editor/objects.cpp",
                 "-fdiagnostics-color=always",
                 "-o",
@@ -22,6 +23,13 @@
                 "-lavutil",
                 "-lswscale"
             ],
+            // "args": [
+            //     "-g",
+            //     "${file}",
+            //     "-fdiagnostics-color=always",
+            //     "-o",
+            //     "${fileDirname}\\${fileBasenameNoExtension}.exe",
+            // ],
             "options": {
                 "cwd": "${fileDirname}"
             },

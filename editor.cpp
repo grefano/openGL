@@ -7,7 +7,6 @@
 
 #include "editor/trackalloc.h"
 #include "editor/ffmpeg.h"
-#include "editor/objects.h"
 
 extern "C"{
     #include <libavcodec/avcodec.h>
@@ -32,34 +31,26 @@ void operator delete(void* memory, size_t size) noexcept{
     free(memory);
 }
 
-
 int main(){
-    Editor editor;
-    editor.create_track();
-
-    Track& track_selected = editor.get_track(0);
-    Clip& clip_selected = track_selected.create_clip("teste.mp4", 1000, 2000, 0);
-    clip_selected.split(1500);
-
-
-    int a = 0;
-    
-
-    
-
-
-    return 0;
-
     if (!glfwInit()){
         log("falha inicializando glfw");
         return -1;
     }
-    int frame_width, frame_height;
-    unsigned char* data;
-    if (!load_frame("teste.mp4", &data, &frame_width, &frame_height)){
+    int frame_width = 640, frame_height = 360;
+    VideoReaderState state;
+    if (!video_reader_open(&state, "teste.mp4")){
+        log("nao abriu video");
+        return 0;
+    }
+    // unsigned char* data;
+    uint8_t* data = new uint8_t[frame_width*frame_height*4];
+    // std::unique_ptr<uint8_t> data = std::make_unique<uint8_t>(frame_width*frame_height*4);
+    // if (!video_reader_read_frame("teste.mp4", &data, &frame_width, &frame_height)){
+    if (!video_reader_read_frame(&state, &data)){
         log("nao carregou o frame");
         return 0;
     }
+    video_reader_close(&state);
     std::cout << "frame res " << frame_width << " " << frame_height << std::endl;
     
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -90,10 +81,6 @@ int main(){
 
      while (!glfwWindowShouldClose(window)) {
 
-        if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS){
-            editor.set_playing();
-        }
-        editor.update(0.0001);
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
