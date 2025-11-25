@@ -4,9 +4,12 @@
 #include <memory>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-
+#include "imgui/imgui.h"
+#include "imgui/imgui_impl_glfw.h"
+#include "imgui/imgui_impl_opengl3.h"
 #include "editor/trackalloc.h"
 #include "editor/ffmpeg.h"
+#include "editor/objects.h"
 
 extern "C"{
     #include <libavcodec/avcodec.h>
@@ -16,6 +19,7 @@ extern "C"{
     #include <libswscale/swscale.h>
 }
 
+double playhead_time = 0;
 // preview (codec, processar e mostrar proximo frame, cache de timelines) - figma
 
 void log(const char* str){
@@ -31,13 +35,42 @@ void operator delete(void* memory, size_t size) noexcept{
     free(memory);
 }
 
+bool video_jump_to_ts(float ts_sec, VideoReaderState* state, double* pt_seconds, int64_t* pts){
+    glfwSetTime(ts_sec);
+    *pt_seconds = ts_sec;
+    *pts = (int64_t)(*pt_seconds  * (double)state->time_base.den / (double)state->time_base.num);
+    video_reader_seek_frame(state, *pts);
+
+    return true;
+}
+
+bool isPlaying = true;
+int64_t pts;
+VideoReaderState state;
+
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods){
+    if (key == GLFW_KEY_RIGHT && action == GLFW_PRESS){
+        double cur_time = glfwGetTime();
+        std::cout << "cur time: " << cur_time << std::endl;
+        // pt_seconds = cur_time + (double)2.0;
+        
+        pts = (int64_t)(playhead_time * (double)state.time_base.den / (double)state.time_base.num);
+        video_reader_seek_frame(&state, pts);
+    }
+    if (key == GLFW_KEY_SPACE && action == GLFW_PRESS){
+        printf("key space\n");
+        isPlaying = !isPlaying;
+    }
+}
+
+
+
 int main(){
     if (!glfwInit()){
         log("falha inicializando glfw");
         return -1;
     }
     int frame_width = 640, frame_height = 360;
-    VideoReaderState state;
     if (!video_reader_open(&state, "teste.mp4")){
         log("nao abriu video");
         return 0;
@@ -59,7 +92,8 @@ int main(){
         return -1;
     }   
     glfwMakeContextCurrent(window);
-    
+    glfwSetKeyCallback(window, key_callback);
+
     gladLoadGL();
     glViewport(0, 0, frame_width, frame_height);
     
@@ -74,50 +108,83 @@ int main(){
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
     
-
+    //ImGui::CreateContext();
+    //ImGui_ImplGlfw_InitForOpenGL(window, true);
+    //ImGui_ImplOpenGL3_Init();
+    //ImGui::StyleColorsDark();
+    double lasttime = glfwGetTime();
     while (!glfwWindowShouldClose(window)) {
-
+        //ImGui_ImplOpenGL3_NewFrame();
+        //ImGui_ImplGlfw_NewFrame();
+        //ImGui::NewFrame();
+        //ImGui::Begin("poggers");                          // Create a window called "Hello, world!" and append into it.
+        double now = glfwGetTime();
+        double dt = now - lasttime;
+        lasttime = now;
+        if (isPlaying){
+            playhead_time += dt;
+        }
+        
         
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        int64_t pts;
         
-        if (!video_reader_read_frame(&state, &data, &pts)){
-            log("nao carregou o frame");
-            return 0;
+        double pt_seconds = pts * (double)state.time_base.num / (double)state.time_base.den;
+        if (pt_seconds < playhead_time){
+
+            if (!video_reader_read_frame(&state, &data, &pts)){
+                log("nao carregou o frame");
+                return 0;
+            }
         }
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, frame_width, frame_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
         // int window_width, window_height;
         // glfwGetFramebufferSize(window, &window_width, &window_height);
-        static bool first_frame = true;
-        if (first_frame){
-            glfwSetTime(0.0);
-            first_frame = false;
-        }
-        double pt_seconds = pts * (double)state.time_base.num / (double)state.time_base.den;
-        while(pt_seconds > glfwGetTime()){
-            glfwWaitEventsTimeout(pt_seconds - glfwGetTime());
-        }
+        // static bool first_frame = true;
+        // if (first_frame){
+        //     glfwSetTime(0.0);
+        //     first_frame = false;
+        // }
+        
+        // static bool skipped = false;
+        // if (pt_seconds > 5.0 && !skipped){
+        //     glfwSetTime(10.0);
+        //     pt_seconds = 10.0;
+        //     pts = (int64_t)(pt_seconds * (double)state.time_base.den / (double)state.time_base.num);
+        //     video_reader_seek_frame(&state, pts);
+        //     skipped = true;
+        // }
+        
+        std::cout << "pt_seconds: " << pt_seconds << " playhead time: " << playhead_time << std::endl;
+        
 
-        std::cout << "pt_seconds before skip: " << pt_seconds << std::endl; 
-        static bool skipped = false;
-        if (pt_seconds > 5.0 && !skipped){
-            glfwSetTime(10.0);
-            pt_seconds = 10.0;
-            pts = (int64_t)(pt_seconds * (double)state.time_base.den / (double)state.time_base.num);
-            video_reader_seek_frame(&state, pts);
-            skipped = true;
-        }
+        // double time_waiting = 0;
+        // while(pt_seconds > playhead_time){
+        //     std::cout << "waiting. pt_seconds: " << pt_seconds << " playhead time: " << playhead_time << std::endl;
+        //     time_waiting += 
+        //     // glfwWaitEventsTimeout(pt_seconds - playhead_time);
+        // }
+
+        // static bool skipped2 = false;
+
+        // if (pt_seconds > 9.0 && !skipped2){
+        //     video_jump_to_ts(pt_seconds-3.0, &state, &pt_seconds, &pts);
+        //     skipped2 = true;
+        // }
+        // if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS){
+        //     playing = !playing;
+        // }
+        
+        // if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS){
+        //     video_jump_to_ts(pt_seconds+(double)2.0, &state, &pt_seconds, &pts);
+        // }
+        
+        // if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS){
+        //     video_jump_to_ts(pt_seconds-(double)2.0, &state, &pt_seconds, &pts);
+            
+        // }
 
 
-        static bool skipped2 = false;
-        if (pt_seconds > 20.0 && !skipped2){
-            glfwSetTime(5.0);
-            pt_seconds = 5.0;
-            pts = (int64_t)(pt_seconds * (double)state.time_base.den / (double)state.time_base.num);
-            video_reader_seek_frame(&state, pts);
-            skipped2 = true;
-        }
-        std::cout << "pt_seconds: " << pt_seconds << std::endl;
+
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
         
@@ -136,7 +203,8 @@ int main(){
         
         glDisable(GL_TEXTURE_2D);
         
-        
+                //ImGui::Render();
+        //ImGui_ImplOpenGL3_RenderDrawData(//ImGui::GetDrawData());
         
         glfwSwapBuffers(window);
         
@@ -147,7 +215,9 @@ int main(){
     video_reader_close(&state);
     
     delete[] data;
-    
+    //ImGui_ImplGlfw_Shutdown();
+    //ImGui_ImplOpenGL3_Shutdown();
+    //ImGui::DestroyContext();
     glfwDestroyWindow(window);
     glfwTerminate();
     
