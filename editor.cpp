@@ -46,11 +46,7 @@ int main(){
     uint8_t* data = new uint8_t[frame_width*frame_height*4];
     // std::unique_ptr<uint8_t> data = std::make_unique<uint8_t>(frame_width*frame_height*4);
     // if (!video_reader_read_frame("teste.mp4", &data, &frame_width, &frame_height)){
-    if (!video_reader_read_frame(&state, &data)){
-        log("nao carregou o frame");
-        return 0;
-    }
-    video_reader_close(&state);
+  
     std::cout << "frame res " << frame_width << " " << frame_height << std::endl;
     
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -67,7 +63,7 @@ int main(){
     gladLoadGL();
     glViewport(0, 0, frame_width, frame_height);
     
-
+    
     GLuint tex;
     glGenTextures(1, &tex);
     glBindTexture(GL_TEXTURE_2D, tex);
@@ -77,46 +73,63 @@ int main(){
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, frame_width, frame_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+    
 
-     while (!glfwWindowShouldClose(window)) {
+    while (!glfwWindowShouldClose(window)) {
 
-
+        
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+        int64_t pts;
+        
+        if (!video_reader_read_frame(&state, &data, &pts)){
+            log("nao carregou o frame");
+            return 0;
+        }
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, frame_width, frame_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
         // int window_width, window_height;
         // glfwGetFramebufferSize(window, &window_width, &window_height);
+        static bool first_frame = true;
+        if (first_frame){
+            glfwSetTime(0.0);
+            first_frame = false;
+        }
+        double pt_seconds = pts * (double)state.time_base.num / (double)state.time_base.den;
+        while(pt_seconds > glfwGetTime()){
+            glfwWaitEventsTimeout(pt_seconds - glfwGetTime());
+        }
+
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
-
+        
         glOrtho(0, frame_width, frame_height, 0, -1, 1);
         glMatrixMode(GL_MODELVIEW);
-
-
+        
+        
         glEnable(GL_TEXTURE_2D);
         glBindTexture(GL_TEXTURE_2D, tex);
         glBegin(GL_QUADS);
-            glTexCoord2d(0,0); glVertex2i(0, 0);
-            glTexCoord2d(1,0); glVertex2i(frame_width, 0);
-            glTexCoord2d(1,1); glVertex2i(frame_width, frame_height);
-            glTexCoord2d(0,1); glVertex2i(0, frame_height);
+        glTexCoord2d(0,0); glVertex2i(0, 0);
+        glTexCoord2d(1,0); glVertex2i(frame_width, 0);
+        glTexCoord2d(1,1); glVertex2i(frame_width, frame_height);
+        glTexCoord2d(0,1); glVertex2i(0, frame_height);
         glEnd();
-
+        
         glDisable(GL_TEXTURE_2D);
-
-
-
+        
+        
+        
         glfwSwapBuffers(window);
-
+        
         // glfwWaitEvents();
         glfwPollEvents();
-
+        
     }
-
+    video_reader_close(&state);
+    
     delete[] data;
-
+    
     glfwDestroyWindow(window);
     glfwTerminate();
-
+    
     return 0;
 }
