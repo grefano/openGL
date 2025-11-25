@@ -98,6 +98,26 @@ int main(){
             glfwWaitEventsTimeout(pt_seconds - glfwGetTime());
         }
 
+        std::cout << "pt_seconds before skip: " << pt_seconds << std::endl; 
+        static bool skipped = false;
+        if (pt_seconds > 5.0 && !skipped){
+            glfwSetTime(10.0);
+            pt_seconds = 10.0;
+            pts = (int64_t)(pt_seconds * (double)state.time_base.den / (double)state.time_base.num);
+            video_reader_seek_frame(&state, pts);
+            skipped = true;
+        }
+
+
+        static bool skipped2 = false;
+        if (pt_seconds > 20.0 && !skipped2){
+            glfwSetTime(5.0);
+            pt_seconds = 5.0;
+            pts = (int64_t)(pt_seconds * (double)state.time_base.den / (double)state.time_base.num);
+            video_reader_seek_frame(&state, pts);
+            skipped2 = true;
+        }
+        std::cout << "pt_seconds: " << pt_seconds << std::endl;
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
         

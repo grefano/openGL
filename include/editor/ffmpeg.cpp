@@ -107,6 +107,38 @@ bool video_reader_read_frame(VideoReaderState* state, uint8_t** frame_buffer, in
     return 1;
 }
 
+
+bool video_reader_seek_frame(VideoReaderState* state, int64_t ts){
+    av_seek_frame(state->av_format_context, state->video_stream_index, ts, AVSEEK_FLAG_BACKWARD);
+
+
+    int res;
+    while (av_read_frame(state->av_format_context, state->av_packet) >= 0){
+        if(state->av_packet->stream_index != state->video_stream_index){
+            av_packet_unref(state->av_packet);
+            continue;
+        }    
+        res = avcodec_send_packet(state->av_codec_context, state->av_packet);
+        if (res < 0){
+            std::cout << "falhou decode packet " << av_err2str(res) << std::endl;
+            return 0;
+        }
+        res = avcodec_receive_frame(state->av_codec_context, state->av_frame);
+        if (res == AVERROR(EAGAIN) || res == AVERROR_EOF){
+            av_packet_unref(state->av_packet);
+            continue;
+        } else if (res < 0){
+            std::cout << "falhou decode packet " << av_err2str(res) << std::endl;
+
+        }
+        av_packet_unref(state->av_packet);
+        break;
+    }
+
+    return true;
+
+}
+
 bool video_reader_close(VideoReaderState* state){
     sws_free_context(&state->sws_scaler_context);
     avformat_close_input(&state->av_format_context);
