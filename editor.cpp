@@ -4,9 +4,11 @@
 #include <memory>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
+
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
+
 #include "editor/trackalloc.h"
 #include "editor/ffmpeg.h"
 #include "editor/objects.h"
@@ -47,16 +49,36 @@ bool video_jump_to_ts(float ts_sec, VideoReaderState* state, double* pt_seconds,
 bool isPlaying = true;
 int64_t pts;
 VideoReaderState state;
+double dt = 0;
+
+
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods){
-    if (key == GLFW_KEY_RIGHT && action == GLFW_PRESS){
-        double cur_time = glfwGetTime();
-        std::cout << "cur time: " << cur_time << std::endl;
-        // pt_seconds = cur_time + (double)2.0;
-        
+
+    bool wasPlaying = isPlaying;
+    if (key == GLFW_KEY_RIGHT){
+        if (action == GLFW_PRESS){
+            playhead_time += 3.0;
+            printf("key press right");
+        } else if (action == GLFW_REPEAT){
+            isPlaying = false;
+            playhead_time += dt / 10000;
+        }
         pts = (int64_t)(playhead_time * (double)state.time_base.den / (double)state.time_base.num);
         video_reader_seek_frame(&state, pts);
     }
+    if (key == GLFW_KEY_LEFT){
+        if (action == GLFW_PRESS){
+            playhead_time -= 3.0;
+            
+        } else if (action == GLFW_REPEAT){
+            isPlaying = false;
+            playhead_time -= dt / 10000;
+        }
+        pts = (int64_t)(playhead_time * (double)state.time_base.den / (double)state.time_base.num);
+        video_reader_seek_frame(&state, pts);
+    }
+    isPlaying = wasPlaying;
     if (key == GLFW_KEY_SPACE && action == GLFW_PRESS){
         printf("key space\n");
         isPlaying = !isPlaying;
@@ -75,6 +97,7 @@ int main(){
         log("nao abriu video");
         return 0;
     }
+    float gui_playhead = 0;
     // unsigned char* data;
     uint8_t* data = new uint8_t[frame_width*frame_height*4];
     // std::unique_ptr<uint8_t> data = std::make_unique<uint8_t>(frame_width*frame_height*4);
@@ -108,33 +131,43 @@ int main(){
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
     
-    //ImGui::CreateContext();
-    //ImGui_ImplGlfw_InitForOpenGL(window, true);
-    //ImGui_ImplOpenGL3_Init();
-    //ImGui::StyleColorsDark();
+    ImGui::CreateContext();
+    ImGui_ImplGlfw_InitForOpenGL(window, true);
+    ImGui_ImplOpenGL3_Init();
+    ImGui::StyleColorsDark();
     double lasttime = glfwGetTime();
     while (!glfwWindowShouldClose(window)) {
-        //ImGui_ImplOpenGL3_NewFrame();
-        //ImGui_ImplGlfw_NewFrame();
-        //ImGui::NewFrame();
-        //ImGui::Begin("poggers");                          // Create a window called "Hello, world!" and append into it.
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+        ImGui::Begin("poggers");                          // Create a window called "Hello, world!" and append into it.
+        ImGui::SliderFloat("playback", &gui_playhead, 0, 100);
+
+        ImGui::End();
+
+
         double now = glfwGetTime();
-        double dt = now - lasttime;
+        dt = now - lasttime;
         lasttime = now;
         if (isPlaying){
             playhead_time += dt;
+            gui_playhead = (float)playhead_time;
+        } else {
+            playhead_time = (double)gui_playhead;
         }
         
         
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
         double pt_seconds = pts * (double)state.time_base.num / (double)state.time_base.den;
-        if (pt_seconds < playhead_time){
+        if (pt_seconds <= playhead_time){
 
             if (!video_reader_read_frame(&state, &data, &pts)){
                 log("nao carregou o frame");
                 return 0;
             }
+        } else {
+            pt_seconds = playhead_time;
         }
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, frame_width, frame_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
         // int window_width, window_height;
@@ -203,8 +236,8 @@ int main(){
         
         glDisable(GL_TEXTURE_2D);
         
-                //ImGui::Render();
-        //ImGui_ImplOpenGL3_RenderDrawData(//ImGui::GetDrawData());
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         
         glfwSwapBuffers(window);
         
@@ -215,9 +248,9 @@ int main(){
     video_reader_close(&state);
     
     delete[] data;
-    //ImGui_ImplGlfw_Shutdown();
-    //ImGui_ImplOpenGL3_Shutdown();
-    //ImGui::DestroyContext();
+    ImGui_ImplGlfw_Shutdown();
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui::DestroyContext();
     glfwDestroyWindow(window);
     glfwTerminate();
     

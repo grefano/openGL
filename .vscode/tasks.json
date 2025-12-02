@@ -14,6 +14,7 @@
                 "-fdiagnostics-color=always",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe",
+                "include/imgui/*.o",
                 "-Iinclude",
                 "-lglfw3",
                 "-lopengl32",
@@ -21,7 +22,7 @@
                 "-lavcodec",
                 "-lavformat",
                 "-lavutil",
-                "-lswscale"
+                "-lswscale",
             ],
             // "args": [
             //     "-g",
