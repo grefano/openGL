@@ -167,56 +167,14 @@ int main(){
                 return 0;
             }
         } else {
+            pts = (int64_t)(playhead_time * (double)state.time_base.den / (double)state.time_base.num);
+            video_reader_seek_frame(&state, pts);
             pt_seconds = playhead_time;
         }
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, frame_width, frame_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-        // int window_width, window_height;
-        // glfwGetFramebufferSize(window, &window_width, &window_height);
-        // static bool first_frame = true;
-        // if (first_frame){
-        //     glfwSetTime(0.0);
-        //     first_frame = false;
-        // }
-        
-        // static bool skipped = false;
-        // if (pt_seconds > 5.0 && !skipped){
-        //     glfwSetTime(10.0);
-        //     pt_seconds = 10.0;
-        //     pts = (int64_t)(pt_seconds * (double)state.time_base.den / (double)state.time_base.num);
-        //     video_reader_seek_frame(&state, pts);
-        //     skipped = true;
-        // }
-        
+
         std::cout << "pt_seconds: " << pt_seconds << " playhead time: " << playhead_time << std::endl;
         
-
-        // double time_waiting = 0;
-        // while(pt_seconds > playhead_time){
-        //     std::cout << "waiting. pt_seconds: " << pt_seconds << " playhead time: " << playhead_time << std::endl;
-        //     time_waiting += 
-        //     // glfwWaitEventsTimeout(pt_seconds - playhead_time);
-        // }
-
-        // static bool skipped2 = false;
-
-        // if (pt_seconds > 9.0 && !skipped2){
-        //     video_jump_to_ts(pt_seconds-3.0, &state, &pt_seconds, &pts);
-        //     skipped2 = true;
-        // }
-        // if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS){
-        //     playing = !playing;
-        // }
-        
-        // if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS){
-        //     video_jump_to_ts(pt_seconds+(double)2.0, &state, &pt_seconds, &pts);
-        // }
-        
-        // if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS){
-        //     video_jump_to_ts(pt_seconds-(double)2.0, &state, &pt_seconds, &pts);
-            
-        // }
-
-
 
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
