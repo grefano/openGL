@@ -183,30 +183,6 @@ src/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
-src/objects.obj: src/objects.cpp.obj
-.PHONY : src/objects.obj
-
-# target to build an object file
-src/objects.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/objects.cpp.obj
-.PHONY : src/objects.cpp.obj
-
-src/objects.i: src/objects.cpp.i
-.PHONY : src/objects.i
-
-# target to preprocess a source file
-src/objects.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/objects.cpp.i
-.PHONY : src/objects.cpp.i
-
-src/objects.s: src/objects.cpp.s
-.PHONY : src/objects.s
-
-# target to generate assembly for a file
-src/objects.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/objects.cpp.s
-.PHONY : src/objects.cpp.s
-
 vendor/stb.obj: vendor/stb.cpp.obj
 .PHONY : vendor/stb.obj
 
@@ -247,9 +223,6 @@ help:
 	@echo ... src/main.obj
 	@echo ... src/main.i
 	@echo ... src/main.s
-	@echo ... src/objects.obj
-	@echo ... src/objects.i
-	@echo ... src/objects.s
 	@echo ... vendor/stb.obj
 	@echo ... vendor/stb.i
 	@echo ... vendor/stb.s

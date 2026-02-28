@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 4.3.0)
 project(myeditor CXX)
 
 add_executable(editor)
-target_sources(editor PRIVATE src/main.cpp libs/glad.o src/ffmpeg.cpp src/objects.cpp vendor/stb.cpp vendor/imgui/docking/imgui.o vendor/imgui/docking/imgui_demo.o vendor/imgui/docking/imgui_draw.o vendor/imgui/docking/imgui_impl_glfw.o vendor/imgui/docking/imgui_impl_opengl3.o vendor/imgui/docking/imgui_tables.o vendor/imgui/docking/imgui_widgets.o)
+target_sources(editor PRIVATE src/main.cpp libs/glad.o src/ffmpeg.cpp vendor/stb.cpp vendor/imgui/docking/imgui.o vendor/imgui/docking/imgui_demo.o vendor/imgui/docking/imgui_draw.o vendor/imgui/docking/imgui_impl_glfw.o vendor/imgui/docking/imgui_impl_opengl3.o vendor/imgui/docking/imgui_tables.o vendor/imgui/docking/imgui_widgets.o)
 
 
 set(MSYS2 "C:/msys64/ucrt64/")

@@ -10,7 +10,6 @@ extern "C"{
 }
 
 struct VideoReaderState{
-    int width, height;
     AVRational time_base;
     uint8_t* frame_buffer;
     AVFormatContext* av_format_context;
@@ -23,11 +22,12 @@ struct VideoReaderState{
 };
 class VideoReader{
     private:
+    int64_t pts;
     
     public:
     VideoReaderState state;
     bool file_open(const char* filename);
-    bool read_frame(uint8_t** frame_buffer, int64_t* pts);
+    bool read_frame(uint8_t** frame_buffer);
     bool seek_frame(int64_t ts);
     bool jump_to_ts(float ts_sec, double* pt_seconds, int64_t* pts);
     double get_time_base();

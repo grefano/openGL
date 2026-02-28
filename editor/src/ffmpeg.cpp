@@ -83,7 +83,7 @@ bool VideoReader::file_open(const char* filename){
     }
     return 1;
 }
-bool VideoReader::read_frame(uint8_t** frame_buffer, int64_t* pts){
+bool VideoReader::read_frame(uint8_t** frame_buffer){
     
 
     
@@ -110,8 +110,8 @@ bool VideoReader::read_frame(uint8_t** frame_buffer, int64_t* pts){
         break;
     }
 
-    *pts = this->state.av_frame->pts;
-    printf("read pts %d", *pts);
+    this->pts = this->state.av_frame->pts;
+    printf("read pts %d", pts);
     
     uint8_t* data = new uint8_t[this->state.av_frame->width * this->state.av_frame->height * 4];
     this->state.sws_scaler_context = sws_getContext(this->state.av_frame->width, this->state.av_frame->height, this->state.av_codec_context->pix_fmt, this->state.av_frame->width, this->state.av_frame->height, AV_PIX_FMT_RGB0, SWS_BILINEAR, NULL, NULL, NULL);

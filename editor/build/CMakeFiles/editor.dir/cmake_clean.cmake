@@ -3,8 +3,6 @@ file(REMOVE_RECURSE
   "CMakeFiles/editor.dir/src/ffmpeg.cpp.obj.d"
   "CMakeFiles/editor.dir/src/main.cpp.obj"
   "CMakeFiles/editor.dir/src/main.cpp.obj.d"
-  "CMakeFiles/editor.dir/src/objects.cpp.obj"
-  "CMakeFiles/editor.dir/src/objects.cpp.obj.d"
   "CMakeFiles/editor.dir/vendor/stb.cpp.obj"
   "CMakeFiles/editor.dir/vendor/stb.cpp.obj.d"
   "editor.exe"
