@@ -170,21 +170,26 @@ int main(){
         
         glEnable(GL_TEXTURE_2D);
         glBindTexture(GL_TEXTURE_2D, tex);
-        glBegin(GL_QUADS);
-        glTexCoord2d(0,0); glVertex2i(0, 0);
-        glTexCoord2d(1,0); glVertex2i(frame_width, 0);
-        glTexCoord2d(1,1); glVertex2i(frame_width, frame_height);
-        glTexCoord2d(0,1); glVertex2i(0, frame_height);
-        glEnd();
+        // glBegin(GL_QUADS);
+        // glTexCoord2d(0,0); glVertex2i(0, 0);
+        // glTexCoord2d(1,0); glVertex2i(frame_width, 0);
+        // glTexCoord2d(1,1); glVertex2i(frame_width, frame_height);
+        // glTexCoord2d(0,1); glVertex2i(0, frame_height);
+        // glEnd();
         
         glDisable(GL_TEXTURE_2D);
         
+        ImGui::Image(tex, ImVec2(frame_width, frame_height));
+
         ImGui::Render();
         ImGui::UpdatePlatformWindows();
         ImGui::RenderPlatformWindowsDefault();
         glfwMakeContextCurrent(window); // restaura o contexto
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         
+        
+
+
         glfwSwapBuffers(window);
         
         // glfwWaitEvents();
