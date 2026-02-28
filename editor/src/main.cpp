@@ -5,21 +5,13 @@
 #include <glad.h>
 #include <GLFW/glfw3.h>
 
-#include "imgui/imgui.h"
-#include "imgui/imgui_impl_glfw.h"
-#include "imgui/imgui_impl_opengl3.h"
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
 
-#include "trackalloc.h"
 #include "ffmpeg.h"
 #include "objects.h"
 
-extern "C"{
-    #include <libavcodec/avcodec.h>
-    #include <libavformat/avformat.h>
-    #include <libavutil/imgutils.h>
-    #include <libavutil/samplefmt.h>
-    #include <libswscale/swscale.h>
-}
 
 // preview (codec, processar e mostrar proximo frame, cache de timelines) - figma
 struct Timeline{
@@ -131,7 +123,6 @@ int main(){
     gladLoadGL();
     glViewport(0, 0, frame_width, frame_height);
     
-    
     GLuint tex;
     glGenTextures(1, &tex);
     glBindTexture(GL_TEXTURE_2D, tex);
@@ -143,6 +134,8 @@ int main(){
     glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
     
     ImGui::CreateContext();
+    ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_DockingEnable | ImGuiConfigFlags_ViewportsEnable;
+    // ImGui::GetIO().ConfigFlags |= imGuiconfig;
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init();
     ImGui::StyleColorsDark();
@@ -151,37 +144,22 @@ int main(){
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
+        ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport());
         ImGui::Begin("poggers");                          // Create a window called "Hello, world!" and append into it.
+        auto drawlist = ImGui::GetWindowDrawList();
+        ImVec2 screenpos = ImGui::GetCursorScreenPos();
+        ImVec2 cursorpos = ImGui::GetMousePos();
+        drawlist->AddCircle({cursorpos.x, cursorpos.y}, 200, IM_COL32(255,0,0,255), 5, 10);
+        drawlist->AddBezierQuadratic(cursorpos, screenpos, {200,200}, IM_COL32(255,0,0,255), 5, 5);
         ImGui::SliderFloat("playback", &tl.gui_playhead, 0, 100);
         ImGui::SliderFloat("playhead", &tl.playhead_time, 0, 100);
-
         ImGui::End();
 
-        // double now = glfwGetTime();
-        // dt = (double)(float)(now - lasttime);
-
-        // printf("now %d last %d\n", now, lasttime);
-        // lasttime = now;
-
-
-        // tl.update(.001);
         videoReader.read_frame(&data, &tl.pts);
-        
-        
-
         
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
-
-        // double timebase = videoReader.get_time_base();
-        // double pt_seconds = pts * timebase;
-
-
- 
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, frame_width, frame_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-
-        // std::cout << "pt_seconds: " << pt_seconds << " playhead time: " << playhead_time << std::endl;
-        
 
         glMatrixMode(GL_PROJECTION);
         glLoadIdentity();
@@ -202,6 +180,9 @@ int main(){
         glDisable(GL_TEXTURE_2D);
         
         ImGui::Render();
+        ImGui::UpdatePlatformWindows();
+        ImGui::RenderPlatformWindowsDefault();
+        glfwMakeContextCurrent(window); // restaura o contexto
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         
         glfwSwapBuffers(window);

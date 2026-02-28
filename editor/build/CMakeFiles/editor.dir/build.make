@@ -141,26 +141,26 @@ editor_OBJECTS = \
 # External object files for target editor
 editor_EXTERNAL_OBJECTS = \
 "C:/Users/gabri/Documents/Code/videoeditor/editor/libs/glad.o" \
-"C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/imgui.o" \
-"C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/imgui_demo.o" \
-"C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/imgui_draw.o" \
-"C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/imgui_impl_glfw.o" \
-"C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/imgui_impl_opengl3.o" \
-"C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/imgui_tables.o" \
-"C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/imgui_widgets.o"
+"C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imgui.o" \
+"C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imgui_demo.o" \
+"C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imgui_draw.o" \
+"C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imgui_impl_glfw.o" \
+"C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imgui_impl_opengl3.o" \
+"C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imgui_tables.o" \
+"C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imgui_widgets.o"
 
 editor.exe: CMakeFiles/editor.dir/src/main.cpp.obj
 editor.exe: CMakeFiles/editor.dir/src/ffmpeg.cpp.obj
 editor.exe: CMakeFiles/editor.dir/src/objects.cpp.obj
 editor.exe: CMakeFiles/editor.dir/vendor/stb.cpp.obj
 editor.exe: C:/Users/gabri/Documents/Code/videoeditor/editor/libs/glad.o
-editor.exe: C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/imgui.o
-editor.exe: C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/imgui_demo.o
-editor.exe: C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/imgui_draw.o
-editor.exe: C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/imgui_impl_glfw.o
-editor.exe: C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/imgui_impl_opengl3.o
-editor.exe: C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/imgui_tables.o
-editor.exe: C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/imgui_widgets.o
+editor.exe: C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imgui.o
+editor.exe: C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imgui_demo.o
+editor.exe: C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imgui_draw.o
+editor.exe: C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imgui_impl_glfw.o
+editor.exe: C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imgui_impl_opengl3.o
+editor.exe: C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imgui_tables.o
+editor.exe: C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imgui_widgets.o
 editor.exe: CMakeFiles/editor.dir/build.make
 editor.exe: C:/msys64/ucrt64/lib/libavcodec.dll.a
 editor.exe: C:/msys64/ucrt64/lib/libavformat.dll.a

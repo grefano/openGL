@@ -217,10 +217,10 @@ CMakeFiles/editor.dir/src/ffmpeg.cpp.obj: C:/Users/gabri/Documents/Code/videoedi
 
 CMakeFiles/editor.dir/src/main.cpp.obj: C:/Users/gabri/Documents/Code/videoeditor/editor/src/main.cpp \
   C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/glad.h \
-  C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/imconfig.h \
-  C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/imgui.h \
-  C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/imgui_impl_glfw.h \
-  C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/imgui_impl_opengl3.h \
+  C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imconfig.h \
+  C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imgui.h \
+  C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imgui_impl_glfw.h \
+  C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imgui_impl_opengl3.h \
   C:/msys64/ucrt64/include/GLFW/glfw3.h \
   C:/msys64/ucrt64/include/KHR/khrplatform.h \
   C:/msys64/ucrt64/include/_mingw.h \
@@ -479,8 +479,7 @@ CMakeFiles/editor.dir/src/main.cpp.obj: C:/Users/gabri/Documents/Code/videoedito
   C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/stdint.h \
   C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/syslimits.h \
   C:/Users/gabri/Documents/Code/videoeditor/editor/src/ffmpeg.h \
-  C:/Users/gabri/Documents/Code/videoeditor/editor/src/objects.h \
-  C:/Users/gabri/Documents/Code/videoeditor/editor/src/trackalloc.h
+  C:/Users/gabri/Documents/Code/videoeditor/editor/src/objects.h
 
 CMakeFiles/editor.dir/src/objects.cpp.obj: C:/Users/gabri/Documents/Code/videoeditor/editor/src/objects.cpp \
   C:/msys64/ucrt64/include/GL/gl.h \
@@ -814,6 +813,8 @@ C:/msys64/ucrt64/include/c++/15.2.0/bits/exception.h:
 C:/msys64/ucrt64/include/GL/gl.h:
 
 C:/msys64/ucrt64/include/c++/15.2.0/bits/streambuf_iterator.h:
+
+C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imgui.h:
 
 C:/msys64/ucrt64/include/c++/15.2.0/string:
 
@@ -1259,13 +1260,11 @@ C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/syslimits.h:
 
 C:/Users/gabri/Documents/Code/videoeditor/editor/src/ffmpeg.h:
 
-C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/imconfig.h:
+C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imconfig.h:
 
-C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/imgui.h:
+C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imgui_impl_glfw.h:
 
-C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/imgui_impl_glfw.h:
-
-C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/imgui_impl_opengl3.h:
+C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imgui_impl_opengl3.h:
 
 C:/msys64/ucrt64/include/assert.h:
 
@@ -1330,8 +1329,6 @@ C:/msys64/ucrt64/include/c++/15.2.0/x86_64-w64-mingw32/bits/c++io.h:
 C:/msys64/ucrt64/include/float.h:
 
 C:/Users/gabri/Documents/Code/videoeditor/editor/src/objects.h:
-
-C:/Users/gabri/Documents/Code/videoeditor/editor/src/trackalloc.h:
 
 C:/Users/gabri/Documents/Code/videoeditor/editor/src/objects.cpp:
 
