@@ -1,5 +1,5 @@
-#include "editor/objects.h"
-#include "editor/ffmpeg.h"
+#include "objects.h"
+#include "ffmpeg.h"
 void Playhead::update(float dT){
     if (m_playing)
     m_time += dT;

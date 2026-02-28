@@ -1,5 +1,5 @@
 #pragma once
-
+#include <GLFW/glfw3.h>
 #include <iostream>
 extern "C"{
     #include <libavcodec/avcodec.h>
@@ -21,9 +21,19 @@ struct VideoReaderState{
     int video_stream_index;
 
 };
+class VideoReader{
+    private:
+    
+    public:
+    VideoReaderState state;
+    bool file_open(const char* filename);
+    bool read_frame(uint8_t** frame_buffer, int64_t* pts);
+    bool seek_frame(int64_t ts);
+    bool jump_to_ts(float ts_sec, double* pt_seconds, int64_t* pts);
+    double get_time_base();
 
+    VideoReader(const char*);
+    ~VideoReader();
 
-bool video_reader_open(VideoReaderState* state, const char* filename);
-bool video_reader_read_frame(VideoReaderState* state, uint8_t** frame_buffer, int64_t* pts);
-bool video_reader_seek_frame(VideoReaderState* state, int64_t ts);
-bool video_reader_close(VideoReaderState* state);
+};
+

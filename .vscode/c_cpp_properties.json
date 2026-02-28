@@ -4,7 +4,8 @@
             "name": "Win32",
             "includePath": [
                 "C:/msys64/ucrt64/include",
-                "include"
+                "include",
+                "editor/vendor"
             ],
             "defines": [
                 "_DEBUG",

@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include <list>
-#include "editor/ffmpeg.h"
+#include "ffmpeg.h"
 
 class Track;
 class Clip{
