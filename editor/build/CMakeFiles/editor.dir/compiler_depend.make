@@ -264,6 +264,7 @@ CMakeFiles/editor.dir/src/main.cpp.obj: C:/Users/gabri/Documents/Code/videoedito
   C:/msys64/ucrt64/include/c++/15.2.0/bits/invoke.h \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/ios_base.h \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/istream.tcc \
+  C:/msys64/ucrt64/include/c++/15.2.0/bits/list.tcc \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/locale_classes.h \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/locale_classes.tcc \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/locale_facets.h \
@@ -293,17 +294,16 @@ CMakeFiles/editor.dir/src/main.cpp.obj: C:/Users/gabri/Documents/Code/videoedito
   C:/msys64/ucrt64/include/c++/15.2.0/bits/std_mutex.h \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/std_thread.h \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_algobase.h \
-  C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_bvector.h \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_construct.h \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_function.h \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_iterator.h \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_iterator_base_funcs.h \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_iterator_base_types.h \
+  C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_list.h \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_pair.h \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_raw_storage_iter.h \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_tempbuf.h \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_uninitialized.h \
-  C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_vector.h \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/streambuf.tcc \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/streambuf_iterator.h \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/string_view.tcc \
@@ -313,7 +313,6 @@ CMakeFiles/editor.dir/src/main.cpp.obj: C:/Users/gabri/Documents/Code/videoedito
   C:/msys64/ucrt64/include/c++/15.2.0/bits/uses_allocator.h \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/uses_allocator_args.h \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/utility.h \
-  C:/msys64/ucrt64/include/c++/15.2.0/bits/vector.tcc \
   C:/msys64/ucrt64/include/c++/15.2.0/bits/version.h \
   C:/msys64/ucrt64/include/c++/15.2.0/cctype \
   C:/msys64/ucrt64/include/c++/15.2.0/cerrno \
@@ -346,6 +345,7 @@ CMakeFiles/editor.dir/src/main.cpp.obj: C:/Users/gabri/Documents/Code/videoedito
   C:/msys64/ucrt64/include/c++/15.2.0/iostream \
   C:/msys64/ucrt64/include/c++/15.2.0/istream \
   C:/msys64/ucrt64/include/c++/15.2.0/limits \
+  C:/msys64/ucrt64/include/c++/15.2.0/list \
   C:/msys64/ucrt64/include/c++/15.2.0/math.h \
   C:/msys64/ucrt64/include/c++/15.2.0/memory \
   C:/msys64/ucrt64/include/c++/15.2.0/mutex \
@@ -376,7 +376,6 @@ CMakeFiles/editor.dir/src/main.cpp.obj: C:/Users/gabri/Documents/Code/videoedito
   C:/msys64/ucrt64/include/c++/15.2.0/tuple \
   C:/msys64/ucrt64/include/c++/15.2.0/type_traits \
   C:/msys64/ucrt64/include/c++/15.2.0/typeinfo \
-  C:/msys64/ucrt64/include/c++/15.2.0/vector \
   C:/msys64/ucrt64/include/c++/15.2.0/x86_64-w64-mingw32/bits/atomic_word.h \
   C:/msys64/ucrt64/include/c++/15.2.0/x86_64-w64-mingw32/bits/basic_file.h \
   C:/msys64/ucrt64/include/c++/15.2.0/x86_64-w64-mingw32/bits/c++allocator.h \
@@ -628,8 +627,6 @@ C:/msys64/ucrt64/include/c++/15.2.0/bits/basic_ios.h:
 
 C:/msys64/ucrt64/include/c++/15.2.0/bits/alloc_traits.h:
 
-C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_vector.h:
-
 C:/msys64/ucrt64/include/c++/15.2.0/bits/refwrap.h:
 
 C:/msys64/ucrt64/include/c++/15.2.0/bits/allocator.h:
@@ -820,6 +817,8 @@ C:/msys64/ucrt64/include/c++/15.2.0/stdexcept:
 
 C:/msys64/ucrt64/include/c++/15.2.0/stdlib.h:
 
+C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_list.h:
+
 C:/msys64/ucrt64/include/c++/15.2.0/streambuf:
 
 C:/msys64/ucrt64/include/c++/15.2.0/string_view:
@@ -883,6 +882,8 @@ C:/msys64/ucrt64/include/corecrt_startup.h:
 C:/msys64/ucrt64/include/ctype.h:
 
 C:/msys64/ucrt64/include/corecrt_wctype.h:
+
+C:/msys64/ucrt64/include/c++/15.2.0/bits/list.tcc:
 
 C:/msys64/ucrt64/include/stdlib.h:
 
@@ -1018,6 +1019,8 @@ C:/msys64/ucrt64/include/time.h:
 
 C:/msys64/ucrt64/include/wchar.h:
 
+C:/msys64/ucrt64/include/c++/15.2.0/list:
+
 C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/limits.h:
 
 C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/mm_malloc.h:
@@ -1066,8 +1069,6 @@ C:/msys64/ucrt64/include/c++/15.2.0/bits/shared_ptr_base.h:
 
 C:/msys64/ucrt64/include/c++/15.2.0/bits/std_function.h:
 
-C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_bvector.h:
-
 C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_raw_storage_iter.h:
 
 C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_tempbuf.h:
@@ -1077,8 +1078,6 @@ C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_uninitialized.h:
 C:/msys64/ucrt64/include/c++/15.2.0/bits/unique_lock.h:
 
 C:/msys64/ucrt64/include/c++/15.2.0/bits/unique_ptr.h:
-
-C:/msys64/ucrt64/include/c++/15.2.0/bits/vector.tcc:
 
 C:/msys64/ucrt64/include/c++/15.2.0/condition_variable:
 
@@ -1093,8 +1092,6 @@ C:/msys64/ucrt64/include/c++/15.2.0/mutex:
 C:/msys64/ucrt64/include/c++/15.2.0/pstl/glue_memory_defs.h:
 
 C:/msys64/ucrt64/include/c++/15.2.0/ratio:
-
-C:/msys64/ucrt64/include/c++/15.2.0/vector:
 
 C:/msys64/ucrt64/include/c++/15.2.0/x86_64-w64-mingw32/bits/c++io.h:
 

@@ -1,11 +1,13 @@
 #include "ffmpeg.h"
-
+// cmake .. -G "MinGW Makefiles" -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++
 
 VideoReader::VideoReader(const char* filename){
+    //printf("video reader constructed\n");
     this->file_open(filename);
 }
 VideoReader::~VideoReader(){
     VideoReaderState* state = &this->state;
+    delete[] state->frame_buffer;
     sws_free_context(&state->sws_scaler_context);
     avformat_close_input(&state->av_format_context);
     avformat_free_context(state->av_format_context);
@@ -29,6 +31,7 @@ bool VideoReader::file_open(const char* filename){
         std::cout << "nao criou avformatcontext" << std::endl;
         return 0;
     }
+
     if (avformat_open_input(&this->state.av_format_context, filename, NULL, NULL) != 0){
         std::cout << "nao abriu video" << std::endl;
         return 0;
@@ -70,25 +73,42 @@ bool VideoReader::file_open(const char* filename){
         std::cout << "nao abriu codec" << std::endl;
         return 0;
     }
-
+    
     this->state.av_frame = av_frame_alloc();
     if(!this->state.av_frame){
         std::cout << "nao alocou avframe" << std::endl;
         return 0;
     }
+    
+    this->state.frame_buffer = new uint8_t[this->state.av_codec_context->width * this->state.av_codec_context->height * 4];
     this->state.av_packet = av_packet_alloc();
     if (!this->state.av_packet){
         std::cout << "nao alocou avpacket" << std::endl;
         return 0;
     }
+// //printf("width: %d, height: %d, pix_fmt codec_params: %d\n", 
+//     av_codec_params->width, 
+//     av_codec_params->height, 
+//     av_codec_params->format);
+
+
+    // this->state.sws_scaler_context = sws_getContext(
+    // av_codec_params->width, av_codec_params->height, (AVPixelFormat)av_codec_params->format,
+    // av_codec_params->width, av_codec_params->height, AV_PIX_FMT_RGB0,
+    // SWS_BILINEAR, NULL, NULL, NULL);
+    // // this->state.sws_scaler_context = sws_getContext(this->state.av_codec_context->width, this->state.av_codec_context->height, this->state.av_codec_context->pix_fmt, this->state.av_codec_context->width, this->state.av_codec_context->height, AV_PIX_FMT_RGB0, SWS_BILINEAR, NULL, NULL, NULL);
+    // if (!this->state.sws_scaler_context){
+    //     std::cout << "não iniciou o sws scaler" << std::endl;
+    //     return 0;
+    // }
     return 1;
 }
-bool VideoReader::read_frame(uint8_t** frame_buffer){
-    
-
+bool VideoReader::read_frame(){
+    //printf("a\n");
     
     int res;
     while (av_read_frame(this->state.av_format_context, this->state.av_packet) >= 0){
+    //printf("b\n");
         if(this->state.av_packet->stream_index != this->state.video_stream_index){
             av_packet_unref(this->state.av_packet);
             continue;
@@ -107,26 +127,35 @@ bool VideoReader::read_frame(uint8_t** frame_buffer){
 
         }
         av_packet_unref(this->state.av_packet);
+    //printf("c\n");
+
         break;
     }
 
     this->pts = this->state.av_frame->pts;
-    printf("read pts %d", pts);
+    printf("read pts %d in sec %f\n", pts, (double)pts * get_time_base());
     
-    uint8_t* data = new uint8_t[this->state.av_frame->width * this->state.av_frame->height * 4];
-    this->state.sws_scaler_context = sws_getContext(this->state.av_frame->width, this->state.av_frame->height, this->state.av_codec_context->pix_fmt, this->state.av_frame->width, this->state.av_frame->height, AV_PIX_FMT_RGB0, SWS_BILINEAR, NULL, NULL, NULL);
-    if (!this->state.sws_scaler_context){
-        std::cout << "não iniciou o sws scaler" << std::endl;
-        return 0;
+
+    if (!this->state.sws_scaler_context) {
+        this->state.sws_scaler_context = sws_getContext(
+            this->state.av_frame->width, this->state.av_frame->height, this->state.av_codec_context->pix_fmt,
+            this->state.av_frame->width, this->state.av_frame->height, AV_PIX_FMT_RGB0,
+            SWS_BILINEAR, NULL, NULL, NULL);
+        if (!this->state.sws_scaler_context){
+            std::cout << "não iniciou o sws scaler" << std::endl;
+            return 0;
+        }
     }
-    uint8_t* dest[4] = {data, NULL, NULL, NULL};
+
+    uint8_t* dest[4] = {this->state.frame_buffer, NULL, NULL, NULL};
     int dest_linesize[4] = {this->state.av_frame->width * 4, 0, 0, 0};
-    sws_scale(this->state.sws_scaler_context, this->state.av_frame->data, this->state.av_frame->linesize, 0, this->state.av_frame->height, dest, dest_linesize);
-    
+    //printf("before sws\n");
+    int h = sws_scale(this->state.sws_scaler_context, this->state.av_frame->data, this->state.av_frame->linesize, 0, this->state.av_frame->height, dest, dest_linesize);
+    //printf("sws h %i", h);
     // *out_width = this->state.av_frame->width;
     // *out_height = this->state.av_frame->height;
-    *frame_buffer = data;
-    data = nullptr;
+    // *frame_buffer = data;
+    // data = nullptr;
     
     
     return 1;
@@ -136,43 +165,29 @@ double VideoReader::get_time_base(){
     return (double)this->state.time_base.num / (double)this->state.time_base.den;
 }
 
-bool VideoReader::seek_frame(int64_t ts){
-    printf("--seek frame\n");
-    // if (!this->state.av_format_context || !this->state.av_codec_context){
-    //     printf("format or stream are null\n");
-    //     return false;
-    // }
-    // av_seek_frame(this->state.av_format_context, this->state.video_stream_index, ts, AVSEEK_FLAG_ANY);
-    // avcodec_flush_buffers(this->state.av_codec_context); 
 
-    printf("flushed\n");
+// int64_t VideoReader::get_(){
+//     return (int64_t)(ts * AV_TIME_BASE);
+// }
 
-    int res;
-    while (av_read_frame(this->state.av_format_context, this->state.av_packet) >= 0){
-        printf("while start\n");
 
-        if(this->state.av_packet->stream_index != this->state.video_stream_index){
-            av_packet_unref(this->state.av_packet);
-            continue;
-        }    
-        res = avcodec_send_packet(this->state.av_codec_context, this->state.av_packet);
-        if (res < 0){
-            std::cout << "falhou decode packet " << av_err2str(res) << std::endl;
-            return 0;
-        }
-        res = avcodec_receive_frame(this->state.av_codec_context, this->state.av_frame);
-        if (res == AVERROR(EAGAIN) || res == AVERROR_EOF){
-            av_packet_unref(this->state.av_packet);
-            continue;
-        } else if (res < 0){
-            std::cout << "falhou decode packet " << av_err2str(res) << std::endl;
-
-        }
-        av_packet_unref(this->state.av_packet);
-        break;
+bool VideoReader::seek_frame(double ts){
+    AVStream* stream = this->state.av_format_context->streams[this->state.video_stream_index];
+    int64_t timestamp = av_rescale_q((int64_t)(ts * AV_TIME_BASE), AV_TIME_BASE_Q, stream->time_base);
+    
+    int res = av_seek_frame(this->state.av_format_context, this->state.video_stream_index, timestamp, AVSEEK_FLAG_BACKWARD);
+    if (res < 0){
+        std::cout << "falhou seek: " << av_err2str(res) << std::endl;
+        return false;
     }
+    avcodec_flush_buffers(this->state.av_codec_context);
+
+    // avança até o frame mais próximo do ts
+    double pts_in_sec = 0.0;
+    do {
+        read_frame();
+        pts_in_sec = (double)this->pts * get_time_base();
+    } while (pts_in_sec < ts - get_time_base()); // tolerância de 1 frame
 
     return true;
-
 }
-

@@ -22,15 +22,16 @@ struct VideoReaderState{
 };
 class VideoReader{
     private:
-    int64_t pts;
     
     public:
+    int64_t pts;
     VideoReaderState state;
     bool file_open(const char* filename);
-    bool read_frame(uint8_t** frame_buffer);
-    bool seek_frame(int64_t ts);
+    bool read_frame();
+    bool seek_frame(double ts);
     bool jump_to_ts(float ts_sec, double* pt_seconds, int64_t* pts);
     double get_time_base();
+    double get_timestamp();
 
     VideoReader(const char*);
     ~VideoReader();
