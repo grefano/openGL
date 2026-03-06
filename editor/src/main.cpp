@@ -73,12 +73,16 @@ int main(){
     int frame_width = 640, frame_height = 360;
     // VideoReader videoReader("teste.mp4");
     
-    auto* videoReader = &tl.add_clip(0, "teste.mp4", 0, 30)->videoReader;
+    // auto* videoReader = &tl.add_clip(0, "teste.mp4", 0, 30)->videoReader;
     // unsigned char* data;
     // uint8_t* data = new uint8_t[frame_width*frame_height*4];
     // std::unique_ptr<uint8_t> data = std::make_unique<uint8_t>(frame_width*frame_height*4);
     // if (!video_reader_read_frame("teste.mp4", &data, &frame_width, &frame_height)){
-        videoReader->seek_frame(0);
+    // videoReader->seek_frame(0);
+
+
+    uint8_t* frame = nullptr;
+    Clip* clip = tl.add_clip_video(0, "teste.mp4", 0, 30);
 
     // videoReader->read_frame();
     std::cout << "frame res " << frame_width << " " << frame_height << std::endl;
@@ -103,7 +107,7 @@ int main(){
     
     double lasttime = glfwGetTime();
     while (!glfwWindowShouldClose(glfw.window_)) {
-        
+        printf("start while\n");
         double now = glfwGetTime();
         double dt = now - lasttime;        
         lasttime = now;
@@ -119,11 +123,12 @@ int main(){
         drawlist->AddBezierQuadratic(cursorpos, screenpos, {200,200}, IM_COL32(255,0,0,255), 5, 5);
         ImGui::BeginDisabled();
         
+        printf("a\n");
    
-        float pts_in_sec = (double)videoReader->pts * videoReader->get_time_base();
+        // float pts_in_sec = (double)videoReader->pts * videoReader->get_time_base();
         float _dtfloat = dt;
         ImGui::SliderFloat("dt", &_dtfloat, 0, 1);
-        ImGui::SliderFloat("playback", &pts_in_sec, 0, 100);
+        // ImGui::SliderFloat("playback", &pts_in_sec, 0, 100);
         ImGui::EndDisabled();
         ImGui::SliderFloat("playhead", &tl.playhead_time, 0, 100);
         ImGui::Image(tex, ImVec2(frame_width, frame_height));
@@ -144,14 +149,15 @@ int main(){
                 ImVec2(screenpos.x+track_pos.x+track_size.x, screenpos.y+track_pos.y+track_size.y), IM_COL32(80, 80, 100, 255));
 
             for(auto& clip : track.clips){
-                printf("clip t0 %f t1 %f\n", clip.tl_time0, clip.tl_time1);
-                ImVec2 pos = UItl.get_clip_pos(&clip, &track, &tl);
-                ImVec2 size = UItl.get_clip_size(&clip, &track, &tl);
+                printf("clip t0 %f t1 %f\n", (*clip).tl_time0, (*clip).tl_time1);
+                ImVec2 pos = UItl.get_clip_pos(clip.get(), &track, &tl);
+                ImVec2 size = UItl.get_clip_size(clip.get(), &track, &tl);
                 drawlist->AddRectFilled(ImVec2(screenpos.x+pos.x, screenpos.y+pos.y), ImVec2(screenpos.x+pos.x+size.x,screenpos.y+pos.y+size.y), IM_COL32(0, 0, 255, 255));
             }
         }
 
         ImGui::End();
+        printf("gui end\n");
 
         // //printf("loop\n");
         // if (!videoReader.read_frame()){
@@ -159,19 +165,25 @@ int main(){
         // }
         // //printf("after read\n");
         tl.update(dt);
+        frame = clip->get_image(tl.playhead_time);
         // videoReader->seek_frame(tl.playhead_time);
         // printf("play time %f\n", tl.playhead_time);
         // videoReader->read_frame();
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, frame_width, frame_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, videoReader->state.frame_buffer);
 
-        glMatrixMode(GL_PROJECTION);
-        glLoadIdentity();
+        if (frame){
+            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+            
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, frame_width, frame_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, frame);
+    
+            glMatrixMode(GL_PROJECTION);
+            glLoadIdentity();
+            
+            glOrtho(0, frame_width, frame_height, 0, -1, 1);
+            glMatrixMode(GL_MODELVIEW);
+
+        }
         
-        glOrtho(0, frame_width, frame_height, 0, -1, 1);
-        glMatrixMode(GL_MODELVIEW);
-        
+        printf("gl end\n");
         
 
         ImGui::Render();
@@ -180,6 +192,7 @@ int main(){
         glfwMakeContextCurrent(glfw.window_); // restaura o contexto
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         
+        printf("d\n");
         
 
 

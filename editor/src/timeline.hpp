@@ -3,18 +3,50 @@
 #include <stdio.h>
 #include <GLFW/glfw3.h>
 #include "ffmpeg.h"
+#include <memory>
+#include <imgui.h>
+struct Transform{
+    ImVec2 position;
+    ImVec2 scale;
+};
+struct Timeline;
 struct Clip{
     float tl_time0;
     float tl_time1;
-    VideoReader videoReader;
-    Clip(float t0, float t1, const char* filename) : videoReader(filename){
+    Transform transform;
+    Clip(float t0, float t1){
         this->tl_time0 = t0;
         this->tl_time1 = t1;
     }
+    virtual uint8_t* get_image(double ts) = 0;
+    virtual void update_image(float ts) = 0;
 };
+struct ClipVideo : public Clip{
+    VideoReader videoReader;
+    ClipVideo(float t0, float t1, const char* filename) : Clip(t0, t1), videoReader(filename){
+
+    }
+    uint8_t* get_image(double ts) override{
+        return videoReader.state.frame_buffer;
+    }
+    void update_image(float ts) override{
+        double pts_in_sec = (double)videoReader.pts * videoReader.get_time_base();
+        double diff = (double)ts - pts_in_sec;
+        if (diff < -1 || diff > 1){
+            printf("seek. diff=%f\n", diff);
+            videoReader.seek_frame((double)ts);
+            videoReader.read_frame();
+            
+        } else if ((double)ts > pts_in_sec){
+            videoReader.read_frame();
+        }
+    }
+    
+};
+
 struct Track{
     int id;
-    std::list<Clip> clips;
+    std::list<std::unique_ptr<Clip>> clips;
 };
 struct Timeline{
     float gui_playhead = 0.0f;
@@ -22,45 +54,27 @@ struct Timeline{
     bool isPlaying = false;
     std::list<Track> tracks_;
 
-
-    Clip* add_clip(size_t track, const char* filename, float time0, float time1){
-        //printf("add clip\n");
+    Clip* add_clip_video(size_t track, const char* filename, float time0, float time1){
         int _id = 0;
         for(std::list<Track>::iterator it = tracks_.begin(); it != tracks_.end(); ++it){
             if (_id == (int)track){
-                return &(*it).clips.emplace_back(time0, time1, filename);
+                (*it).clips.push_back(std::make_unique<ClipVideo>(time0, time1, filename));
+                return (*it).clips.back().get();
             }
             _id++;
         }
         Track* t = &this->tracks_.emplace_back();
         t->id = tracks_.size()-1;
-        return &t->clips.emplace_back(time0, time1, filename);
-
+        t->clips.push_back(std::make_unique<ClipVideo>(time0, time1, filename));
+        return t->clips.back().get();
     }
+
     void update(double dt){
         this->playhead_time += (float)dt;
 
         for (auto& track : tracks_){
             for (auto& clip : track.clips){
-                // clip.videoReader.seek_frame(playhead_time);
-                // printf("playtime %f pts %f", this->playhead_time, clip.videoReader.pts);
-                // printf("playhead %f this pts in sec %d this pts %d\n", this->playhead_time, (double)clip.videoReader.get_time_base(),  clip.videoReader.pts);
-                // if (this->playhead_time < clip.videoReader.){
-
-                // }
-                // printf("read pts %d in sec %f playhead %f\n", clip.videoReader.pts, (double)clip.videoReader.pts * clip.videoReader.get_time_base(), playhead_time);
-                double pts_in_sec = (double)clip.videoReader.pts * clip.videoReader.get_time_base();
-                double diff = (double)playhead_time - pts_in_sec;
-                // printf("playhead=%.3f pts=%.3f diff=%.3f\n", (double)playhead_time, pts_in_sec, diff);
-                if (diff < -1 || diff > 1){
-                    printf("seek. diff=%f\n", diff);
-                    clip.videoReader.seek_frame((double)playhead_time);
-                    clip.videoReader.read_frame();
-                    
-                } else if ((double)playhead_time > pts_in_sec){
-                    clip.videoReader.read_frame();
-                }
-
+                (*clip).update_image(playhead_time);
             }
         }
     }
@@ -101,4 +115,8 @@ struct Timeline{
             this->isPlaying = !this->isPlaying;
         }
     }
+};
+
+struct ClipNestedTimeline : public Clip{
+    Timeline timeline;
 };

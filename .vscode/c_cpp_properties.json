@@ -5,7 +5,8 @@
             "includePath": [
                 "C:/msys64/ucrt64/include",
                 "include",
-                "editor/vendor"
+                "editor/vendor",
+                "editor/vendor/imgui/docking"
             ],
             "defines": [
                 "_DEBUG",
