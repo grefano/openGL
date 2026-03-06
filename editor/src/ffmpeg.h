@@ -25,7 +25,7 @@ class VideoReader{
     
     public:
     int w, h;
-    int64_t pts;
+    int64_t pts = 0;
     VideoReaderState state;
     bool file_open(const char* filename);
     bool read_frame();

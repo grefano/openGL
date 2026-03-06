@@ -17,7 +17,7 @@ Glfw::Glfw(){
     window_ = glfwCreateWindow(640, 360, "teste", NULL, NULL);
 
     if (!window_){
-        printf("falha ao criar janela");
+        //printf("falha ao criar janela");
         glfwTerminate();
         throw "window não foi criada";
     }   

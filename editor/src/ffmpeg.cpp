@@ -2,7 +2,7 @@
 // cmake .. -G "MinGW Makefiles" -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++
 
 VideoReader::VideoReader(const char* filename){
-    //printf("video reader constructed\n");
+    ////printf("video reader constructed\n");
     this->file_open(filename);
 }
 VideoReader::~VideoReader(){
@@ -86,7 +86,7 @@ bool VideoReader::file_open(const char* filename){
         std::cout << "nao alocou avpacket" << std::endl;
         return 0;
     }
-// //printf("width: %d, height: %d, pix_fmt codec_params: %d\n", 
+// ////printf("width: %d, height: %d, pix_fmt codec_params: %d\n", 
 //     av_codec_params->width, 
 //     av_codec_params->height, 
 //     av_codec_params->format);
@@ -105,11 +105,11 @@ bool VideoReader::file_open(const char* filename){
     return 1;
 }
 bool VideoReader::read_frame(){
-    //printf("a\n");
+    ////printf("a\n");
     
     int res;
     while (av_read_frame(this->state.av_format_context, this->state.av_packet) >= 0){
-    //printf("b\n");
+    ////printf("b\n");
         if(this->state.av_packet->stream_index != this->state.video_stream_index){
             av_packet_unref(this->state.av_packet);
             continue;
@@ -128,13 +128,13 @@ bool VideoReader::read_frame(){
 
         }
         av_packet_unref(this->state.av_packet);
-    //printf("c\n");
+    ////printf("c\n");
 
         break;
     }
 
     this->pts = this->state.av_frame->pts;
-    printf("read pts %d in sec %f\n", pts, (double)pts * get_time_base());
+    //printf("read pts %d in sec %f\n", pts, (double)pts * get_time_base());
     
 
     if (!this->state.sws_scaler_context) {
@@ -150,15 +150,15 @@ bool VideoReader::read_frame(){
 
     uint8_t* dest[4] = {this->state.frame_buffer, NULL, NULL, NULL};
     int dest_linesize[4] = {this->state.av_frame->width * 4, 0, 0, 0};
-    //printf("before sws\n");
+    ////printf("before sws\n");
     int h = sws_scale(this->state.sws_scaler_context, this->state.av_frame->data, this->state.av_frame->linesize, 0, this->state.av_frame->height, dest, dest_linesize);
-    //printf("sws h %i", h);
+    ////printf("sws h %i", h);
     // *out_width = this->state.av_frame->width;
     // *out_height = this->state.av_frame->height;
     // *frame_buffer = data;
     // data = nullptr;
     
-    
+    //printf("reedeede\n");
     return 1;
 }
 

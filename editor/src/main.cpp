@@ -45,7 +45,7 @@ int main(){
 
     uint8_t* frame = nullptr;
     Clip* clip = tl.add_clip_video(0, "teste.mp4", 0, 30);
-    Clip* clip2 = tl.add_clip_video(1, "teste2.mp4", 0, 30);
+    // Clip* clip2 = tl.add_clip_video(1, "teste2.mp4", 0, 30);
 
     std::cout << "frame res " << clip->w << " " << clip->h << std::endl;
     
@@ -56,7 +56,7 @@ int main(){
     gladLoadGL();
     glViewport(0, 0, 1920, 1080);
     
-    
+    tl.init_shader();
 
 
     double lasttime = glfwGetTime();
@@ -83,7 +83,8 @@ int main(){
         // ImGui::SliderFloat("playback", &pts_in_sec, 0, 100);
         ImGui::EndDisabled();
         ImGui::SliderFloat("playhead", &tl.playhead_time, 0, 100);
-        ImGui::Image(tl.playhead_tex, ImVec2(640, 360));
+        GLuint _tex_overlay = overlap_textures(0, clip->get_tex(), tl.shd_overlap);
+        ImGui::Image(_tex_overlay, ImVec2(640, 360));
 
         ImGui::End();
 
@@ -94,14 +95,14 @@ int main(){
         UItl.set_size(ImGui::GetWindowWidth(), 300);
         drawlist->AddRectFilled(screenpos, ImVec2(screenpos.x+UItl.size.x, screenpos.y+UItl.size.y), IM_COL32(40, 40, 40, 255));
         for(auto& track : tl.tracks_){
-            printf("track id %d", track.id);
+            //printf("track id %d", track.id);
             ImVec2 track_pos = UItl.get_track_pos(track.id);
             ImVec2 track_size = UItl.get_track_size(track.id);
             drawlist->AddRectFilled(ImVec2(screenpos.x+track_pos.x, screenpos.y+track_pos.y),
                 ImVec2(screenpos.x+track_pos.x+track_size.x, screenpos.y+track_pos.y+track_size.y), IM_COL32(80, 80, 100, 255));
 
             for(auto& clip : track.clips){
-                printf("clip t0 %f t1 %f\n", (*clip).tl_time0, (*clip).tl_time1);
+                //printf("clip t0 %f t1 %f\n", (*clip).tl_time0, (*clip).tl_time1);
                 ImVec2 pos = UItl.get_clip_pos(clip.get(), &track, &tl);
                 ImVec2 size = UItl.get_clip_size(clip.get(), &track, &tl);
                 drawlist->AddRectFilled(ImVec2(screenpos.x+pos.x, screenpos.y+pos.y), ImVec2(screenpos.x+pos.x+size.x,screenpos.y+pos.y+size.y), IM_COL32(0, 0, 255, 255));

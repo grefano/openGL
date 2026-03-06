@@ -39,15 +39,18 @@ struct ClipVideo : public Clip{
     void update_image(float ts) override{
         double pts_in_sec = (double)videoReader.pts * videoReader.get_time_base();
         double diff = (double)ts - pts_in_sec;
+        //printf("pts in sec %f time base %f pts %d\n", pts_in_sec, videoReader.get_time_base(), videoReader.pts);
         if (diff < -1 || diff > 1){
-            printf("seek. diff=%f\n", diff);
+            //printf("seek. diff=%f\n", diff);
             videoReader.seek_frame((double)ts);
             videoReader.read_frame();
             
         } else if ((double)ts > pts_in_sec){
+        //printf("read\n");
             videoReader.read_frame();
         }
 
+        //printf("image to text\n");
         image_to_tex(&this->tex, get_image(), this->w, this->h);
 
 
@@ -68,7 +71,39 @@ struct Timeline{
     std::list<Track> tracks_;
     uint8_t* playhead_frame;
     GLuint playhead_tex;
-
+    GLuint shd_overlap;
+        void init_shader(){
+            const char* vs = R"(#version 330 core
+    layout (location = 0) in vec2 aPos;
+    layout (location = 1) in vec2 aTex;
+    
+    out vec2 TexCoord;
+    
+    void main()
+    {
+        TexCoord = aTex;
+        gl_Position = vec4(aPos, 0.0, 1.0);
+    })";
+            const char* fs = R"(#version 330 core
+            in vec2 TexCoord;
+    
+            uniform sampler2D tex1;
+            uniform sampler2D tex2;
+    
+            out vec4 FragColor;
+    
+            void main()
+            {
+                vec4 base = texture(tex1, TexCoord);
+                vec4 overlay = texture(tex2, TexCoord);
+    
+                FragColor = mix(base, overlay, overlay.a);
+            })";
+    
+    
+            this->shd_overlap= createShader(vs, fs);
+            
+        }
     Clip* add_clip_video(size_t track, const char* filename, float time0, float time1){
         int _id = 0;
         for(std::list<Track>::iterator it = tracks_.begin(); it != tracks_.end(); ++it){
@@ -86,11 +121,13 @@ struct Timeline{
 
     void update(double dt){
         this->playhead_time += (float)dt;
-
+        //printf("update %f\n", playhead_time);
         for (auto& track : tracks_){
             for (auto& clip : track.clips){
                 (*clip).update_image(playhead_time);
-                image_to_tex(&this->playhead_tex, clip.get()->get_image(), clip.get()->w, clip.get()->h);
+
+                this->playhead_tex = clip.get()->get_tex();//overlap_textures(this->playhead_tex, clip.get()->get_tex(), this->shd_overlap);
+                // image_to_tex(&this->playhead_tex, clip.get()->get_image(), clip.get()->w, clip.get()->h);
             }
         }
     }
@@ -102,7 +139,7 @@ struct Timeline{
         if (key == GLFW_KEY_RIGHT){
             if (action == GLFW_PRESS){
                 this->playhead_time += 3.0;
-                //printf("key press right\n");
+                ////printf("key press right\n");
             } else if (action == GLFW_REPEAT){
                 this->isPlaying = false;
                 this->playhead_time += 1;
@@ -128,7 +165,7 @@ struct Timeline{
 
         this->isPlaying = wasPlaying;
         if (key == GLFW_KEY_SPACE && action == GLFW_PRESS){
-            //printf("key space\n");
+            ////printf("key space\n");
             this->isPlaying = !this->isPlaying;
         }
     }
