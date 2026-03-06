@@ -113,33 +113,38 @@ GLuint createShader(const char* vs, const char* fs)
 }
 GLuint overlap_textures(GLuint tex1, GLuint tex2, GLuint shader)
 {
-    GLuint fbo;
+    static GLuint fbo;
 
-    GLuint resultTexture;
+    static GLuint resultTexture;
 
-    glGenFramebuffers(1,&fbo);
-    glBindFramebuffer(GL_FRAMEBUFFER,fbo);
+    if (fbo == 0){
+        printf("CRIOU FBO");
+        glGenFramebuffers(1,&fbo);
+        glBindFramebuffer(GL_FRAMEBUFFER,fbo);
+    
+        glGenTextures(1,&resultTexture);
+        glBindTexture(GL_TEXTURE_2D,resultTexture);
+    
+        glTexImage2D(GL_TEXTURE_2D,0,GL_RGBA,640,360,0,GL_RGBA,GL_UNSIGNED_BYTE,nullptr);
+    
+        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
+    
+        glFramebufferTexture2D(GL_FRAMEBUFFER,GL_COLOR_ATTACHMENT0,GL_TEXTURE_2D,resultTexture,0);
+        GLenum drawBuffers[1] = {GL_COLOR_ATTACHMENT0};
+        glDrawBuffers(1, drawBuffers);
 
-    glGenTextures(1,&resultTexture);
-    glBindTexture(GL_TEXTURE_2D,resultTexture);
-
-    glTexImage2D(GL_TEXTURE_2D,0,GL_RGBA,640,360,0,GL_RGBA,GL_UNSIGNED_BYTE,nullptr);
-
-    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
-
-    glFramebufferTexture2D(GL_FRAMEBUFFER,GL_COLOR_ATTACHMENT0,GL_TEXTURE_2D,resultTexture,0);
-    GLenum drawBuffers[1] = {GL_COLOR_ATTACHMENT0};
-    glDrawBuffers(1, drawBuffers);
+    }
     if(glCheckFramebufferStatus(GL_FRAMEBUFFER)!=GL_FRAMEBUFFER_COMPLETE){
         printf("FBO ERROR\n");
-}
+    }
+        glBindFramebuffer(GL_FRAMEBUFFER,fbo);
+
     glViewport(0,0,640,360);
 
     glUseProgram(shader);
     GLint current;
     glGetIntegerv(GL_CURRENT_PROGRAM, &current);
-   printf("shader %d. current shader %d\n", shader, current);
 
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D,tex1);
