@@ -40,20 +40,21 @@ int main(){
         log("falha inicializando glfw");
         return -1;
     }
-    int frame_width = 640, frame_height = 360;
+    // int frame_width = 1920, frame_height = 1080;
 
 
     uint8_t* frame = nullptr;
     Clip* clip = tl.add_clip_video(0, "teste.mp4", 0, 30);
+    Clip* clip2 = tl.add_clip_video(1, "teste2.mp4", 0, 30);
 
-    std::cout << "frame res " << frame_width << " " << frame_height << std::endl;
+    std::cout << "frame res " << clip->w << " " << clip->h << std::endl;
     
     Glfw glfw;
     Imgui imgui(glfw.window_);
     glfwSetKeyCallback(glfw.window_, key_callback);
     
     gladLoadGL();
-    glViewport(0, 0, frame_width, frame_height);
+    glViewport(0, 0, 1920, 1080);
     
     
 
@@ -82,7 +83,7 @@ int main(){
         // ImGui::SliderFloat("playback", &pts_in_sec, 0, 100);
         ImGui::EndDisabled();
         ImGui::SliderFloat("playhead", &tl.playhead_time, 0, 100);
-        ImGui::Image(tl.playhead_tex, ImVec2(frame_width, frame_height));
+        ImGui::Image(tl.playhead_tex, ImVec2(640, 360));
 
         ImGui::End();
 

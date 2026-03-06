@@ -14,6 +14,7 @@ struct Clip{
     GLuint tex;
     float tl_time0;
     float tl_time1;
+    int w, h;
     Transform transform;
     Clip(float t0, float t1){
         this->tl_time0 = t0;
@@ -26,8 +27,9 @@ struct Clip{
 struct ClipVideo : public Clip{
     VideoReader videoReader;
     ClipVideo(float t0, float t1, const char* filename) : Clip(t0, t1), videoReader(filename){
-
-    }
+        this->w = this->videoReader.w;
+        this->h = this->videoReader.h;
+    }   
     uint8_t* get_image() override{
         return videoReader.state.frame_buffer;
     }
@@ -46,7 +48,7 @@ struct ClipVideo : public Clip{
             videoReader.read_frame();
         }
 
-        image_to_tex(&this->tex, get_image(), 640, 360);
+        image_to_tex(&this->tex, get_image(), this->w, this->h);
 
 
     }
@@ -88,7 +90,7 @@ struct Timeline{
         for (auto& track : tracks_){
             for (auto& clip : track.clips){
                 (*clip).update_image(playhead_time);
-                image_to_tex(&this->playhead_tex, clip.get()->get_image(), 640, 360);
+                image_to_tex(&this->playhead_tex, clip.get()->get_image(), clip.get()->w, clip.get()->h);
             }
         }
     }

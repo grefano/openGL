@@ -90,7 +90,8 @@ bool VideoReader::file_open(const char* filename){
 //     av_codec_params->width, 
 //     av_codec_params->height, 
 //     av_codec_params->format);
-
+    this->w = av_codec_params->width;
+    this->h = av_codec_params->height;
 
     // this->state.sws_scaler_context = sws_getContext(
     // av_codec_params->width, av_codec_params->height, (AVPixelFormat)av_codec_params->format,

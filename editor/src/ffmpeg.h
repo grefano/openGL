@@ -24,6 +24,7 @@ class VideoReader{
     private:
     
     public:
+    int w, h;
     int64_t pts;
     VideoReaderState state;
     bool file_open(const char* filename);
