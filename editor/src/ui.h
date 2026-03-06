@@ -32,4 +32,52 @@ struct TimelineUI{
         this->px_per_track = h / (view_track_window.y+1 - view_track_window.x);
     }
 
+    void draw(Timeline* tl){
+        ImGui::Begin("tl");                          // Create a window called "Hello, world!" and append into it.
+        ImDrawList* drawlist = ImGui::GetWindowDrawList();
+        ImVec2 screenpos = ImGui::GetCursorScreenPos();
+        ImVec2 cursorpos = ImGui::GetMousePos();
+        this->set_size(ImGui::GetWindowWidth(), 300);
+        drawlist->AddRectFilled(screenpos, ImVec2(screenpos.x+this->size.x, screenpos.y+this->size.y), IM_COL32(40, 40, 40, 255));
+        for(auto& track : (*tl).tracks_){
+            //printf("track id %d", track.id);
+            ImVec2 track_pos = this->get_track_pos(track.id);
+            ImVec2 track_size = this->get_track_size(track.id);
+            drawlist->AddRectFilled(ImVec2(screenpos.x+track_pos.x, screenpos.y+track_pos.y),
+                ImVec2(screenpos.x+track_pos.x+track_size.x, screenpos.y+track_pos.y+track_size.y), IM_COL32(80, 80, 100, 255));
+
+            for(auto& clip : track.clips){
+                //printf("clip t0 %f t1 %f\n", (*clip).tl_time0, (*clip).tl_time1);
+                ImVec2 pos = this->get_clip_pos(clip.get(), &track, tl);
+                ImVec2 size = this->get_clip_size(clip.get(), &track, tl);
+                drawlist->AddRectFilled(ImVec2(screenpos.x+pos.x, screenpos.y+pos.y), ImVec2(screenpos.x+pos.x+size.x,screenpos.y+pos.y+size.y), IM_COL32(0, 0, 255, 255));
+            }
+        }
+
+        ImGui::End();
+    }
+
+};
+
+
+struct PreviewUI{
+    
+    void draw(Timeline* tl, GLuint tex){
+        static double lasttime = 0;
+        double now = glfwGetTime();
+        double dt = now - lasttime;        
+        lasttime = now;
+        ImGui::Begin("preview");                          // Create a window called "Hello, world!" and append into it.
+        auto drawlist = ImGui::GetWindowDrawList();
+        ImVec2 screenpos = ImGui::GetCursorScreenPos();
+        ImVec2 cursorpos = ImGui::GetMousePos();
+        ImGui::BeginDisabled();
+        float _dtfloat = dt;
+        ImGui::SliderFloat("dt", &_dtfloat, 0, 1);
+        ImGui::EndDisabled();
+        ImGui::SliderFloat("playhead", &(*tl).playhead_time, 0, 100);
+        ImGui::Image(tex, ImVec2(640, 360));
+
+        ImGui::End();
+    }
 };

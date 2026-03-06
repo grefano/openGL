@@ -89,15 +89,27 @@ struct Timeline{
     
             uniform sampler2D tex1;
             uniform sampler2D tex2;
-    
+            
             out vec4 FragColor;
-    
+            uniform vec2 overlayPos;   // posição do canto superior esquerdo (0.0 a 1.0)
+            uniform vec2 overlaySize;  // tamanho (ex: 0.5, 0.5 = metade da tela)
+
             void main()
             {
                 vec4 base = texture(tex1, TexCoord);
-                vec4 overlay = texture(tex2, TexCoord);
-    
-                FragColor = mix(base, overlay, overlay.a);
+
+                vec2 overlayCoord = (TexCoord - overlayPos) / overlaySize;
+
+                if (overlayCoord.x >= 0.0 && overlayCoord.x <= 1.0 &&
+                    overlayCoord.y >= 0.0 && overlayCoord.y <= 1.0)
+                {
+                    vec4 overlay = texture(tex2, overlayCoord);
+                    FragColor = mix(base, overlay, 1.0);
+                }
+                else
+                {
+                    FragColor = base;
+                }
             })";
     
     
@@ -126,7 +138,7 @@ struct Timeline{
             for (auto& clip : track.clips){
                 (*clip).update_image(playhead_time);
 
-                this->playhead_tex = clip.get()->get_tex();//overlap_textures(this->playhead_tex, clip.get()->get_tex(), this->shd_overlap);
+                this->playhead_tex = overlap_textures(clip.get()->get_tex(), this->playhead_tex, this->shd_overlap);
                 // image_to_tex(&this->playhead_tex, clip.get()->get_image(), clip.get()->w, clip.get()->h);
             }
         }

@@ -156,8 +156,11 @@ GLuint overlap_textures(GLuint tex1, GLuint tex2, GLuint shader)
 
     glClear(GL_COLOR_BUFFER_BIT);
 
-    glClearColor(1,0,0,1);
-glClear(GL_COLOR_BUFFER_BIT);
+    // glClearColor(1,0,0,1);
+// glClear(GL_COLOR_BUFFER_BIT);
+
+glUniform2f(glGetUniformLocation(shader, "overlayPos"), 0.25f + sin(glfwGetTime())*.2, 0.25f);
+glUniform2f(glGetUniformLocation(shader, "overlaySize"), 0.5f, 0.5f);
     RenderQuad();
 
     glBindFramebuffer(GL_FRAMEBUFFER,0);
