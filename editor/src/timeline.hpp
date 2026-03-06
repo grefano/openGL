@@ -5,12 +5,13 @@
 #include "ffmpeg.h"
 #include <memory>
 #include <imgui.h>
+#include "opengl.h"
 struct Transform{
     ImVec2 position;
     ImVec2 scale;
 };
-struct Timeline;
 struct Clip{
+    GLuint tex;
     float tl_time0;
     float tl_time1;
     Transform transform;
@@ -18,7 +19,8 @@ struct Clip{
         this->tl_time0 = t0;
         this->tl_time1 = t1;
     }
-    virtual uint8_t* get_image(double ts) = 0;
+    virtual uint8_t* get_image() = 0;
+    virtual GLuint get_tex() = 0;
     virtual void update_image(float ts) = 0;
 };
 struct ClipVideo : public Clip{
@@ -26,8 +28,11 @@ struct ClipVideo : public Clip{
     ClipVideo(float t0, float t1, const char* filename) : Clip(t0, t1), videoReader(filename){
 
     }
-    uint8_t* get_image(double ts) override{
+    uint8_t* get_image() override{
         return videoReader.state.frame_buffer;
+    }
+    GLuint get_tex() override{
+        return tex;
     }
     void update_image(float ts) override{
         double pts_in_sec = (double)videoReader.pts * videoReader.get_time_base();
@@ -40,7 +45,13 @@ struct ClipVideo : public Clip{
         } else if ((double)ts > pts_in_sec){
             videoReader.read_frame();
         }
+
+        image_to_tex(&this->tex, get_image(), 640, 360);
+
+
     }
+
+
     
 };
 
@@ -53,6 +64,8 @@ struct Timeline{
     float playhead_time = 0.0f;
     bool isPlaying = false;
     std::list<Track> tracks_;
+    uint8_t* playhead_frame;
+    GLuint playhead_tex;
 
     Clip* add_clip_video(size_t track, const char* filename, float time0, float time1){
         int _id = 0;
@@ -75,9 +88,11 @@ struct Timeline{
         for (auto& track : tracks_){
             for (auto& clip : track.clips){
                 (*clip).update_image(playhead_time);
+                image_to_tex(&this->playhead_tex, clip.get()->get_image(), 640, 360);
             }
         }
     }
+
 
 
     void key_callback(int key, int action){

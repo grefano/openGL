@@ -267,6 +267,8 @@ CMakeFiles/editor.dir/src/main.cpp.obj: \
  C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imconfig.h \
  C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/float.h \
  C:/msys64/ucrt64/include/float.h C:/msys64/ucrt64/include/assert.h \
+ C:\Users\gabri\Documents\Code\videoeditor\editor\src\opengl.h \
+ C:\Users\gabri\Documents\Code\videoeditor\editor\src\ui.h \
  C:\Users\gabri\Documents\Code\videoeditor\editor\src\implimgui.h \
  C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imgui_impl_glfw.h \
  C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imgui_impl_opengl3.h \

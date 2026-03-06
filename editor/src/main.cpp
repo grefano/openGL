@@ -8,6 +8,7 @@
 
 #include "ffmpeg.h"
 #include "timeline.hpp"
+#include "ui.h"
 #include "implimgui.h"
 #include "implglfw.h"
 
@@ -31,38 +32,7 @@ void operator delete(void* memory, size_t size) noexcept{
     free(memory);
 }
 
-struct TimelineUI{
-    ImVec2 view_time_window;
-    ImVec2 view_track_window;
-    float px_per_sec;
-    float px_per_track;
-    
-    ImVec2 size;
-    TimelineUI(){
-        this->view_time_window = ImVec2(0, 100);
-        this->view_track_window = ImVec2(0, 2);
-        this->px_per_sec = 20;
-    }
-    ImVec2 get_track_pos(int id){
-        return ImVec2(5, id*px_per_track);
-    }
-    ImVec2 get_track_size(int id){
-        return ImVec2(this->size.x, (id+1)*px_per_track);
-    }
-    ImVec2 get_clip_pos(Clip* clip, Track* track, Timeline* tl){
-        return ImVec2(clip->tl_time0 - view_time_window.x * px_per_sec, get_track_pos(track->id).y);
-    }
-    ImVec2 get_clip_size(Clip* clip, Track* track, Timeline* tl){
-        return ImVec2( (clip->tl_time1 - clip->tl_time0) * px_per_sec, get_track_size(track->id).y);
-    }
 
-    void set_size(float w, float h){
-        this->size = ImVec2(w, h);
-        this->px_per_sec = w/(view_time_window.y-view_time_window.x);
-        this->px_per_track = h / (view_track_window.y+1 - view_track_window.x);
-    }
-
-};
 
 TimelineUI UItl;
 int main(){
@@ -71,20 +41,11 @@ int main(){
         return -1;
     }
     int frame_width = 640, frame_height = 360;
-    // VideoReader videoReader("teste.mp4");
-    
-    // auto* videoReader = &tl.add_clip(0, "teste.mp4", 0, 30)->videoReader;
-    // unsigned char* data;
-    // uint8_t* data = new uint8_t[frame_width*frame_height*4];
-    // std::unique_ptr<uint8_t> data = std::make_unique<uint8_t>(frame_width*frame_height*4);
-    // if (!video_reader_read_frame("teste.mp4", &data, &frame_width, &frame_height)){
-    // videoReader->seek_frame(0);
 
 
     uint8_t* frame = nullptr;
     Clip* clip = tl.add_clip_video(0, "teste.mp4", 0, 30);
 
-    // videoReader->read_frame();
     std::cout << "frame res " << frame_width << " " << frame_height << std::endl;
     
     Glfw glfw;
@@ -94,20 +55,11 @@ int main(){
     gladLoadGL();
     glViewport(0, 0, frame_width, frame_height);
     
-    GLuint tex;
-    glGenTextures(1, &tex);
-    glBindTexture(GL_TEXTURE_2D, tex);
-    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
     
-    
+
+
     double lasttime = glfwGetTime();
     while (!glfwWindowShouldClose(glfw.window_)) {
-        printf("start while\n");
         double now = glfwGetTime();
         double dt = now - lasttime;        
         lasttime = now;
@@ -123,7 +75,6 @@ int main(){
         drawlist->AddBezierQuadratic(cursorpos, screenpos, {200,200}, IM_COL32(255,0,0,255), 5, 5);
         ImGui::BeginDisabled();
         
-        printf("a\n");
    
         // float pts_in_sec = (double)videoReader->pts * videoReader->get_time_base();
         float _dtfloat = dt;
@@ -131,7 +82,7 @@ int main(){
         // ImGui::SliderFloat("playback", &pts_in_sec, 0, 100);
         ImGui::EndDisabled();
         ImGui::SliderFloat("playhead", &tl.playhead_time, 0, 100);
-        ImGui::Image(tex, ImVec2(frame_width, frame_height));
+        ImGui::Image(tl.playhead_tex, ImVec2(frame_width, frame_height));
 
         ImGui::End();
 
@@ -157,33 +108,9 @@ int main(){
         }
 
         ImGui::End();
-        printf("gui end\n");
 
-        // //printf("loop\n");
-        // if (!videoReader.read_frame()){
-        //     //printf("cant read frame\n");
-        // }
-        // //printf("after read\n");
         tl.update(dt);
-        frame = clip->get_image(tl.playhead_time);
-        // videoReader->seek_frame(tl.playhead_time);
-        // printf("play time %f\n", tl.playhead_time);
-        // videoReader->read_frame();
 
-        if (frame){
-            glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-            
-            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, frame_width, frame_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, frame);
-    
-            glMatrixMode(GL_PROJECTION);
-            glLoadIdentity();
-            
-            glOrtho(0, frame_width, frame_height, 0, -1, 1);
-            glMatrixMode(GL_MODELVIEW);
-
-        }
-        
-        printf("gl end\n");
         
 
         ImGui::Render();
@@ -192,7 +119,6 @@ int main(){
         glfwMakeContextCurrent(glfw.window_); // restaura o contexto
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         
-        printf("d\n");
         
 
 

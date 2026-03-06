@@ -477,7 +477,9 @@ CMakeFiles/editor.dir/src/main.cpp.obj: C:/Users/gabri/Documents/Code/videoedito
   C:/Users/gabri/Documents/Code/videoeditor/editor/src/ffmpeg.h \
   C:/Users/gabri/Documents/Code/videoeditor/editor/src/implglfw.h \
   C:/Users/gabri/Documents/Code/videoeditor/editor/src/implimgui.h \
-  C:/Users/gabri/Documents/Code/videoeditor/editor/src/timeline.hpp
+  C:/Users/gabri/Documents/Code/videoeditor/editor/src/opengl.h \
+  C:/Users/gabri/Documents/Code/videoeditor/editor/src/timeline.hpp \
+  C:/Users/gabri/Documents/Code/videoeditor/editor/src/ui.h
 
 CMakeFiles/editor.dir/vendor/stb.cpp.obj: C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/stb.cpp \
   C:/msys64/ucrt64/include/_mingw.h \
@@ -1098,6 +1100,10 @@ C:/msys64/ucrt64/include/c++/15.2.0/x86_64-w64-mingw32/bits/c++io.h:
 C:/msys64/ucrt64/include/float.h:
 
 C:/Users/gabri/Documents/Code/videoeditor/editor/src/implimgui.h:
+
+C:/Users/gabri/Documents/Code/videoeditor/editor/src/opengl.h:
+
+C:/Users/gabri/Documents/Code/videoeditor/editor/src/ui.h:
 
 C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/stb.cpp:
 
