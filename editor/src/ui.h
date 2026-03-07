@@ -13,14 +13,18 @@ struct TimelineUI{
         this->view_track_window = ImVec2(0, 2);
         this->px_per_sec = 20;
     }
+
+    float get_x(float time){
+        return (time - view_time_window.x) * px_per_sec;
+    }   
     ImVec2 get_track_pos(int id){
-        return ImVec2(5, id*px_per_track);
+        return ImVec2(0, id*px_per_track);
     }
     ImVec2 get_track_size(int id){
         return ImVec2(this->size.x, (id+1)*px_per_track);
     }
     ImVec2 get_clip_pos(Clip* clip, Track* track, Timeline* tl){
-        return ImVec2(clip->tl_time0 - view_time_window.x * px_per_sec, get_track_pos(track->id).y);
+        return ImVec2( get_x(clip->tl_time0), get_track_pos(track->id).y);
     }
     ImVec2 get_clip_size(Clip* clip, Track* track, Timeline* tl){
         return ImVec2( (clip->tl_time1 - clip->tl_time0) * px_per_sec, get_track_size(track->id).y);
@@ -54,7 +58,8 @@ struct TimelineUI{
                 drawlist->AddRectFilled(ImVec2(screenpos.x+pos.x, screenpos.y+pos.y), ImVec2(screenpos.x+pos.x+size.x,screenpos.y+pos.y+size.y), IM_COL32(0, 0, 255, 255));
             }
         }
-
+        float headx = screenpos.x + get_x(tl->playhead_time);
+        drawlist->AddRectFilled(ImVec2(headx, screenpos.y), ImVec2(headx+5, screenpos.y+this->size.y), IM_COL32(0,255,0,255));
         ImGui::End();
         printf("end draw timeline\n");
     }
