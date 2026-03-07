@@ -22,7 +22,9 @@ struct Clip{
         this->tl_time0 = t0;
         this->tl_time1 = t1;
     }
-    
+    ~Clip(){
+        glDeleteTextures(1, &tex);
+    }
     virtual uint8_t* get_image() = 0;
     virtual GLuint get_tex() = 0;
     virtual void update_image(float ts) = 0;

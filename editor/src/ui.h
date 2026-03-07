@@ -63,15 +63,18 @@ struct TimelineUI{
 
 
 struct PreviewUI{
-    
-    void draw(Timeline* tl, ImTextureRef tex){
+    const char* name;
+    PreviewUI(const char* name = "preview"){
+        this->name = name; 
+    }
+    void draw(Timeline* tl, GLuint tex){
         printf("draw preview\n");
 
         static double lasttime = 0;
         double now = glfwGetTime();
         double dt = now - lasttime;        
         lasttime = now;
-        ImGui::Begin("preview");                          // Create a window called "Hello, world!" and append into it.
+        ImGui::Begin(this->name);                          // Create a window called "Hello, world!" and append into it.
         auto drawlist = ImGui::GetWindowDrawList();
         ImVec2 screenpos = ImGui::GetCursorScreenPos();
         ImVec2 cursorpos = ImGui::GetMousePos();

@@ -88,18 +88,18 @@ void Timeline::update(double dt){
     // o resultado da iteração vai ser oq? (preciso implementar em Clip)
 
     // walker -> lista de clipes na ordem certa -> chamar clip.get_image pra todos -> imagem final
-    std::list<Clip*> clips;
-    WalkerTimeline::walk(this, &clips);
+    // std::list<Clip*> clips;
+    // WalkerTimeline::walk(this, &clips);
+    // this->playhead_tex = 0;
+    // printf("--clip walk size=%zu\n", clips.size());
+    // for (Clip* clip : clips){
+    //     printf("clip t0 %f t1 %f\n", clip->tl_time0, clip->tl_time1);
+    //     clip->update_image(playhead_time);
+    //     printf("updated image\n");
+    //     this->playhead_tex = overlap_textures(clip->get_tex(), this->playhead_tex, this->shd_overlap);
+    //     printf("overlaped textures\n");
 
-    printf("--clip walk size=%zu\n", clips.size());
-    for (Clip* clip : clips){
-        printf("clip t0 %f t1 %f\n", clip->tl_time0, clip->tl_time1);
-        clip->update_image(playhead_time);
-        printf("updated image\n");
-        this->playhead_tex = overlap_textures(clip->get_tex(), this->playhead_tex, this->shd_overlap);
-        printf("overlaped textures\n");
-
-    }
+    // }
 
     // for(auto it = tracks_.begin(); it != tracks_.end(); ++it){
 

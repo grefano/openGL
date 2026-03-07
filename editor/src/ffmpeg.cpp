@@ -3,6 +3,10 @@
 
 VideoReader::VideoReader(const char* filename){
     ////printf("video reader constructed\n");
+    // Initialize state so destructor can safely clean up even if file_open() fails.
+    this->state = {};
+    this->state.video_stream_index = -1;
+
     printf("open file\n");
     this->file_open(filename);
 }
@@ -37,8 +41,8 @@ bool VideoReader::file_open(const char* filename){
         printf("nao abriu video\n");
         return 0;
     }
-    const AVCodecParameters* av_codec_params;
-    const AVCodec* av_codec;
+    const AVCodecParameters* av_codec_params = nullptr;
+    const AVCodec* av_codec = nullptr;
     for(int i = 0; i < this->state.av_format_context->nb_streams; ++i){
         av_codec_params = this->state.av_format_context->streams[i]->codecpar;
         av_codec = avcodec_find_decoder(av_codec_params->codec_id);
@@ -51,8 +55,6 @@ bool VideoReader::file_open(const char* filename){
             break;
         }
     }
-    this->state.av_codec_context = avcodec_alloc_context3(av_codec);
-    // AVFormatContext* av_format_context 
 
     if (this->state.video_stream_index == -1){
         printf("nao achou uma video stream válida\n");
@@ -70,7 +72,7 @@ bool VideoReader::file_open(const char* filename){
         return 0;
     }
 
-    if(!avcodec_open2(this->state.av_codec_context, av_codec, NULL) < 0){
+    if(avcodec_open2(this->state.av_codec_context, av_codec, NULL) < 0){
         printf("nao abriu codec\n");
         return 0;
     }

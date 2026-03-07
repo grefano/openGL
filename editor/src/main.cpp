@@ -36,6 +36,7 @@ void operator delete(void* memory, size_t size) noexcept{
 
 TimelineUI UItl;
 PreviewUI UIpreview;
+// PreviewUI UIpreview2("preview2");
 int main(){
     if (!glfwInit()){
         log("falha inicializando glfw");
@@ -46,7 +47,7 @@ int main(){
 
     uint8_t* frame = nullptr;
     Clip* clip = tl.add_clip_video(0, "teste.mp4", 0, 30);
-    tl.add_clip_video(1, "teste.mp4", 0, 30);
+    Clip* clip2 = tl.add_clip_video(1, "video3.mp4", 5, 10);
     // Clip* clip2 = tl.add_clip_video(1, "teste2.mp4", 0, 30);
 
     std::cout << "frame res " << clip->w << " " << clip->h << std::endl;
@@ -73,11 +74,18 @@ int main(){
         ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport());
         printf("loop b\n");
 
-        // clip->update_image(tl.playhead_time);
+        clip->update_image(tl.playhead_time);
+        clip2->update_image(tl.playhead_time);
         tl.update(dt);
-        UIpreview.draw(&tl, tl.playhead_tex);
+        // GLuint a = overlap_textures(clip->tex, clip->tex, tl.shd_overlap);
+        GLuint a = clip->tex;
+        UIpreview.draw(&tl, a);
+        GLuint b = overlap_textures(clip2->tex, a, tl.shd_overlap);
+        // UIpreview2.draw(&tl, b);
+        ImGui::Image(b, ImVec2(640, 360));
         UItl.draw(&tl);
-        
+        GLuint c = overlap_textures(clip->tex, b, tl.shd_overlap);
+        ImGui::Image(c, ImVec2(640, 360));
         printf("loop a\n");
         ImGui::Render();
         ImGui::UpdatePlatformWindows();
@@ -86,7 +94,7 @@ int main(){
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
         
         
-
+        
 
         glfwSwapBuffers(glfw.window_);
         

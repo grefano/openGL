@@ -109,11 +109,67 @@ GLuint createShader(const char* vs, const char* fs)
 
     return program;
 }
+
 GLuint overlap_textures(GLuint tex_below, GLuint tex_above, GLuint shader)
 {
-    static GLuint fbo;
+    static GLuint fbo = 0;
 
-    static GLuint resultTexture;
+    if (fbo == 0) {
+        glGenFramebuffers(1, &fbo);
+    }
+
+    GLuint resultTexture;
+    glGenTextures(1, &resultTexture);
+    glBindTexture(GL_TEXTURE_2D, resultTexture);
+
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 640, 360, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+    glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+
+    glFramebufferTexture2D(GL_FRAMEBUFFER,
+        GL_COLOR_ATTACHMENT0,
+        GL_TEXTURE_2D,
+        resultTexture,
+        0);
+
+    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+        printf("FBO ERROR\n");
+    }
+
+    glViewport(0,0,640,360);
+
+    glUseProgram(shader);
+
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, tex_below);
+    glUniform1i(glGetUniformLocation(shader,"tex1"),0);
+
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, tex_above);
+    glUniform1i(glGetUniformLocation(shader,"tex2"),1);
+
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    glUniform2f(glGetUniformLocation(shader, "overlayPos"),
+        0.25f + sin(glfwGetTime())*.2,
+        0.25f);
+
+    glUniform2f(glGetUniformLocation(shader, "overlaySize"),0.5f,0.5f);
+
+    RenderQuad();
+
+    glBindFramebuffer(GL_FRAMEBUFFER,0);
+
+    return resultTexture;
+}
+GLuint overlap_textures2(GLuint tex_below, GLuint tex_above, GLuint shader)
+{
+    GLuint fbo = 0;
+
+    GLuint resultTexture;
 
     if (fbo == 0){
         printf("CRIOU FBO");
@@ -206,7 +262,8 @@ const char* fs = R"(#version 330 core
                     overlayCoord.y >= 0.0 && overlayCoord.y <= 1.0)
                 {
                     vec4 overlay = texture(tex2, overlayCoord);
-                    FragColor = mix(base, overlay, 1.0);
+                    // FragColor = mix(base, overlay, 1.0);
+                    FragColor = overlay * vec4(vec3(0.5), 1.0);
                 }
                 else
                 {
@@ -214,3 +271,5 @@ const char* fs = R"(#version 330 core
                 }
             })";
     
+
+            
