@@ -223,53 +223,20 @@ glUniform2f(glGetUniformLocation(shader, "overlaySize"), 0.5f, 0.5f);
 }
 
 
-const char* vs = R"(#version 330 core
-    layout (location = 0) in vec2 aPos;
-    layout (location = 1) in vec2 aTex;
-    
-    out vec2 TexCoord;
-    
-    void main()
-    {
-        TexCoord = aTex;
-        gl_Position = vec4(aPos, 0.0, 1.0);
-    })";
-const char* fs = R"(#version 330 core
-            in vec2 TexCoord;
-    
-            uniform sampler2D tex1;
-            uniform sampler2D tex2;
-            
-            out vec4 FragColor;
-            uniform vec2 overlayPos;   // posição do canto superior esquerdo (0.0 a 1.0)
-            uniform vec2 overlaySize;  // tamanho (ex: 0.5, 0.5 = metade da tela)
 
-            void main()
-            {
+std::string readFileToString(const std::string& filename) {
+    std::ifstream file(filename);
+    if (!file.is_open()) {
+        std::cerr << "Error opening file: " << filename << std::endl;
+        throw false;
+    }
+    // Read the entire file content into the string using iterators
+    std::string content((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
+    return content;
 
-            vec4 base = texture(tex1, TexCoord);
-            // vec4 overlay = texture(tex2, TexCoord);
-                // if (TexCoord.x > 0.2 && TexCoord.x < 0.8 && TexCoord.y > 0.2 && TexCoord.y < 0.8){
-                //     FragColor = base;
-                    
-                //     } else {
-                //         FragColor = overlay;
-                // }
+}
 
-                vec2 overlayCoord = (TexCoord - overlayPos) / overlaySize;
-
-                if (overlayCoord.x >= 0.0 && overlayCoord.x <= 1.0 &&
-                    overlayCoord.y >= 0.0 && overlayCoord.y <= 1.0)
-                {
-                    vec4 overlay = texture(tex2, overlayCoord);
-                    // FragColor = mix(base, overlay, 1.0);
-                    FragColor = overlay * vec4(vec3(0.5), 1.0);
-                }
-                else
-                {
-                    FragColor = base;
-                }
-            })";
-    
-
-            
+std::string fs_source = readFileToString("shaders/overlay.frag.glsl");
+const char* fs = fs_source.c_str();
+std::string vs_source = readFileToString("shaders/overlay.vertex.glsl");
+const char* vs = vs_source.c_str();

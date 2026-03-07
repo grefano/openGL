@@ -261,6 +261,8 @@ CMakeFiles/editor.dir/src/main.cpp.obj: \
  C:/msys64/ucrt64/include/libswscale/version.h \
  C:\Users\gabri\Documents\Code\videoeditor\editor\src\timeline.hpp \
  C:\Users\gabri\Documents\Code\videoeditor\editor\src\opengl.h \
+ C:/msys64/ucrt64/include/c++/15.2.0/iterator \
+ C:/msys64/ucrt64/include/c++/15.2.0/bits/stream_iterator.h \
  C:/msys64/ucrt64/include/c++/15.2.0/list \
  C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_list.h \
  C:/msys64/ucrt64/include/c++/15.2.0/bits/list.tcc \

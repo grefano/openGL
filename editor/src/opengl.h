@@ -3,6 +3,10 @@
 #include <stdio.h>
 #include <math.h>
 #include <GLFW/glfw3.h>
+#include <fstream>
+#include <string>
+#include <iterator>
+#include <iostream>
 
 GLuint create_texture();
 void image_to_tex(GLuint* tex, uint8_t* buffer, int w, int h);

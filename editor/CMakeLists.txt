@@ -8,7 +8,6 @@ target_sources(editor PRIVATE src/main.cpp libs/glad.o src/ffmpeg.cpp src/opengl
 
 
 set(MSYS2 "C:/msys64/ucrt64/")
-
 target_include_directories(editor PRIVATE ${MSYS2}/include vendor/ vendor/imgui/docking)
 
 find_library(AVCODEC_LIB NAMES avcodec PATHS "${MSYS2}/lib" NO_DEFAULT_PATH)
