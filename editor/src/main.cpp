@@ -63,6 +63,7 @@ int main(){
 
     double lasttime = glfwGetTime();
     while (!glfwWindowShouldClose(glfw.window_)) {
+        printf("loop\n");
         double now = glfwGetTime();
         double dt = now - lasttime;        
         lasttime = now;
@@ -70,12 +71,14 @@ int main(){
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
         ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport());
+        printf("loop b\n");
+
+        // clip->update_image(tl.playhead_time);
+        tl.update(dt);
         UIpreview.draw(&tl, tl.playhead_tex);
         UItl.draw(&tl);
-        tl.update(dt);
-
         
-
+        printf("loop a\n");
         ImGui::Render();
         ImGui::UpdatePlatformWindows();
         ImGui::RenderPlatformWindowsDefault();

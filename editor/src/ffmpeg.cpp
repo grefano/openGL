@@ -3,6 +3,7 @@
 
 VideoReader::VideoReader(const char* filename){
     ////printf("video reader constructed\n");
+    printf("open file\n");
     this->file_open(filename);
 }
 VideoReader::~VideoReader(){
@@ -28,12 +29,12 @@ bool VideoReader::jump_to_ts(float ts_sec, double* pt_seconds, int64_t* pts){
 bool VideoReader::file_open(const char* filename){
     this->state.av_format_context = avformat_alloc_context();
     if (!this->state.av_format_context){
-        std::cout << "nao criou avformatcontext" << std::endl;
+        printf("nao criou avformatcontext\n");
         return 0;
     }
 
     if (avformat_open_input(&this->state.av_format_context, filename, NULL, NULL) != 0){
-        std::cout << "nao abriu video" << std::endl;
+        printf("nao abriu video\n");
         return 0;
     }
     const AVCodecParameters* av_codec_params;
@@ -54,36 +55,36 @@ bool VideoReader::file_open(const char* filename){
     // AVFormatContext* av_format_context 
 
     if (this->state.video_stream_index == -1){
-        std::cout << "nao achou uma video stream válida " << std::endl;
+        printf("nao achou uma video stream válida\n");
         return 0;
     }
 
     this->state.av_codec_context = avcodec_alloc_context3(av_codec);
     if(!this->state.av_codec_context){
-        std::cout << "nao criou avcodeccontext" << std::endl;
+        printf("nao criou avcodeccontext\n");
         return 0;
     }
 
     if(avcodec_parameters_to_context(this->state.av_codec_context, av_codec_params) < 0){
-        std::cout << "nao iniciou avcodeccontext" << std::endl;
+        printf("nao iniciou avcodeccontext\n");
         return 0;
     }
 
     if(!avcodec_open2(this->state.av_codec_context, av_codec, NULL) < 0){
-        std::cout << "nao abriu codec" << std::endl;
+        printf("nao abriu codec\n");
         return 0;
     }
     
     this->state.av_frame = av_frame_alloc();
     if(!this->state.av_frame){
-        std::cout << "nao alocou avframe" << std::endl;
+        printf("nao alocou avframe\n");
         return 0;
     }
     
     this->state.frame_buffer = new uint8_t[this->state.av_codec_context->width * this->state.av_codec_context->height * 4];
     this->state.av_packet = av_packet_alloc();
     if (!this->state.av_packet){
-        std::cout << "nao alocou avpacket" << std::endl;
+        printf("nao alocou avpacket\n");
         return 0;
     }
 // ////printf("width: %d, height: %d, pix_fmt codec_params: %d\n", 
@@ -117,6 +118,7 @@ bool VideoReader::read_frame(){
         res = avcodec_send_packet(this->state.av_codec_context, this->state.av_packet);
         if (res < 0){
             std::cout << "falhou decode packet " << av_err2str(res) << std::endl;
+            
             return 0;
         }
         res = avcodec_receive_frame(this->state.av_codec_context, this->state.av_frame);

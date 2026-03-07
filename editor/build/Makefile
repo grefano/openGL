@@ -183,6 +183,54 @@ src/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
+src/opengl.obj: src/opengl.cpp.obj
+.PHONY : src/opengl.obj
+
+# target to build an object file
+src/opengl.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/opengl.cpp.obj
+.PHONY : src/opengl.cpp.obj
+
+src/opengl.i: src/opengl.cpp.i
+.PHONY : src/opengl.i
+
+# target to preprocess a source file
+src/opengl.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/opengl.cpp.i
+.PHONY : src/opengl.cpp.i
+
+src/opengl.s: src/opengl.cpp.s
+.PHONY : src/opengl.s
+
+# target to generate assembly for a file
+src/opengl.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/opengl.cpp.s
+.PHONY : src/opengl.cpp.s
+
+src/timeline.obj: src/timeline.cpp.obj
+.PHONY : src/timeline.obj
+
+# target to build an object file
+src/timeline.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/timeline.cpp.obj
+.PHONY : src/timeline.cpp.obj
+
+src/timeline.i: src/timeline.cpp.i
+.PHONY : src/timeline.i
+
+# target to preprocess a source file
+src/timeline.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/timeline.cpp.i
+.PHONY : src/timeline.cpp.i
+
+src/timeline.s: src/timeline.cpp.s
+.PHONY : src/timeline.s
+
+# target to generate assembly for a file
+src/timeline.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/timeline.cpp.s
+.PHONY : src/timeline.cpp.s
+
 vendor/stb.obj: vendor/stb.cpp.obj
 .PHONY : vendor/stb.obj
 
@@ -223,6 +271,12 @@ help:
 	@echo ... src/main.obj
 	@echo ... src/main.i
 	@echo ... src/main.s
+	@echo ... src/opengl.obj
+	@echo ... src/opengl.i
+	@echo ... src/opengl.s
+	@echo ... src/timeline.obj
+	@echo ... src/timeline.i
+	@echo ... src/timeline.s
 	@echo ... vendor/stb.obj
 	@echo ... vendor/stb.i
 	@echo ... vendor/stb.s
