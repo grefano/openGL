@@ -64,7 +64,7 @@ struct TimelineUI{
 
 struct PreviewUI{
     const char* name;
-    PreviewUI(const char* name = "preview"){
+    PreviewUI(const char* name = "awdawdawd"){
         this->name = name; 
     }
     void draw(Timeline* tl, GLuint tex){
