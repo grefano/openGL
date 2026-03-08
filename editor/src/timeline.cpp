@@ -17,6 +17,11 @@ GLuint ClipVideo::get_tex(){
 }
 
 void ClipVideo::update_image(float ts){
+    // if (ts < 0){
+    //     this->tex = 0;
+    //     this->videoReader.pts = 0;
+    //     this->videoReader.state.frame_buffer = 0;
+    // }
     double pts_in_sec = (double)videoReader.pts * videoReader.get_time_base();
     double diff = (double)ts - pts_in_sec;
     if (debug)
@@ -108,7 +113,11 @@ void Timeline::update(double dt){
     // printf("--clip walk size=%zu\n", clips.size());
     for (Clip* clip : clips){
         // printf("clip t0 %f t1 %f\n", clip->tl_time0, clip->tl_time1);
-        clip->update_image(playhead_time);
+        if (playhead_time < clip->tl_time0 || playhead_time > clip->tl_time1){
+            continue;
+        }
+        float rel_ts = playhead_time-clip->tl_time0;
+        clip->update_image(rel_ts);
         // printf("updated image\n");
         printf("RENDER CLIP h = %i\n", clip->h);
         this->playhead_tex = this->playhead_tex == 0 ? clip->get_tex() : overlap_textures(this->playhead_tex, clip->get_tex(), this->shd_overlap);
