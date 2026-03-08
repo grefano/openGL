@@ -12,9 +12,9 @@ GLuint create_texture(){
     return tex;
 }
 
-void image_to_tex(GLuint* tex, uint8_t* buffer, int w, int h){
-    glGenTextures(1, tex);
-    glBindTexture(GL_TEXTURE_2D, *tex);
+void image_to_tex(GLuint tex, uint8_t* buffer, int w, int h){
+    // glGenTextures(1, tex);
+    glBindTexture(GL_TEXTURE_2D, tex);
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
@@ -37,7 +37,7 @@ void image_to_tex(GLuint* tex, uint8_t* buffer, int w, int h){
 }
 void RenderQuad()
 {
-    ////printf("render quad\n");
+    //printf("render quad\n");
     static GLuint quadVAO = 0;
     static GLuint quadVBO;
 
@@ -75,14 +75,14 @@ void RenderQuad()
 }
 GLuint createShader(const char* vs, const char* fs)
 {
-    ////printf("shader source:\n%s\n", vs);
-    ////printf("shader source:\n%s\n", fs);
-    ////printf("create shader\n");
+    //printf("shader source:\n%s\n", vs);
+    //printf("shader source:\n%s\n", fs);
+    //printf("create shader\n");
     GLuint vertex = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertex,1,&vs,nullptr);
     glCompileShader(vertex);
-    //printf("vertex shader %d\n", vertex);
-    ////printf("awdawd\n");
+    printf("vertex shader %d\n", vertex);
+    //printf("awdawd\n");
     GLint success;
     glGetShaderiv(vertex, GL_COMPILE_STATUS, &success);
 
@@ -90,15 +90,15 @@ GLuint createShader(const char* vs, const char* fs)
     {
         char info[512];
         glGetShaderInfoLog(vertex,512,NULL,info);
-        //printf("error %s\n", info);
+        printf("error %s\n", info);
     }
-    ////printf("create fragment\n");
+    //printf("create fragment\n");
 
     GLuint fragment = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(fragment,1,&fs,nullptr);
     glCompileShader(fragment);
 
-    ////printf("program\n");
+    //printf("program\n");
     GLuint program = glCreateProgram();
     glAttachShader(program,vertex);
     glAttachShader(program,fragment);
@@ -110,17 +110,14 @@ GLuint createShader(const char* vs, const char* fs)
     return program;
 }
 
-GLuint overlap_textures(GLuint tex_below, GLuint tex_above, GLuint shader)
+void overlap_textures(GLuint tex_below, GLuint tex_above, GLuint result_tex, GLuint fbo, GLuint shader)
 {
-    static GLuint fbo = 0;
+    // static GLuint fbo = 0;
 
-    if (fbo == 0) {
-        glGenFramebuffers(1, &fbo);
-    }
 
-    static GLuint resultTexture;
-    glGenTextures(1, &resultTexture);
-    glBindTexture(GL_TEXTURE_2D, resultTexture);
+    // static GLuint resultTexture;
+    // glGenTextures(1, &resultTexture);
+    glBindTexture(GL_TEXTURE_2D, result_tex);
 
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, 640, 360, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
 
@@ -132,11 +129,11 @@ GLuint overlap_textures(GLuint tex_below, GLuint tex_above, GLuint shader)
     glFramebufferTexture2D(GL_FRAMEBUFFER,
         GL_COLOR_ATTACHMENT0,
         GL_TEXTURE_2D,
-        resultTexture,
+        result_tex,
         0);
 
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-        //printf("FBO ERROR\n");
+        printf("FBO ERROR\n");
     }
 
     glViewport(0,0,640,360);
@@ -163,9 +160,7 @@ GLuint overlap_textures(GLuint tex_below, GLuint tex_above, GLuint shader)
 
     glBindFramebuffer(GL_FRAMEBUFFER,0);
 
-    return resultTexture;
 }
-
 
 
 std::string readFileToString(const std::string& filename) {
@@ -190,3 +185,10 @@ std::string fs_transform_source = readFileToString("shaders/transform.frag.glsl"
 const char* fs_transform = fs_transform_source.c_str();
 std::string vs_transform_source = readFileToString("shaders/transform.vertex.glsl");
 const char* vs_transform = vs_transform_source.c_str();
+
+
+
+std::string fs_default_source = readFileToString("shaders/default.frag.glsl");
+const char* fs_default = fs_default_source.c_str();
+std::string vs_default_source = readFileToString("shaders/default.vertex.glsl");
+const char* vs_default = vs_default_source.c_str();

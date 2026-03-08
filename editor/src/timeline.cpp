@@ -4,16 +4,17 @@ static bool debug = false;
 uint8_t* ClipVideo::get_image(){
     return videoReader.state.frame_buffer;
 }
-GLuint ClipVideo::get_tex(GLuint fbo){
-    GLuint tex = this->tex;
+void ClipVideo::get_tex_raw(GLuint tex){
+    image_to_tex(tex, get_image(), this->w, this->h);
+}
+void ClipVideo::get_tex_result(GLuint raw_tex, GLuint result_tex, GLuint fbo){
 
     for(auto& compptr : this->shader_components){
         if (debug)
             printf("it comp\n");
-        tex = compptr.get()->get_tex(tex, fbo);
+        compptr.get()->get_tex(raw_tex, result_tex, fbo);
     }
 
-    return tex;
 }
 
 void ClipVideo::update_image(float ts){
@@ -42,7 +43,7 @@ void ClipVideo::update_image(float ts){
         printf("image to text\n");
 
     }
-    image_to_tex(&this->tex, get_image(), this->w, this->h);
+    
 
 
 }
@@ -78,7 +79,12 @@ void WalkerTimeline::walk(Clip* clip, std::list<Clip*>* out_clips){
 }
 void Timeline::init_shader(){
     glGenFramebuffers(1, &this->fbo);
+    glGenTextures(1, &this->clip_tex);
+    glGenTextures(1, &this->clip_result_tex);
+    glGenTextures(1, &this->playhead_tex);
+    glGenTextures(1, &this->temp_tex);
     this->shd_overlap= createShader(vs, fs);
+
     
 }
 Timeline::Timeline(int w, int h){
@@ -87,8 +93,11 @@ Timeline::Timeline(int w, int h){
 }
 Timeline::~Timeline(){
     glDeleteFramebuffers(1, &this->fbo);
-  glDeleteTextures(1, &this->playhead_tex);
+    glDeleteTextures(1, &this->playhead_tex);
+    glDeleteTextures(1, &this->clip_result_tex);
+    glDeleteTextures(1, &this->clip_tex);
     glDeleteProgram(this->shd_overlap);
+
 }
 Clip* Timeline::add_clip_video(size_t track, const char* filename, float time0, float time1){
     int _id = 0;
@@ -116,22 +125,43 @@ void Timeline::update(double dt){
     // walker -> lista de clipes na ordem certa -> chamar clip.get_image pra todos -> imagem final
     std::list<Clip*> clips;
     WalkerTimeline::walk(this, &clips);
-    this->playhead_tex = 0;
     // printf("--clip walk size=%zu\n", clips.size());
+    int i = 0;
+    
     for (Clip* clip : clips){
-        // printf("clip t0 %f t1 %f\n", clip->tl_time0, clip->tl_time1);
-        if (playhead_time < clip->tl_time0 || playhead_time > clip->tl_time1){
-            continue;
-        }
+        printf("clip t0 %f t1 %f\n", clip->tl_time0, clip->tl_time1);
         float rel_ts = playhead_time-clip->tl_time0;
         clip->update_image(rel_ts);
-        // printf("updated image\n");
-        printf("RENDER CLIP h = %i\n", clip->h);
-        this->playhead_tex = this->playhead_tex == 0 ? clip->get_tex(this->fbo) : overlap_textures(this->playhead_tex, clip->get_tex(this->fbo), this->shd_overlap);
-        // this->playhead_tex = overlap_textures(clip->get_tex(), this->playhead_tex, this->shd_overlap);
-        
-        // printf("overlaped textures\n");
+        // if (i == 0){
 
+        //     continue;
+        // }
+        // if (playhead_time < clip->tl_time0 || playhead_time > clip->tl_time1){
+        //     continue;
+        // }
+        // if (first){
+            
+            
+        //     first = false;
+        //     continue;
+        // }
+        // printf("updated image\n");
+        printf("textures clip %d clip res %d playhead %d\n fbo %d\n", this->clip_tex, this->clip_result_tex, this->playhead_tex, this->fbo);
+        clip->get_tex_raw(this->clip_tex);
+        clip->get_tex_result(this->clip_tex, this->clip_result_tex, this->fbo);
+        if (i == 0) {
+            overlap_textures(this->clip_result_tex, this->clip_result_tex, this->playhead_tex, this->fbo, this->shd_overlap);
+        } else {
+            overlap_textures(this->clip_result_tex, this->playhead_tex, this->temp_tex, this->fbo, this->shd_overlap);
+            std::swap(this->playhead_tex, this->temp_tex);
+        }
+        // overlap_textures(this->clip_result_tex, this->playhead_tex, this->playhead_tex, this->fbo, this->shd_overlap);
+        // overlap_textures(this->playhead_tex, this->clip_result_tex, this->texs[i], this->fbo, this->shd_overlap);
+        // std::swap(this->playhead_tex, this->temp_tex);
+        // this->playhead_tex = overlap_textures(clip->get_tex(), this->playhead_tex, this->shd_overlap);
+        // printf("overlaped textures\n");
+        i++;
+        // break;
     }
 
 

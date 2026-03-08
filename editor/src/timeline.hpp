@@ -10,7 +10,6 @@
 
 
 struct Clip{
-    GLuint tex;
     float tl_time0;
     float tl_time1;
     int w, h;
@@ -19,13 +18,14 @@ struct Clip{
         this->tl_time0 = t0;
         this->tl_time1 = t1;
     }
-    ~Clip(){
-        glDeleteTextures(1, &tex);
-    }
+
     template <typename T>
     T* add_component();
     virtual uint8_t* get_image() = 0;
-    virtual GLuint get_tex(GLuint fbo) = 0;
+    // virtual GLuint get_tex(GLuint fbo, GLuint result_tex) = 0;
+    virtual void get_tex_raw(GLuint tex) = 0;
+    virtual void get_tex_result(GLuint raw_tex, GLuint result_tex, GLuint fbo) = 0;
+    
     virtual void update_image(float ts) = 0;
 };
 
@@ -49,10 +49,13 @@ struct ClipVideo : public Clip{
     ClipVideo(float t0, float t1, const char* filename) : Clip(t0, t1), videoReader(filename){
         this->w = this->videoReader.w;
         this->h = this->videoReader.h;
+        this->add_component<Default>()->bind_shader(vs_default, fs_default);
     };
     uint8_t* get_image() override;
-    GLuint get_tex(GLuint fbo) override;
+    // GLuint get_tex(GLuint fbo, GLuint result_tex) override;
     void update_image(float ts) override;
+    void get_tex_raw(GLuint tex) override;
+    void get_tex_result(GLuint raw_tex, GLuint result_tex, GLuint fbo);
 };
 
 struct Track{
@@ -72,10 +75,12 @@ struct Timeline{
     std::list<Track> tracks_;
     uint8_t* playhead_frame;
     ImVec2 frame_dimensions;
-    GLuint playhead_tex;
-    GLuint shd_overlap;
-    GLuint fbo;
-    
+    GLuint playhead_tex = 0;
+    GLuint temp_tex = 0;
+    GLuint clip_tex = 0;
+    GLuint clip_result_tex = 0;
+    GLuint shd_overlap = 0;
+    GLuint fbo = 0;
     void init_shader();
     Clip* add_clip_video(size_t track, const char* filename, float time0, float time1);
     void update(double dt);

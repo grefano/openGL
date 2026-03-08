@@ -39,26 +39,31 @@ int main(){
         return -1;
     }
 
-    Clip* clip = tl.add_clip_video(0, "teste.mp4", 0, 30);
-    Overlap* comp= clip->add_component<Overlap>();
-    comp->position = {.5, .5};
-    comp->scale = {1, 1};
     
-    Clip* clip2 = tl.add_clip_video(1, "video3.mp4", 5, 10);
-    Transform* comp2= clip2->add_component<Transform>();
-    comp2->position = {.5, .5};
-    comp2->scale = {1, 1};
-    
-
     Glfw glfw;
     Imgui imgui(glfw.window_);
     glfwSetKeyCallback(glfw.window_, key_callback);
-
+    
     gladLoadGL();
     
+    Clip* clip2 = tl.add_clip_video(0, "video3.mp4", 5, 10);
+    Transform* comp2= clip2->add_component<Transform>();
+    comp2->position = {.5, .2};
+    comp2->scale = {.8, 1};
+    Clip* clip = tl.add_clip_video(1, "teste.mp4", 0, 30);
+    Transform* comp= clip->add_component<Transform>();
+    comp->position = {0, 0};
+    comp->scale = {1,1};
+    
+
+    //    Clip* clip3 = tl.add_clip_video(2, "teste.mp4", 5, 10);
+    // Transform* comp2= clip3->add_component<Transform>();
+    // comp2->position = {.5, .5};
+    // comp2->scale = {1, 1};
+    
     tl.init_shader();
-    comp->bind_shader(vs, fs);
-    comp2->bind_shader(vs, fs);
+    comp->bind_shader(vs_transform, fs_transform);
+    comp2->bind_shader(vs_transform, fs_transform);
     
     
     double lasttime = glfwGetTime();
@@ -74,11 +79,15 @@ int main(){
         tl.update(dt);
 
         UItl.draw(&tl);
-        printf("tex = %d\n", tl.playhead_tex);
+        // printf("tex = %d\n", tl.playhead_tex);
         UIpreview.draw(&tl, tl.playhead_tex, tl.frame_dimensions);
         printf("DIM %d %d", clip->w, clip->h);
-        ImGui::Image(clip->get_tex(tl.fbo), ImVec2(clip->w, clip->h));
-        ImGui::Image(clip2->get_tex(tl.fbo), ImVec2(clip2->w, clip2->h));
+        ImGui::Image( tl.clip_tex, ImVec2(clip->w, clip->h));
+        ImGui::Image( tl.clip_result_tex, ImVec2(clip->w, clip->h));
+
+
+        // ImGui::Image( clip->get_tex(tl.fbo, ), ImVec2(clip->w, clip->h));
+        // ImGui::Image(clip2->get_tex(tl.fbo), ImVec2(clip2->w, clip2->h));
         // ImGui::Image(overlap_textures(clip->tex, clip->tex, tl.shd_overlap), ImVec2(640, 360));
         
         ImGui::Render();
