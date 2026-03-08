@@ -25,7 +25,7 @@ struct Clip{
     template <typename T>
     T* add_component();
     virtual uint8_t* get_image() = 0;
-    virtual GLuint get_tex() = 0;
+    virtual GLuint get_tex(GLuint fbo) = 0;
     virtual void update_image(float ts) = 0;
 };
 
@@ -51,7 +51,7 @@ struct ClipVideo : public Clip{
         this->h = this->videoReader.h;
     };
     uint8_t* get_image() override;
-    GLuint get_tex() override;
+    GLuint get_tex(GLuint fbo) override;
     void update_image(float ts) override;
 };
 
@@ -74,11 +74,14 @@ struct Timeline{
     ImVec2 frame_dimensions;
     GLuint playhead_tex;
     GLuint shd_overlap;
+    GLuint fbo;
+    
     void init_shader();
     Clip* add_clip_video(size_t track, const char* filename, float time0, float time1);
     void update(double dt);
     void key_callback(int key, int action);
     Timeline(int, int);
+    ~Timeline();
 };
 
 struct ClipNestedTimeline : public Clip{

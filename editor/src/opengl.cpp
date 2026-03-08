@@ -37,7 +37,7 @@ void image_to_tex(GLuint* tex, uint8_t* buffer, int w, int h){
 }
 void RenderQuad()
 {
-    //printf("render quad\n");
+    ////printf("render quad\n");
     static GLuint quadVAO = 0;
     static GLuint quadVBO;
 
@@ -75,14 +75,14 @@ void RenderQuad()
 }
 GLuint createShader(const char* vs, const char* fs)
 {
-    //printf("shader source:\n%s\n", vs);
-    //printf("shader source:\n%s\n", fs);
-    //printf("create shader\n");
+    ////printf("shader source:\n%s\n", vs);
+    ////printf("shader source:\n%s\n", fs);
+    ////printf("create shader\n");
     GLuint vertex = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertex,1,&vs,nullptr);
     glCompileShader(vertex);
-    printf("vertex shader %d\n", vertex);
-    //printf("awdawd\n");
+    //printf("vertex shader %d\n", vertex);
+    ////printf("awdawd\n");
     GLint success;
     glGetShaderiv(vertex, GL_COMPILE_STATUS, &success);
 
@@ -90,15 +90,15 @@ GLuint createShader(const char* vs, const char* fs)
     {
         char info[512];
         glGetShaderInfoLog(vertex,512,NULL,info);
-        printf("error %s\n", info);
+        //printf("error %s\n", info);
     }
-    //printf("create fragment\n");
+    ////printf("create fragment\n");
 
     GLuint fragment = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(fragment,1,&fs,nullptr);
     glCompileShader(fragment);
 
-    //printf("program\n");
+    ////printf("program\n");
     GLuint program = glCreateProgram();
     glAttachShader(program,vertex);
     glAttachShader(program,fragment);
@@ -136,7 +136,7 @@ GLuint overlap_textures(GLuint tex_below, GLuint tex_above, GLuint shader)
         0);
 
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-        printf("FBO ERROR\n");
+        //printf("FBO ERROR\n");
     }
 
     glViewport(0,0,640,360);

@@ -11,7 +11,6 @@
 #include "ui.h"
 #include "implimgui.h"
 #include "implglfw.h"
-
 // preview (codec, processar e mostrar proximo frame, cache de timelines) - figma
 Timeline tl = Timeline(640, 360);
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods){
@@ -75,10 +74,11 @@ int main(){
         tl.update(dt);
 
         UItl.draw(&tl);
+        printf("tex = %d\n", tl.playhead_tex);
         UIpreview.draw(&tl, tl.playhead_tex, tl.frame_dimensions);
         printf("DIM %d %d", clip->w, clip->h);
-        ImGui::Image(clip->get_tex(), ImVec2(clip->w, clip->h));
-        ImGui::Image(clip2->get_tex(), ImVec2(clip2->w, clip2->h));
+        ImGui::Image(clip->get_tex(tl.fbo), ImVec2(clip->w, clip->h));
+        ImGui::Image(clip2->get_tex(tl.fbo), ImVec2(clip2->w, clip2->h));
         // ImGui::Image(overlap_textures(clip->tex, clip->tex, tl.shd_overlap), ImVec2(640, 360));
         
         ImGui::Render();

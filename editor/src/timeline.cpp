@@ -4,13 +4,13 @@ static bool debug = false;
 uint8_t* ClipVideo::get_image(){
     return videoReader.state.frame_buffer;
 }
-GLuint ClipVideo::get_tex(){
+GLuint ClipVideo::get_tex(GLuint fbo){
     GLuint tex = this->tex;
 
     for(auto& compptr : this->shader_components){
         if (debug)
             printf("it comp\n");
-        tex = compptr.get()->get_tex(tex);
+        tex = compptr.get()->get_tex(tex, fbo);
     }
 
     return tex;
@@ -77,11 +77,18 @@ void WalkerTimeline::walk(Clip* clip, std::list<Clip*>* out_clips){
     out_clips->push_back(clip);
 }
 void Timeline::init_shader(){
+    glGenFramebuffers(1, &this->fbo);
     this->shd_overlap= createShader(vs, fs);
     
 }
 Timeline::Timeline(int w, int h){
     this->frame_dimensions = ImVec2(w, h);
+    
+}
+Timeline::~Timeline(){
+    glDeleteFramebuffers(1, &this->fbo);
+  glDeleteTextures(1, &this->playhead_tex);
+    glDeleteProgram(this->shd_overlap);
 }
 Clip* Timeline::add_clip_video(size_t track, const char* filename, float time0, float time1){
     int _id = 0;
@@ -120,7 +127,7 @@ void Timeline::update(double dt){
         clip->update_image(rel_ts);
         // printf("updated image\n");
         printf("RENDER CLIP h = %i\n", clip->h);
-        this->playhead_tex = this->playhead_tex == 0 ? clip->get_tex() : overlap_textures(this->playhead_tex, clip->get_tex(), this->shd_overlap);
+        this->playhead_tex = this->playhead_tex == 0 ? clip->get_tex(this->fbo) : overlap_textures(this->playhead_tex, clip->get_tex(this->fbo), this->shd_overlap);
         // this->playhead_tex = overlap_textures(clip->get_tex(), this->playhead_tex, this->shd_overlap);
         
         // printf("overlaped textures\n");

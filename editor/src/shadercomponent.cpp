@@ -6,20 +6,22 @@ void ComponentShader::bind_shader(const char* vs, const char* fs){
     printf("--\n");
 }
 
-GLuint ComponentShader::get_tex(GLuint tex){
-    static GLuint fbo = 0;
+GLuint ComponentShader::get_tex(GLuint tex, GLuint fbo){
+    // static GLuint fbo = 0;
 
-    if (fbo == 0) {
-        glGenFramebuffers(1, &fbo);
+    // if (fbo == 0) {
+    //     glGenFramebuffers(1, &fbo);
+    // }
+    if (this->tex == 0){
+        this->tex = create_texture();
     }
     int w, h;
     glBindTexture(GL_TEXTURE_2D, tex);
     glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH,  &w);
     glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &h);
 
-    GLuint resultTexture;
-    glGenTextures(1, &resultTexture);
-    glBindTexture(GL_TEXTURE_2D, resultTexture);
+    // glGenTextures(1, &this->tex);
+    glBindTexture(GL_TEXTURE_2D, this->tex);
 
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, nullptr);
 
@@ -32,7 +34,7 @@ GLuint ComponentShader::get_tex(GLuint tex){
     glFramebufferTexture2D(GL_FRAMEBUFFER,
         GL_COLOR_ATTACHMENT0,
         GL_TEXTURE_2D,
-        resultTexture,
+        this->tex,
         0);
 
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
@@ -53,13 +55,13 @@ GLuint ComponentShader::get_tex(GLuint tex){
 
     RenderQuad();
     glBindFramebuffer(GL_FRAMEBUFFER,0);
-    return resultTexture;
+    return this->tex;
 }
 
 
 void Transform::set_uniform(GLuint shader){
-    glUniform2f(glGetUniformLocation(shader, "offset"), position.x, position.y);
-    glUniform2f(glGetUniformLocation(shader, "scale"), scale.x, scale.y);
+    glUniform2f(glGetUniformLocation(this->shader, "offset"), position.x, position.y);
+    glUniform2f(glGetUniformLocation(this->shader, "scale"), scale.x, scale.y);
     
 }
 
