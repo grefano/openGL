@@ -16,3 +16,6 @@ GLuint overlap_textures(GLuint tex_below, GLuint tex_above, GLuint shader);
 
 extern const char* vs;
 extern const char* fs;
+
+extern const char* vs_transform;
+extern const char* fs_transform;

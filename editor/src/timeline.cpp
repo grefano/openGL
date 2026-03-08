@@ -1,30 +1,43 @@
 #include "timeline.hpp"
 
-
-
-
+static bool debug = false;
 uint8_t* ClipVideo::get_image(){
     return videoReader.state.frame_buffer;
 }
 GLuint ClipVideo::get_tex(){
+    GLuint tex = this->tex;
+
+    for(auto& compptr : this->shader_components){
+        if (debug)
+            printf("it comp\n");
+        tex = compptr.get()->get_tex(tex);
+    }
+
     return tex;
 }
+
 void ClipVideo::update_image(float ts){
     double pts_in_sec = (double)videoReader.pts * videoReader.get_time_base();
     double diff = (double)ts - pts_in_sec;
-    printf("pts in sec %f time base %f pts %d\n", pts_in_sec, videoReader.get_time_base(), videoReader.pts);
+    if (debug)
+        printf("pts in sec %f time base %f pts %d\n", pts_in_sec, videoReader.get_time_base(), videoReader.pts);
     if (diff < -1 || diff > 1){
-        printf("seek. diff=%f\n", diff);
+        if (debug)
+            printf("seek. diff=%f\n", diff);
         videoReader.seek_frame((double)ts);
         videoReader.read_frame();
         
     } else if ((double)ts > pts_in_sec){
-    printf("read\n");
+        if (debug)
+            printf("read\n");
         videoReader.read_frame();
     }
-    printf("w %f h %f", this->w, this->h);
-    printf("image to text\n");
-    image_to_tex(&this->tex, get_image(), 640, 360);
+    if (debug){
+        printf("w %f h %f", this->w, this->h);
+        printf("image to text\n");
+
+    }
+    image_to_tex(&this->tex, get_image(), this->w, this->h);
 
 
 }
@@ -33,6 +46,7 @@ void ClipVideo::update_image(float ts){
 
 struct Timeline;
 void WalkerTimeline::walk(Timeline* tl, std::list<Clip*>* out_clips){
+    if (debug)
         printf("walk tl\n");
 
     for (auto it = tl->tracks_.rbegin(); it != tl->tracks_.rend(); ++it){
@@ -40,29 +54,29 @@ void WalkerTimeline::walk(Timeline* tl, std::list<Clip*>* out_clips){
     }
 }
 void WalkerTimeline::walk(Track* track, std::list<Clip*>* out_clips){
+    if (debug)
         printf("walk track. track ptr %p clips size=%zu\n", track, track->clips.size());
-        if (!track){
-            printf("track undefined\n");
+    if (!track){
+        printf("track undefined\n");
 
-        }
+    }
     for (auto& ptrclip : track->clips) {
-        printf("walk loop clips\n");
         if (ptrclip == nullptr){
             printf("clip null\n");
         }
-            printf("before get\n");
         Clip* c = ptrclip.get();
-        printf("pointer clip %p\n", c);
         walk(c, out_clips);
     }
 }
 void WalkerTimeline::walk(Clip* clip, std::list<Clip*>* out_clips){
-        printf("walk lip\n");
     out_clips->push_back(clip);
 }
 void Timeline::init_shader(){
     this->shd_overlap= createShader(vs, fs);
     
+}
+Timeline::Timeline(int w, int h){
+    this->frame_dimensions = ImVec2(w, h);
 }
 Clip* Timeline::add_clip_video(size_t track, const char* filename, float time0, float time1){
     int _id = 0;
@@ -91,29 +105,20 @@ void Timeline::update(double dt){
     std::list<Clip*> clips;
     WalkerTimeline::walk(this, &clips);
     this->playhead_tex = 0;
-    printf("--clip walk size=%zu\n", clips.size());
+    // printf("--clip walk size=%zu\n", clips.size());
     for (Clip* clip : clips){
-        printf("clip t0 %f t1 %f\n", clip->tl_time0, clip->tl_time1);
+        // printf("clip t0 %f t1 %f\n", clip->tl_time0, clip->tl_time1);
         clip->update_image(playhead_time);
-        printf("updated image\n");
-        this->playhead_tex = this->playhead_tex == 0 ? clip->get_tex() : overlap_textures(clip->get_tex(), this->playhead_tex, this->shd_overlap);
-        printf("overlaped textures\n");
+        // printf("updated image\n");
+        printf("RENDER CLIP h = %i\n", clip->h);
+        this->playhead_tex = this->playhead_tex == 0 ? clip->get_tex() : overlap_textures(this->playhead_tex, clip->get_tex(), this->shd_overlap);
+        // this->playhead_tex = overlap_textures(clip->get_tex(), this->playhead_tex, this->shd_overlap);
+        
+        // printf("overlaped textures\n");
 
     }
 
-    // for(auto it = tracks_.begin(); it != tracks_.end(); ++it){
 
-    //     auto track = *it;
-        
-
-    //     for (auto& clip : track.clips){
-    //         (*clip).update_image(playhead_time);
-
-    //         this->playhead_tex = overlap_textures(clip.get()->get_tex(), this->playhead_tex, this->shd_overlap);
-    //         // image_to_tex(&this->playhead_tex, clip.get()->get_image(), clip.get()->w, clip.get()->h);
-    //     }
-    
-    // }
 }
 
 

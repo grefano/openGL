@@ -13,8 +13,7 @@
 #include "implglfw.h"
 
 // preview (codec, processar e mostrar proximo frame, cache de timelines) - figma
-Timeline tl;
-
+Timeline tl = Timeline(640, 360);
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods){
     tl.key_callback(key, action);
 }
@@ -32,8 +31,6 @@ void operator delete(void* memory, size_t size) noexcept{
     free(memory);
 }
 
-
-
 TimelineUI UItl;
 PreviewUI UIpreview;
 // PreviewUI UIpreview2("preview2");
@@ -42,30 +39,31 @@ int main(){
         log("falha inicializando glfw");
         return -1;
     }
-    // int frame_width = 1920, frame_height = 1080;
 
-
-    uint8_t* frame = nullptr;
-    Clip* clip2 = tl.add_clip_video(0, "video3.mp4", 5, 10);
-    Clip* clip = tl.add_clip_video(1, "teste.mp4", 0, 30);
-    tl.add_clip_video(2, "teste.mp4", 0, 30);
-    // Clip* clip2 = tl.add_clip_video(1, "teste2.mp4", 0, 30);
-
-    std::cout << "frame res " << clip->w << " " << clip->h << std::endl;
+    Clip* clip = tl.add_clip_video(0, "teste.mp4", 0, 30);
+    Overlap* comp= clip->add_component<Overlap>();
+    comp->position = {.5, .5};
+    comp->scale = {1, 1};
     
+    Clip* clip2 = tl.add_clip_video(1, "video3.mp4", 5, 10);
+    Transform* comp2= clip2->add_component<Transform>();
+    comp2->position = {.5, .5};
+    comp2->scale = {1, 1};
+    
+
     Glfw glfw;
     Imgui imgui(glfw.window_);
     glfwSetKeyCallback(glfw.window_, key_callback);
-    
+
     gladLoadGL();
-    glViewport(0, 0, 1920, 1080);
     
     tl.init_shader();
-
-
+    comp->bind_shader(vs, fs);
+    comp2->bind_shader(vs, fs);
+    
+    
     double lasttime = glfwGetTime();
     while (!glfwWindowShouldClose(glfw.window_)) {
-        printf("loop\n");
         double now = glfwGetTime();
         double dt = now - lasttime;        
         lasttime = now;
@@ -73,23 +71,16 @@ int main(){
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
         ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport());
-        printf("loop b\n");
 
-        // clip->update_image(tl.playhead_time);
-        // clip2->update_image(tl.playhead_time);
         tl.update(dt);
-        // GLuint a = overlap_textures(clip->tex, clip->tex, tl.shd_overlap);
-        // GLuint a = clip->tex;
-        // GLuint b = overlap_textures(clip2->tex, a, tl.shd_overlap);
-        // // UIpreview2.draw(&tl, b);
-        // ImGui::Image(b, ImVec2(640, 360));
-        // GLuint c = overlap_textures(clip->tex, b, tl.shd_overlap);
-        // ImGui::Image(c, ImVec2(640, 360));
-        
-        UItl.draw(&tl);
-        UIpreview.draw(&tl, tl.playhead_tex);
 
-        printf("loop a\n");
+        UItl.draw(&tl);
+        UIpreview.draw(&tl, tl.playhead_tex, tl.frame_dimensions);
+        printf("DIM %d %d", clip->w, clip->h);
+        ImGui::Image(clip->get_tex(), ImVec2(clip->w, clip->h));
+        ImGui::Image(clip2->get_tex(), ImVec2(clip2->w, clip2->h));
+        // ImGui::Image(overlap_textures(clip->tex, clip->tex, tl.shd_overlap), ImVec2(640, 360));
+        
         ImGui::Render();
         ImGui::UpdatePlatformWindows();
         ImGui::RenderPlatformWindowsDefault();

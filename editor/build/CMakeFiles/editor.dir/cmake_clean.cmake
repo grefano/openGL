@@ -5,6 +5,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/editor.dir/src/main.cpp.obj.d"
   "CMakeFiles/editor.dir/src/opengl.cpp.obj"
   "CMakeFiles/editor.dir/src/opengl.cpp.obj.d"
+  "CMakeFiles/editor.dir/src/shadercomponent.cpp.obj"
+  "CMakeFiles/editor.dir/src/shadercomponent.cpp.obj.d"
   "CMakeFiles/editor.dir/src/timeline.cpp.obj"
   "CMakeFiles/editor.dir/src/timeline.cpp.obj.d"
   "CMakeFiles/editor.dir/vendor/stb.cpp.obj"

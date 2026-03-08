@@ -207,6 +207,30 @@ src/opengl.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/opengl.cpp.s
 .PHONY : src/opengl.cpp.s
 
+src/shadercomponent.obj: src/shadercomponent.cpp.obj
+.PHONY : src/shadercomponent.obj
+
+# target to build an object file
+src/shadercomponent.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/shadercomponent.cpp.obj
+.PHONY : src/shadercomponent.cpp.obj
+
+src/shadercomponent.i: src/shadercomponent.cpp.i
+.PHONY : src/shadercomponent.i
+
+# target to preprocess a source file
+src/shadercomponent.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/shadercomponent.cpp.i
+.PHONY : src/shadercomponent.cpp.i
+
+src/shadercomponent.s: src/shadercomponent.cpp.s
+.PHONY : src/shadercomponent.s
+
+# target to generate assembly for a file
+src/shadercomponent.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/shadercomponent.cpp.s
+.PHONY : src/shadercomponent.cpp.s
+
 src/timeline.obj: src/timeline.cpp.obj
 .PHONY : src/timeline.obj
 
@@ -274,6 +298,9 @@ help:
 	@echo ... src/opengl.obj
 	@echo ... src/opengl.i
 	@echo ... src/opengl.s
+	@echo ... src/shadercomponent.obj
+	@echo ... src/shadercomponent.i
+	@echo ... src/shadercomponent.s
 	@echo ... src/timeline.obj
 	@echo ... src/timeline.i
 	@echo ... src/timeline.s

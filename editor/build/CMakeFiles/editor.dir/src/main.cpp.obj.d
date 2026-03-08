@@ -263,6 +263,7 @@ CMakeFiles/editor.dir/src/main.cpp.obj: \
  C:\Users\gabri\Documents\Code\videoeditor\editor\src\opengl.h \
  C:/msys64/ucrt64/include/c++/15.2.0/iterator \
  C:/msys64/ucrt64/include/c++/15.2.0/bits/stream_iterator.h \
+ C:\Users\gabri\Documents\Code\videoeditor\editor\src\shadercomponent.hpp \
  C:/msys64/ucrt64/include/c++/15.2.0/list \
  C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_list.h \
  C:/msys64/ucrt64/include/c++/15.2.0/bits/list.tcc \

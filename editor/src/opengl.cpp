@@ -118,7 +118,7 @@ GLuint overlap_textures(GLuint tex_below, GLuint tex_above, GLuint shader)
         glGenFramebuffers(1, &fbo);
     }
 
-    GLuint resultTexture;
+    static GLuint resultTexture;
     glGenTextures(1, &resultTexture);
     glBindTexture(GL_TEXTURE_2D, resultTexture);
 
@@ -153,68 +153,12 @@ GLuint overlap_textures(GLuint tex_below, GLuint tex_above, GLuint shader)
 
     glClear(GL_COLOR_BUFFER_BIT);
 
-    glUniform2f(glGetUniformLocation(shader, "overlayPos"),
+    glUniform2f(glGetUniformLocation(shader, "pos"),
         0.25f + sin(glfwGetTime())*.2,
         0.25f);
 
-    glUniform2f(glGetUniformLocation(shader, "overlaySize"),0.5f,0.5f);
+    glUniform2f(glGetUniformLocation(shader, "scale"),0.5f,0.5f);
 
-    RenderQuad();
-
-    glBindFramebuffer(GL_FRAMEBUFFER,0);
-
-    return resultTexture;
-}
-GLuint overlap_textures2(GLuint tex_below, GLuint tex_above, GLuint shader)
-{
-    GLuint fbo = 0;
-
-    GLuint resultTexture;
-
-    if (fbo == 0){
-        printf("CRIOU FBO");
-        glGenFramebuffers(1,&fbo);
-        glBindFramebuffer(GL_FRAMEBUFFER,fbo);
-    
-        glGenTextures(1,&resultTexture);
-        glBindTexture(GL_TEXTURE_2D,resultTexture);
-    
-        glTexImage2D(GL_TEXTURE_2D,0,GL_RGBA,640,360,0,GL_RGBA,GL_UNSIGNED_BYTE,nullptr);
-    
-        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MIN_FILTER,GL_LINEAR);
-        glTexParameteri(GL_TEXTURE_2D,GL_TEXTURE_MAG_FILTER,GL_LINEAR);
-    
-        glFramebufferTexture2D(GL_FRAMEBUFFER,GL_COLOR_ATTACHMENT0,GL_TEXTURE_2D,resultTexture,0);
-        GLenum drawBuffers[1] = {GL_COLOR_ATTACHMENT0};
-        glDrawBuffers(1, drawBuffers);
-
-    }
-    if(glCheckFramebufferStatus(GL_FRAMEBUFFER)!=GL_FRAMEBUFFER_COMPLETE){
-        printf("FBO ERROR\n");
-    }
-        glBindFramebuffer(GL_FRAMEBUFFER,fbo);
-
-    glViewport(0,0,640,360);
-
-    glUseProgram(shader);
-    GLint current;
-    glGetIntegerv(GL_CURRENT_PROGRAM, &current);
-
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D,tex_below);
-    glUniform1i(glGetUniformLocation(shader,"tex1"),0);
-
-    glActiveTexture(GL_TEXTURE1);
-    glBindTexture(GL_TEXTURE_2D,tex_above);
-    glUniform1i(glGetUniformLocation(shader,"tex2"),1);
-
-    glClear(GL_COLOR_BUFFER_BIT);
-
-    // glClearColor(1,0,0,1);
-// glClear(GL_COLOR_BUFFER_BIT);
-
-glUniform2f(glGetUniformLocation(shader, "overlayPos"), 0.25f + sin(glfwGetTime())*.2, 0.25f);
-glUniform2f(glGetUniformLocation(shader, "overlaySize"), 0.5f, 0.5f);
     RenderQuad();
 
     glBindFramebuffer(GL_FRAMEBUFFER,0);
@@ -240,3 +184,9 @@ std::string fs_source = readFileToString("shaders/overlay.frag.glsl");
 const char* fs = fs_source.c_str();
 std::string vs_source = readFileToString("shaders/overlay.vertex.glsl");
 const char* vs = vs_source.c_str();
+
+
+std::string fs_transform_source = readFileToString("shaders/transform.frag.glsl");
+const char* fs_transform = fs_transform_source.c_str();
+std::string vs_transform_source = readFileToString("shaders/transform.vertex.glsl");
+const char* vs_transform = vs_transform_source.c_str();
