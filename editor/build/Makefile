@@ -135,29 +135,173 @@ editor/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/build
 .PHONY : editor/fast
 
-src/ffmpeg.obj: src/ffmpeg.cpp.obj
-.PHONY : src/ffmpeg.obj
+src/application/render.obj: src/application/render.cpp.obj
+.PHONY : src/application/render.obj
 
 # target to build an object file
-src/ffmpeg.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/ffmpeg.cpp.obj
-.PHONY : src/ffmpeg.cpp.obj
+src/application/render.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/application/render.cpp.obj
+.PHONY : src/application/render.cpp.obj
 
-src/ffmpeg.i: src/ffmpeg.cpp.i
-.PHONY : src/ffmpeg.i
+src/application/render.i: src/application/render.cpp.i
+.PHONY : src/application/render.i
 
 # target to preprocess a source file
-src/ffmpeg.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/ffmpeg.cpp.i
-.PHONY : src/ffmpeg.cpp.i
+src/application/render.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/application/render.cpp.i
+.PHONY : src/application/render.cpp.i
 
-src/ffmpeg.s: src/ffmpeg.cpp.s
-.PHONY : src/ffmpeg.s
+src/application/render.s: src/application/render.cpp.s
+.PHONY : src/application/render.s
 
 # target to generate assembly for a file
-src/ffmpeg.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/ffmpeg.cpp.s
-.PHONY : src/ffmpeg.cpp.s
+src/application/render.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/application/render.cpp.s
+.PHONY : src/application/render.cpp.s
+
+src/domain/shadercomponent.obj: src/domain/shadercomponent.cpp.obj
+.PHONY : src/domain/shadercomponent.obj
+
+# target to build an object file
+src/domain/shadercomponent.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/domain/shadercomponent.cpp.obj
+.PHONY : src/domain/shadercomponent.cpp.obj
+
+src/domain/shadercomponent.i: src/domain/shadercomponent.cpp.i
+.PHONY : src/domain/shadercomponent.i
+
+# target to preprocess a source file
+src/domain/shadercomponent.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/domain/shadercomponent.cpp.i
+.PHONY : src/domain/shadercomponent.cpp.i
+
+src/domain/shadercomponent.s: src/domain/shadercomponent.cpp.s
+.PHONY : src/domain/shadercomponent.s
+
+# target to generate assembly for a file
+src/domain/shadercomponent.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/domain/shadercomponent.cpp.s
+.PHONY : src/domain/shadercomponent.cpp.s
+
+src/domain/timeline.obj: src/domain/timeline.cpp.obj
+.PHONY : src/domain/timeline.obj
+
+# target to build an object file
+src/domain/timeline.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/domain/timeline.cpp.obj
+.PHONY : src/domain/timeline.cpp.obj
+
+src/domain/timeline.i: src/domain/timeline.cpp.i
+.PHONY : src/domain/timeline.i
+
+# target to preprocess a source file
+src/domain/timeline.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/domain/timeline.cpp.i
+.PHONY : src/domain/timeline.cpp.i
+
+src/domain/timeline.s: src/domain/timeline.cpp.s
+.PHONY : src/domain/timeline.s
+
+# target to generate assembly for a file
+src/domain/timeline.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/domain/timeline.cpp.s
+.PHONY : src/domain/timeline.cpp.s
+
+src/infrastructure/ffmpeg.obj: src/infrastructure/ffmpeg.cpp.obj
+.PHONY : src/infrastructure/ffmpeg.obj
+
+# target to build an object file
+src/infrastructure/ffmpeg.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/infrastructure/ffmpeg.cpp.obj
+.PHONY : src/infrastructure/ffmpeg.cpp.obj
+
+src/infrastructure/ffmpeg.i: src/infrastructure/ffmpeg.cpp.i
+.PHONY : src/infrastructure/ffmpeg.i
+
+# target to preprocess a source file
+src/infrastructure/ffmpeg.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/infrastructure/ffmpeg.cpp.i
+.PHONY : src/infrastructure/ffmpeg.cpp.i
+
+src/infrastructure/ffmpeg.s: src/infrastructure/ffmpeg.cpp.s
+.PHONY : src/infrastructure/ffmpeg.s
+
+# target to generate assembly for a file
+src/infrastructure/ffmpeg.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/infrastructure/ffmpeg.cpp.s
+.PHONY : src/infrastructure/ffmpeg.cpp.s
+
+src/infrastructure/mediapool.obj: src/infrastructure/mediapool.cpp.obj
+.PHONY : src/infrastructure/mediapool.obj
+
+# target to build an object file
+src/infrastructure/mediapool.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/infrastructure/mediapool.cpp.obj
+.PHONY : src/infrastructure/mediapool.cpp.obj
+
+src/infrastructure/mediapool.i: src/infrastructure/mediapool.cpp.i
+.PHONY : src/infrastructure/mediapool.i
+
+# target to preprocess a source file
+src/infrastructure/mediapool.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/infrastructure/mediapool.cpp.i
+.PHONY : src/infrastructure/mediapool.cpp.i
+
+src/infrastructure/mediapool.s: src/infrastructure/mediapool.cpp.s
+.PHONY : src/infrastructure/mediapool.s
+
+# target to generate assembly for a file
+src/infrastructure/mediapool.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/infrastructure/mediapool.cpp.s
+.PHONY : src/infrastructure/mediapool.cpp.s
+
+src/infrastructure/opengl.obj: src/infrastructure/opengl.cpp.obj
+.PHONY : src/infrastructure/opengl.obj
+
+# target to build an object file
+src/infrastructure/opengl.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/infrastructure/opengl.cpp.obj
+.PHONY : src/infrastructure/opengl.cpp.obj
+
+src/infrastructure/opengl.i: src/infrastructure/opengl.cpp.i
+.PHONY : src/infrastructure/opengl.i
+
+# target to preprocess a source file
+src/infrastructure/opengl.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/infrastructure/opengl.cpp.i
+.PHONY : src/infrastructure/opengl.cpp.i
+
+src/infrastructure/opengl.s: src/infrastructure/opengl.cpp.s
+.PHONY : src/infrastructure/opengl.s
+
+# target to generate assembly for a file
+src/infrastructure/opengl.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/infrastructure/opengl.cpp.s
+.PHONY : src/infrastructure/opengl.cpp.s
+
+src/infrastructure/timelinewalker.obj: src/infrastructure/timelinewalker.cpp.obj
+.PHONY : src/infrastructure/timelinewalker.obj
+
+# target to build an object file
+src/infrastructure/timelinewalker.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/infrastructure/timelinewalker.cpp.obj
+.PHONY : src/infrastructure/timelinewalker.cpp.obj
+
+src/infrastructure/timelinewalker.i: src/infrastructure/timelinewalker.cpp.i
+.PHONY : src/infrastructure/timelinewalker.i
+
+# target to preprocess a source file
+src/infrastructure/timelinewalker.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/infrastructure/timelinewalker.cpp.i
+.PHONY : src/infrastructure/timelinewalker.cpp.i
+
+src/infrastructure/timelinewalker.s: src/infrastructure/timelinewalker.cpp.s
+.PHONY : src/infrastructure/timelinewalker.s
+
+# target to generate assembly for a file
+src/infrastructure/timelinewalker.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/infrastructure/timelinewalker.cpp.s
+.PHONY : src/infrastructure/timelinewalker.cpp.s
 
 src/main.obj: src/main.cpp.obj
 .PHONY : src/main.obj
@@ -182,78 +326,6 @@ src/main.s: src/main.cpp.s
 src/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
-
-src/opengl.obj: src/opengl.cpp.obj
-.PHONY : src/opengl.obj
-
-# target to build an object file
-src/opengl.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/opengl.cpp.obj
-.PHONY : src/opengl.cpp.obj
-
-src/opengl.i: src/opengl.cpp.i
-.PHONY : src/opengl.i
-
-# target to preprocess a source file
-src/opengl.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/opengl.cpp.i
-.PHONY : src/opengl.cpp.i
-
-src/opengl.s: src/opengl.cpp.s
-.PHONY : src/opengl.s
-
-# target to generate assembly for a file
-src/opengl.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/opengl.cpp.s
-.PHONY : src/opengl.cpp.s
-
-src/shadercomponent.obj: src/shadercomponent.cpp.obj
-.PHONY : src/shadercomponent.obj
-
-# target to build an object file
-src/shadercomponent.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/shadercomponent.cpp.obj
-.PHONY : src/shadercomponent.cpp.obj
-
-src/shadercomponent.i: src/shadercomponent.cpp.i
-.PHONY : src/shadercomponent.i
-
-# target to preprocess a source file
-src/shadercomponent.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/shadercomponent.cpp.i
-.PHONY : src/shadercomponent.cpp.i
-
-src/shadercomponent.s: src/shadercomponent.cpp.s
-.PHONY : src/shadercomponent.s
-
-# target to generate assembly for a file
-src/shadercomponent.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/shadercomponent.cpp.s
-.PHONY : src/shadercomponent.cpp.s
-
-src/timeline.obj: src/timeline.cpp.obj
-.PHONY : src/timeline.obj
-
-# target to build an object file
-src/timeline.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/timeline.cpp.obj
-.PHONY : src/timeline.cpp.obj
-
-src/timeline.i: src/timeline.cpp.i
-.PHONY : src/timeline.i
-
-# target to preprocess a source file
-src/timeline.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/timeline.cpp.i
-.PHONY : src/timeline.cpp.i
-
-src/timeline.s: src/timeline.cpp.s
-.PHONY : src/timeline.s
-
-# target to generate assembly for a file
-src/timeline.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/src/timeline.cpp.s
-.PHONY : src/timeline.cpp.s
 
 vendor/stb.obj: vendor/stb.cpp.obj
 .PHONY : vendor/stb.obj
@@ -289,21 +361,30 @@ help:
 	@echo ... edit_cache
 	@echo ... rebuild_cache
 	@echo ... editor
-	@echo ... src/ffmpeg.obj
-	@echo ... src/ffmpeg.i
-	@echo ... src/ffmpeg.s
+	@echo ... src/application/render.obj
+	@echo ... src/application/render.i
+	@echo ... src/application/render.s
+	@echo ... src/domain/shadercomponent.obj
+	@echo ... src/domain/shadercomponent.i
+	@echo ... src/domain/shadercomponent.s
+	@echo ... src/domain/timeline.obj
+	@echo ... src/domain/timeline.i
+	@echo ... src/domain/timeline.s
+	@echo ... src/infrastructure/ffmpeg.obj
+	@echo ... src/infrastructure/ffmpeg.i
+	@echo ... src/infrastructure/ffmpeg.s
+	@echo ... src/infrastructure/mediapool.obj
+	@echo ... src/infrastructure/mediapool.i
+	@echo ... src/infrastructure/mediapool.s
+	@echo ... src/infrastructure/opengl.obj
+	@echo ... src/infrastructure/opengl.i
+	@echo ... src/infrastructure/opengl.s
+	@echo ... src/infrastructure/timelinewalker.obj
+	@echo ... src/infrastructure/timelinewalker.i
+	@echo ... src/infrastructure/timelinewalker.s
 	@echo ... src/main.obj
 	@echo ... src/main.i
 	@echo ... src/main.s
-	@echo ... src/opengl.obj
-	@echo ... src/opengl.i
-	@echo ... src/opengl.s
-	@echo ... src/shadercomponent.obj
-	@echo ... src/shadercomponent.i
-	@echo ... src/shadercomponent.s
-	@echo ... src/timeline.obj
-	@echo ... src/timeline.i
-	@echo ... src/timeline.s
 	@echo ... vendor/stb.obj
 	@echo ... vendor/stb.i
 	@echo ... vendor/stb.s

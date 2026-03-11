@@ -7,32 +7,50 @@
 },
 {
   "directory": "C:/Users/gabri/Documents/Code/videoeditor/editor/build",
-  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/editor.dir/includes_CXX.rsp -g -o CMakeFiles\\editor.dir\\src\\ffmpeg.cpp.obj -c C:\\Users\\gabri\\Documents\\Code\\videoeditor\\editor\\src\\ffmpeg.cpp",
-  "file": "C:/Users/gabri/Documents/Code/videoeditor/editor/src/ffmpeg.cpp",
-  "output": "CMakeFiles/editor.dir/src/ffmpeg.cpp.obj"
-},
-{
-  "directory": "C:/Users/gabri/Documents/Code/videoeditor/editor/build",
-  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/editor.dir/includes_CXX.rsp -g -o CMakeFiles\\editor.dir\\src\\opengl.cpp.obj -c C:\\Users\\gabri\\Documents\\Code\\videoeditor\\editor\\src\\opengl.cpp",
-  "file": "C:/Users/gabri/Documents/Code/videoeditor/editor/src/opengl.cpp",
-  "output": "CMakeFiles/editor.dir/src/opengl.cpp.obj"
-},
-{
-  "directory": "C:/Users/gabri/Documents/Code/videoeditor/editor/build",
-  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/editor.dir/includes_CXX.rsp -g -o CMakeFiles\\editor.dir\\src\\timeline.cpp.obj -c C:\\Users\\gabri\\Documents\\Code\\videoeditor\\editor\\src\\timeline.cpp",
-  "file": "C:/Users/gabri/Documents/Code/videoeditor/editor/src/timeline.cpp",
-  "output": "CMakeFiles/editor.dir/src/timeline.cpp.obj"
-},
-{
-  "directory": "C:/Users/gabri/Documents/Code/videoeditor/editor/build",
-  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/editor.dir/includes_CXX.rsp -g -o CMakeFiles\\editor.dir\\src\\shadercomponent.cpp.obj -c C:\\Users\\gabri\\Documents\\Code\\videoeditor\\editor\\src\\shadercomponent.cpp",
-  "file": "C:/Users/gabri/Documents/Code/videoeditor/editor/src/shadercomponent.cpp",
-  "output": "CMakeFiles/editor.dir/src/shadercomponent.cpp.obj"
-},
-{
-  "directory": "C:/Users/gabri/Documents/Code/videoeditor/editor/build",
   "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/editor.dir/includes_CXX.rsp -g -o CMakeFiles\\editor.dir\\vendor\\stb.cpp.obj -c C:\\Users\\gabri\\Documents\\Code\\videoeditor\\editor\\vendor\\stb.cpp",
   "file": "C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/stb.cpp",
   "output": "CMakeFiles/editor.dir/vendor/stb.cpp.obj"
+},
+{
+  "directory": "C:/Users/gabri/Documents/Code/videoeditor/editor/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/editor.dir/includes_CXX.rsp -g -o CMakeFiles\\editor.dir\\src\\application\\render.cpp.obj -c C:\\Users\\gabri\\Documents\\Code\\videoeditor\\editor\\src\\application\\render.cpp",
+  "file": "C:/Users/gabri/Documents/Code/videoeditor/editor/src/application/render.cpp",
+  "output": "CMakeFiles/editor.dir/src/application/render.cpp.obj"
+},
+{
+  "directory": "C:/Users/gabri/Documents/Code/videoeditor/editor/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/editor.dir/includes_CXX.rsp -g -o CMakeFiles\\editor.dir\\src\\infrastructure\\ffmpeg.cpp.obj -c C:\\Users\\gabri\\Documents\\Code\\videoeditor\\editor\\src\\infrastructure\\ffmpeg.cpp",
+  "file": "C:/Users/gabri/Documents/Code/videoeditor/editor/src/infrastructure/ffmpeg.cpp",
+  "output": "CMakeFiles/editor.dir/src/infrastructure/ffmpeg.cpp.obj"
+},
+{
+  "directory": "C:/Users/gabri/Documents/Code/videoeditor/editor/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/editor.dir/includes_CXX.rsp -g -o CMakeFiles\\editor.dir\\src\\infrastructure\\opengl.cpp.obj -c C:\\Users\\gabri\\Documents\\Code\\videoeditor\\editor\\src\\infrastructure\\opengl.cpp",
+  "file": "C:/Users/gabri/Documents/Code/videoeditor/editor/src/infrastructure/opengl.cpp",
+  "output": "CMakeFiles/editor.dir/src/infrastructure/opengl.cpp.obj"
+},
+{
+  "directory": "C:/Users/gabri/Documents/Code/videoeditor/editor/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/editor.dir/includes_CXX.rsp -g -o CMakeFiles\\editor.dir\\src\\infrastructure\\mediapool.cpp.obj -c C:\\Users\\gabri\\Documents\\Code\\videoeditor\\editor\\src\\infrastructure\\mediapool.cpp",
+  "file": "C:/Users/gabri/Documents/Code/videoeditor/editor/src/infrastructure/mediapool.cpp",
+  "output": "CMakeFiles/editor.dir/src/infrastructure/mediapool.cpp.obj"
+},
+{
+  "directory": "C:/Users/gabri/Documents/Code/videoeditor/editor/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/editor.dir/includes_CXX.rsp -g -o CMakeFiles\\editor.dir\\src\\infrastructure\\timelinewalker.cpp.obj -c C:\\Users\\gabri\\Documents\\Code\\videoeditor\\editor\\src\\infrastructure\\timelinewalker.cpp",
+  "file": "C:/Users/gabri/Documents/Code/videoeditor/editor/src/infrastructure/timelinewalker.cpp",
+  "output": "CMakeFiles/editor.dir/src/infrastructure/timelinewalker.cpp.obj"
+},
+{
+  "directory": "C:/Users/gabri/Documents/Code/videoeditor/editor/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/editor.dir/includes_CXX.rsp -g -o CMakeFiles\\editor.dir\\src\\domain\\timeline.cpp.obj -c C:\\Users\\gabri\\Documents\\Code\\videoeditor\\editor\\src\\domain\\timeline.cpp",
+  "file": "C:/Users/gabri/Documents/Code/videoeditor/editor/src/domain/timeline.cpp",
+  "output": "CMakeFiles/editor.dir/src/domain/timeline.cpp.obj"
+},
+{
+  "directory": "C:/Users/gabri/Documents/Code/videoeditor/editor/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/editor.dir/includes_CXX.rsp -g -o CMakeFiles\\editor.dir\\src\\domain\\shadercomponent.cpp.obj -c C:\\Users\\gabri\\Documents\\Code\\videoeditor\\editor\\src\\domain\\shadercomponent.cpp",
+  "file": "C:/Users/gabri/Documents/Code/videoeditor/editor/src/domain/shadercomponent.cpp",
+  "output": "CMakeFiles/editor.dir/src/domain/shadercomponent.cpp.obj"
 }
 ]
