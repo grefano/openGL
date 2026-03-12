@@ -77,3 +77,7 @@ void Timeline::key_callback(int key, int action){
     }
 }
 
+void VideoClip::accept(ClipVisitor* visitor, Clip* clip, Render* render, float rel_ts){
+    printf("accepted clip t0 %f t1 %f rel_ts %f\n", clip->tl_time0, clip->tl_time1, rel_ts);
+    visitor->visit(*this, clip, render, rel_ts);
+}

@@ -7,15 +7,22 @@
 #include <GLFW/glfw3.h>
 #include <memory>
 #include <imgui.h>
-struct RenderDescriptor;
+class Render;
+struct VideoClip;
+struct Clip;
+struct ClipVisitor{
+    virtual void visit(VideoClip& masterclip, Clip* clip, Render* render, float rel_ts) = 0;
+};
 struct MasterClip{ // liga o clipe ao mediasource e ao filereader, decide como renderização acontece
     MediaSource* source;
+    virtual void accept(ClipVisitor* visitor, Clip* clip, Render* render, float rel_ts) = 0;
 };
 
 struct VideoClip : public MasterClip{
     VideoReader reader;
     VideoClip(const char* filepath) : reader(filepath){
     }
+    void accept(ClipVisitor* visitor, Clip* clip, Render* render, float rel_ts);
 
 };
 
@@ -27,6 +34,9 @@ struct Clip{
     Clip(float t0, float t1){
         this->tl_time0 = t0;
         this->tl_time1 = t1;
+    }
+    ~Clip(){
+        delete masterclip;
     }
 
     template <typename T>

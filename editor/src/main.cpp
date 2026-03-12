@@ -31,9 +31,12 @@ namespace TL_APPLICATION{
         MediaSource* file1 = (*mediapool).add_file(filepath);
         printf(file1->filepath);
         Clip* clip = (*tl).add_clip(track, time_tl.x, time_tl.y);
-        VideoClip videoclip(filepath);
-        videoclip.source = file1;
-        clip->masterclip = &videoclip;
+        float scale = 2;
+        // auto comp = clip->add_component<Transform>();
+        // comp->scale = {scale, scale};
+        // comp->position = {.5,.5};
+        clip->masterclip = new VideoClip(filepath);
+        clip->masterclip->source = file1;
         return clip;
     }
 
@@ -66,7 +69,16 @@ int main(){
     Mediapool mediapool;
     TL_APPLICATION::mediapool = &mediapool;
     printf("mediapool");
-    Clip* clip = add_clip(0, {5, 20}, "video3.mp4");
+    
+    Clip* clip = add_clip(0, {5, 20}, "teste.mp4");
+    Transform* comp = clip->add_component<Transform>();
+    comp->position = {0, 0};
+    comp->scale = {2, 2};
+
+    clip = add_clip(1, {0, 10}, "video3.mp4");
+    comp = clip->add_component<Transform>();
+    comp->position = {0, 0};
+    comp->scale = {1, 1};
     printf("clip");
 
 
@@ -108,8 +120,8 @@ int main(){
     printf("draw preview");
         UIpreview.draw(&tl, render.playhead_tex, render.preview_dimensions);
         // printf("DIM %d %d", clip->, clip->h);
-        // ImGui::Image( tl.clip_tex, ImVec2(clip->w, clip->h));
-        // ImGui::Image( tl.clip_result_tex, ImVec2(clip->w, clip->h));
+        ImGui::Image( render.clip_tex, ImVec2(640, 360));
+        ImGui::Image( render.clip_result_tex, ImVec2(640, 360));
 
 
         ImGui::Render();

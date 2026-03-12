@@ -34,8 +34,8 @@ void ComponentShader::get_tex(GLuint tex, GLuint result_tex, GLuint fbo){
     }
 
     glViewport(0,0,w,h);
-
-
+    
+    assert(w > 0 && h > 0);
     glUseProgram(this->shader);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, tex);
