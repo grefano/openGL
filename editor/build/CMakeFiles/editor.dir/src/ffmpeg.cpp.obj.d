@@ -1,6 +1,6 @@
 CMakeFiles/editor.dir/src/ffmpeg.cpp.obj: \
- C:\Users\gabri\Documents\Code\videoeditor\editor\src\ffmpeg.cpp \
- C:\Users\gabri\Documents\Code\videoeditor\editor\src\ffmpeg.h \
+ J:\code\videoeditor\editor\src\ffmpeg.cpp \
+ J:\code\videoeditor\editor\src\ffmpeg.h \
  C:/msys64/ucrt64/include/GLFW/glfw3.h \
  C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/stddef.h \
  C:/msys64/ucrt64/include/stddef.h C:/msys64/ucrt64/include/crtdefs.h \

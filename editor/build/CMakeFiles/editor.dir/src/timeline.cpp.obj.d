@@ -1,8 +1,8 @@
 CMakeFiles/editor.dir/src/timeline.cpp.obj: \
- C:\Users\gabri\Documents\Code\videoeditor\editor\src\timeline.cpp \
- C:\Users\gabri\Documents\Code\videoeditor\editor\src\timeline.hpp \
- C:\Users\gabri\Documents\Code\videoeditor\editor\src\opengl.h \
- C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/glad.h \
+ J:\code\videoeditor\editor\src\timeline.cpp \
+ J:\code\videoeditor\editor\src\timeline.hpp \
+ J:\code\videoeditor\editor\src\opengl.h \
+ J:/code/videoeditor/editor/vendor/glad.h \
  C:/msys64/ucrt64/include/KHR/khrplatform.h \
  C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/stdint.h \
  C:/msys64/ucrt64/include/stdint.h C:/msys64/ucrt64/include/crtdefs.h \
@@ -173,7 +173,7 @@ CMakeFiles/editor.dir/src/timeline.cpp.obj: \
  C:/msys64/ucrt64/include/c++/15.2.0/iterator \
  C:/msys64/ucrt64/include/c++/15.2.0/bits/stream_iterator.h \
  C:/msys64/ucrt64/include/c++/15.2.0/iostream \
- C:\Users\gabri\Documents\Code\videoeditor\editor\src\ffmpeg.h \
+ J:\code\videoeditor\editor\src\ffmpeg.h \
  C:/msys64/ucrt64/include/libavcodec/avcodec.h \
  C:/msys64/ucrt64/include/libavutil/samplefmt.h \
  C:/msys64/ucrt64/include/libavutil/attributes.h \
@@ -234,7 +234,7 @@ CMakeFiles/editor.dir/src/timeline.cpp.obj: \
  C:/msys64/ucrt64/include/libswscale/swscale.h \
  C:/msys64/ucrt64/include/libswscale/version_major.h \
  C:/msys64/ucrt64/include/libswscale/version.h \
- C:\Users\gabri\Documents\Code\videoeditor\editor\src\shadercomponent.hpp \
+ J:\code\videoeditor\editor\src\shadercomponent.hpp \
  C:/msys64/ucrt64/include/c++/15.2.0/list \
  C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_list.h \
  C:/msys64/ucrt64/include/c++/15.2.0/bits/allocated_ptr.h \
@@ -255,7 +255,7 @@ CMakeFiles/editor.dir/src/timeline.cpp.obj: \
  C:/msys64/ucrt64/include/c++/15.2.0/backward/auto_ptr.h \
  C:/msys64/ucrt64/include/c++/15.2.0/pstl/glue_memory_defs.h \
  C:/msys64/ucrt64/include/c++/15.2.0/pstl/execution_defs.h \
- C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imgui.h \
- C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imconfig.h \
+ J:/code/videoeditor/editor/vendor/imgui/docking/imgui.h \
+ J:/code/videoeditor/editor/vendor/imgui/docking/imconfig.h \
  C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/float.h \
  C:/msys64/ucrt64/include/float.h C:/msys64/ucrt64/include/assert.h

@@ -52,10 +52,10 @@ RM = "C:\Program Files\CMake\bin\cmake.exe" -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:\Users\gabri\Documents\Code\videoeditor\editor
+CMAKE_SOURCE_DIR = J:\code\videoeditor\editor
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = C:\Users\gabri\Documents\Code\videoeditor\editor\build
+CMAKE_BINARY_DIR = J:\code\videoeditor\editor\build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/editor.dir/depend.make
@@ -73,93 +73,93 @@ CMakeFiles/editor.dir/codegen:
 
 CMakeFiles/editor.dir/src/main.cpp.obj: CMakeFiles/editor.dir/flags.make
 CMakeFiles/editor.dir/src/main.cpp.obj: CMakeFiles/editor.dir/includes_CXX.rsp
-CMakeFiles/editor.dir/src/main.cpp.obj: C:/Users/gabri/Documents/Code/videoeditor/editor/src/main.cpp
+CMakeFiles/editor.dir/src/main.cpp.obj: J:/code/videoeditor/editor/src/main.cpp
 CMakeFiles/editor.dir/src/main.cpp.obj: CMakeFiles/editor.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\gabri\Documents\Code\videoeditor\editor\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/editor.dir/src/main.cpp.obj"
-	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/editor.dir/src/main.cpp.obj -MF CMakeFiles\editor.dir\src\main.cpp.obj.d -o CMakeFiles\editor.dir\src\main.cpp.obj -c C:\Users\gabri\Documents\Code\videoeditor\editor\src\main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=J:\code\videoeditor\editor\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/editor.dir/src/main.cpp.obj"
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/editor.dir/src/main.cpp.obj -MF CMakeFiles\editor.dir\src\main.cpp.obj.d -o CMakeFiles\editor.dir\src\main.cpp.obj -c J:\code\videoeditor\editor\src\main.cpp
 
 CMakeFiles/editor.dir/src/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/editor.dir/src/main.cpp.i"
-	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\gabri\Documents\Code\videoeditor\editor\src\main.cpp > CMakeFiles\editor.dir\src\main.cpp.i
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E J:\code\videoeditor\editor\src\main.cpp > CMakeFiles\editor.dir\src\main.cpp.i
 
 CMakeFiles/editor.dir/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/editor.dir/src/main.cpp.s"
-	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\gabri\Documents\Code\videoeditor\editor\src\main.cpp -o CMakeFiles\editor.dir\src\main.cpp.s
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S J:\code\videoeditor\editor\src\main.cpp -o CMakeFiles\editor.dir\src\main.cpp.s
 
 CMakeFiles/editor.dir/src/ffmpeg.cpp.obj: CMakeFiles/editor.dir/flags.make
 CMakeFiles/editor.dir/src/ffmpeg.cpp.obj: CMakeFiles/editor.dir/includes_CXX.rsp
-CMakeFiles/editor.dir/src/ffmpeg.cpp.obj: C:/Users/gabri/Documents/Code/videoeditor/editor/src/ffmpeg.cpp
+CMakeFiles/editor.dir/src/ffmpeg.cpp.obj: J:/code/videoeditor/editor/src/ffmpeg.cpp
 CMakeFiles/editor.dir/src/ffmpeg.cpp.obj: CMakeFiles/editor.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\gabri\Documents\Code\videoeditor\editor\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/editor.dir/src/ffmpeg.cpp.obj"
-	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/editor.dir/src/ffmpeg.cpp.obj -MF CMakeFiles\editor.dir\src\ffmpeg.cpp.obj.d -o CMakeFiles\editor.dir\src\ffmpeg.cpp.obj -c C:\Users\gabri\Documents\Code\videoeditor\editor\src\ffmpeg.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=J:\code\videoeditor\editor\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/editor.dir/src/ffmpeg.cpp.obj"
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/editor.dir/src/ffmpeg.cpp.obj -MF CMakeFiles\editor.dir\src\ffmpeg.cpp.obj.d -o CMakeFiles\editor.dir\src\ffmpeg.cpp.obj -c J:\code\videoeditor\editor\src\ffmpeg.cpp
 
 CMakeFiles/editor.dir/src/ffmpeg.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/editor.dir/src/ffmpeg.cpp.i"
-	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\gabri\Documents\Code\videoeditor\editor\src\ffmpeg.cpp > CMakeFiles\editor.dir\src\ffmpeg.cpp.i
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E J:\code\videoeditor\editor\src\ffmpeg.cpp > CMakeFiles\editor.dir\src\ffmpeg.cpp.i
 
 CMakeFiles/editor.dir/src/ffmpeg.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/editor.dir/src/ffmpeg.cpp.s"
-	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\gabri\Documents\Code\videoeditor\editor\src\ffmpeg.cpp -o CMakeFiles\editor.dir\src\ffmpeg.cpp.s
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S J:\code\videoeditor\editor\src\ffmpeg.cpp -o CMakeFiles\editor.dir\src\ffmpeg.cpp.s
 
 CMakeFiles/editor.dir/src/opengl.cpp.obj: CMakeFiles/editor.dir/flags.make
 CMakeFiles/editor.dir/src/opengl.cpp.obj: CMakeFiles/editor.dir/includes_CXX.rsp
-CMakeFiles/editor.dir/src/opengl.cpp.obj: C:/Users/gabri/Documents/Code/videoeditor/editor/src/opengl.cpp
+CMakeFiles/editor.dir/src/opengl.cpp.obj: J:/code/videoeditor/editor/src/opengl.cpp
 CMakeFiles/editor.dir/src/opengl.cpp.obj: CMakeFiles/editor.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\gabri\Documents\Code\videoeditor\editor\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/editor.dir/src/opengl.cpp.obj"
-	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/editor.dir/src/opengl.cpp.obj -MF CMakeFiles\editor.dir\src\opengl.cpp.obj.d -o CMakeFiles\editor.dir\src\opengl.cpp.obj -c C:\Users\gabri\Documents\Code\videoeditor\editor\src\opengl.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=J:\code\videoeditor\editor\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/editor.dir/src/opengl.cpp.obj"
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/editor.dir/src/opengl.cpp.obj -MF CMakeFiles\editor.dir\src\opengl.cpp.obj.d -o CMakeFiles\editor.dir\src\opengl.cpp.obj -c J:\code\videoeditor\editor\src\opengl.cpp
 
 CMakeFiles/editor.dir/src/opengl.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/editor.dir/src/opengl.cpp.i"
-	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\gabri\Documents\Code\videoeditor\editor\src\opengl.cpp > CMakeFiles\editor.dir\src\opengl.cpp.i
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E J:\code\videoeditor\editor\src\opengl.cpp > CMakeFiles\editor.dir\src\opengl.cpp.i
 
 CMakeFiles/editor.dir/src/opengl.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/editor.dir/src/opengl.cpp.s"
-	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\gabri\Documents\Code\videoeditor\editor\src\opengl.cpp -o CMakeFiles\editor.dir\src\opengl.cpp.s
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S J:\code\videoeditor\editor\src\opengl.cpp -o CMakeFiles\editor.dir\src\opengl.cpp.s
 
 CMakeFiles/editor.dir/src/timeline.cpp.obj: CMakeFiles/editor.dir/flags.make
 CMakeFiles/editor.dir/src/timeline.cpp.obj: CMakeFiles/editor.dir/includes_CXX.rsp
-CMakeFiles/editor.dir/src/timeline.cpp.obj: C:/Users/gabri/Documents/Code/videoeditor/editor/src/timeline.cpp
+CMakeFiles/editor.dir/src/timeline.cpp.obj: J:/code/videoeditor/editor/src/timeline.cpp
 CMakeFiles/editor.dir/src/timeline.cpp.obj: CMakeFiles/editor.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\gabri\Documents\Code\videoeditor\editor\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/editor.dir/src/timeline.cpp.obj"
-	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/editor.dir/src/timeline.cpp.obj -MF CMakeFiles\editor.dir\src\timeline.cpp.obj.d -o CMakeFiles\editor.dir\src\timeline.cpp.obj -c C:\Users\gabri\Documents\Code\videoeditor\editor\src\timeline.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=J:\code\videoeditor\editor\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/editor.dir/src/timeline.cpp.obj"
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/editor.dir/src/timeline.cpp.obj -MF CMakeFiles\editor.dir\src\timeline.cpp.obj.d -o CMakeFiles\editor.dir\src\timeline.cpp.obj -c J:\code\videoeditor\editor\src\timeline.cpp
 
 CMakeFiles/editor.dir/src/timeline.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/editor.dir/src/timeline.cpp.i"
-	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\gabri\Documents\Code\videoeditor\editor\src\timeline.cpp > CMakeFiles\editor.dir\src\timeline.cpp.i
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E J:\code\videoeditor\editor\src\timeline.cpp > CMakeFiles\editor.dir\src\timeline.cpp.i
 
 CMakeFiles/editor.dir/src/timeline.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/editor.dir/src/timeline.cpp.s"
-	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\gabri\Documents\Code\videoeditor\editor\src\timeline.cpp -o CMakeFiles\editor.dir\src\timeline.cpp.s
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S J:\code\videoeditor\editor\src\timeline.cpp -o CMakeFiles\editor.dir\src\timeline.cpp.s
 
 CMakeFiles/editor.dir/src/shadercomponent.cpp.obj: CMakeFiles/editor.dir/flags.make
 CMakeFiles/editor.dir/src/shadercomponent.cpp.obj: CMakeFiles/editor.dir/includes_CXX.rsp
-CMakeFiles/editor.dir/src/shadercomponent.cpp.obj: C:/Users/gabri/Documents/Code/videoeditor/editor/src/shadercomponent.cpp
+CMakeFiles/editor.dir/src/shadercomponent.cpp.obj: J:/code/videoeditor/editor/src/shadercomponent.cpp
 CMakeFiles/editor.dir/src/shadercomponent.cpp.obj: CMakeFiles/editor.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\gabri\Documents\Code\videoeditor\editor\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/editor.dir/src/shadercomponent.cpp.obj"
-	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/editor.dir/src/shadercomponent.cpp.obj -MF CMakeFiles\editor.dir\src\shadercomponent.cpp.obj.d -o CMakeFiles\editor.dir\src\shadercomponent.cpp.obj -c C:\Users\gabri\Documents\Code\videoeditor\editor\src\shadercomponent.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=J:\code\videoeditor\editor\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/editor.dir/src/shadercomponent.cpp.obj"
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/editor.dir/src/shadercomponent.cpp.obj -MF CMakeFiles\editor.dir\src\shadercomponent.cpp.obj.d -o CMakeFiles\editor.dir\src\shadercomponent.cpp.obj -c J:\code\videoeditor\editor\src\shadercomponent.cpp
 
 CMakeFiles/editor.dir/src/shadercomponent.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/editor.dir/src/shadercomponent.cpp.i"
-	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\gabri\Documents\Code\videoeditor\editor\src\shadercomponent.cpp > CMakeFiles\editor.dir\src\shadercomponent.cpp.i
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E J:\code\videoeditor\editor\src\shadercomponent.cpp > CMakeFiles\editor.dir\src\shadercomponent.cpp.i
 
 CMakeFiles/editor.dir/src/shadercomponent.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/editor.dir/src/shadercomponent.cpp.s"
-	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\gabri\Documents\Code\videoeditor\editor\src\shadercomponent.cpp -o CMakeFiles\editor.dir\src\shadercomponent.cpp.s
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S J:\code\videoeditor\editor\src\shadercomponent.cpp -o CMakeFiles\editor.dir\src\shadercomponent.cpp.s
 
 CMakeFiles/editor.dir/vendor/stb.cpp.obj: CMakeFiles/editor.dir/flags.make
 CMakeFiles/editor.dir/vendor/stb.cpp.obj: CMakeFiles/editor.dir/includes_CXX.rsp
-CMakeFiles/editor.dir/vendor/stb.cpp.obj: C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/stb.cpp
+CMakeFiles/editor.dir/vendor/stb.cpp.obj: J:/code/videoeditor/editor/vendor/stb.cpp
 CMakeFiles/editor.dir/vendor/stb.cpp.obj: CMakeFiles/editor.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=C:\Users\gabri\Documents\Code\videoeditor\editor\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/editor.dir/vendor/stb.cpp.obj"
-	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/editor.dir/vendor/stb.cpp.obj -MF CMakeFiles\editor.dir\vendor\stb.cpp.obj.d -o CMakeFiles\editor.dir\vendor\stb.cpp.obj -c C:\Users\gabri\Documents\Code\videoeditor\editor\vendor\stb.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=J:\code\videoeditor\editor\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/editor.dir/vendor/stb.cpp.obj"
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/editor.dir/vendor/stb.cpp.obj -MF CMakeFiles\editor.dir\vendor\stb.cpp.obj.d -o CMakeFiles\editor.dir\vendor\stb.cpp.obj -c J:\code\videoeditor\editor\vendor\stb.cpp
 
 CMakeFiles/editor.dir/vendor/stb.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/editor.dir/vendor/stb.cpp.i"
-	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\gabri\Documents\Code\videoeditor\editor\vendor\stb.cpp > CMakeFiles\editor.dir\vendor\stb.cpp.i
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E J:\code\videoeditor\editor\vendor\stb.cpp > CMakeFiles\editor.dir\vendor\stb.cpp.i
 
 CMakeFiles/editor.dir/vendor/stb.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/editor.dir/vendor/stb.cpp.s"
-	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\gabri\Documents\Code\videoeditor\editor\vendor\stb.cpp -o CMakeFiles\editor.dir\vendor\stb.cpp.s
+	C:\msys64\ucrt64\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S J:\code\videoeditor\editor\vendor\stb.cpp -o CMakeFiles\editor.dir\vendor\stb.cpp.s
 
 # Object files for target editor
 editor_OBJECTS = \
@@ -172,14 +172,14 @@ editor_OBJECTS = \
 
 # External object files for target editor
 editor_EXTERNAL_OBJECTS = \
-"C:/Users/gabri/Documents/Code/videoeditor/editor/libs/glad.o" \
-"C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imgui.o" \
-"C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imgui_demo.o" \
-"C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imgui_draw.o" \
-"C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imgui_impl_glfw.o" \
-"C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imgui_impl_opengl3.o" \
-"C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imgui_tables.o" \
-"C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imgui_widgets.o"
+"J:/code/videoeditor/editor/libs/glad.o" \
+"J:/code/videoeditor/editor/vendor/imgui/docking/imgui.o" \
+"J:/code/videoeditor/editor/vendor/imgui/docking/imgui_demo.o" \
+"J:/code/videoeditor/editor/vendor/imgui/docking/imgui_draw.o" \
+"J:/code/videoeditor/editor/vendor/imgui/docking/imgui_impl_glfw.o" \
+"J:/code/videoeditor/editor/vendor/imgui/docking/imgui_impl_opengl3.o" \
+"J:/code/videoeditor/editor/vendor/imgui/docking/imgui_tables.o" \
+"J:/code/videoeditor/editor/vendor/imgui/docking/imgui_widgets.o"
 
 editor.exe: CMakeFiles/editor.dir/src/main.cpp.obj
 editor.exe: CMakeFiles/editor.dir/src/ffmpeg.cpp.obj
@@ -187,24 +187,19 @@ editor.exe: CMakeFiles/editor.dir/src/opengl.cpp.obj
 editor.exe: CMakeFiles/editor.dir/src/timeline.cpp.obj
 editor.exe: CMakeFiles/editor.dir/src/shadercomponent.cpp.obj
 editor.exe: CMakeFiles/editor.dir/vendor/stb.cpp.obj
-editor.exe: C:/Users/gabri/Documents/Code/videoeditor/editor/libs/glad.o
-editor.exe: C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imgui.o
-editor.exe: C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imgui_demo.o
-editor.exe: C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imgui_draw.o
-editor.exe: C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imgui_impl_glfw.o
-editor.exe: C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imgui_impl_opengl3.o
-editor.exe: C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imgui_tables.o
-editor.exe: C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imgui_widgets.o
+editor.exe: J:/code/videoeditor/editor/libs/glad.o
+editor.exe: J:/code/videoeditor/editor/vendor/imgui/docking/imgui.o
+editor.exe: J:/code/videoeditor/editor/vendor/imgui/docking/imgui_demo.o
+editor.exe: J:/code/videoeditor/editor/vendor/imgui/docking/imgui_draw.o
+editor.exe: J:/code/videoeditor/editor/vendor/imgui/docking/imgui_impl_glfw.o
+editor.exe: J:/code/videoeditor/editor/vendor/imgui/docking/imgui_impl_opengl3.o
+editor.exe: J:/code/videoeditor/editor/vendor/imgui/docking/imgui_tables.o
+editor.exe: J:/code/videoeditor/editor/vendor/imgui/docking/imgui_widgets.o
 editor.exe: CMakeFiles/editor.dir/build.make
-editor.exe: C:/msys64/ucrt64/lib/libavcodec.dll.a
-editor.exe: C:/msys64/ucrt64/lib/libavformat.dll.a
-editor.exe: C:/msys64/ucrt64/lib/libavutil.dll.a
-editor.exe: C:/msys64/ucrt64/lib/libswscale.dll.a
-editor.exe: C:/msys64/ucrt64/lib/libglfw3.dll.a
 editor.exe: CMakeFiles/editor.dir/linkLibs.rsp
 editor.exe: CMakeFiles/editor.dir/objects1.rsp
 editor.exe: CMakeFiles/editor.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=C:\Users\gabri\Documents\Code\videoeditor\editor\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable editor.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=J:\code\videoeditor\editor\build\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable editor.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\editor.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -216,6 +211,6 @@ CMakeFiles/editor.dir/clean:
 .PHONY : CMakeFiles/editor.dir/clean
 
 CMakeFiles/editor.dir/depend:
-	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" C:\Users\gabri\Documents\Code\videoeditor\editor C:\Users\gabri\Documents\Code\videoeditor\editor C:\Users\gabri\Documents\Code\videoeditor\editor\build C:\Users\gabri\Documents\Code\videoeditor\editor\build C:\Users\gabri\Documents\Code\videoeditor\editor\build\CMakeFiles\editor.dir\DependInfo.cmake "--color=$(COLOR)" editor
+	$(CMAKE_COMMAND) -E cmake_depends "MinGW Makefiles" J:\code\videoeditor\editor J:\code\videoeditor\editor J:\code\videoeditor\editor\build J:\code\videoeditor\editor\build J:\code\videoeditor\editor\build\CMakeFiles\editor.dir\DependInfo.cmake "--color=$(COLOR)" editor
 .PHONY : CMakeFiles/editor.dir/depend
 

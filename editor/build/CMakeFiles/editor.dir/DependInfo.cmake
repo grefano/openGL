@@ -8,12 +8,12 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "C:/Users/gabri/Documents/Code/videoeditor/editor/src/ffmpeg.cpp" "CMakeFiles/editor.dir/src/ffmpeg.cpp.obj" "gcc" "CMakeFiles/editor.dir/src/ffmpeg.cpp.obj.d"
-  "C:/Users/gabri/Documents/Code/videoeditor/editor/src/main.cpp" "CMakeFiles/editor.dir/src/main.cpp.obj" "gcc" "CMakeFiles/editor.dir/src/main.cpp.obj.d"
-  "C:/Users/gabri/Documents/Code/videoeditor/editor/src/opengl.cpp" "CMakeFiles/editor.dir/src/opengl.cpp.obj" "gcc" "CMakeFiles/editor.dir/src/opengl.cpp.obj.d"
-  "C:/Users/gabri/Documents/Code/videoeditor/editor/src/shadercomponent.cpp" "CMakeFiles/editor.dir/src/shadercomponent.cpp.obj" "gcc" "CMakeFiles/editor.dir/src/shadercomponent.cpp.obj.d"
-  "C:/Users/gabri/Documents/Code/videoeditor/editor/src/timeline.cpp" "CMakeFiles/editor.dir/src/timeline.cpp.obj" "gcc" "CMakeFiles/editor.dir/src/timeline.cpp.obj.d"
-  "C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/stb.cpp" "CMakeFiles/editor.dir/vendor/stb.cpp.obj" "gcc" "CMakeFiles/editor.dir/vendor/stb.cpp.obj.d"
+  "J:/code/videoeditor/editor/src/ffmpeg.cpp" "CMakeFiles/editor.dir/src/ffmpeg.cpp.obj" "gcc" "CMakeFiles/editor.dir/src/ffmpeg.cpp.obj.d"
+  "J:/code/videoeditor/editor/src/main.cpp" "CMakeFiles/editor.dir/src/main.cpp.obj" "gcc" "CMakeFiles/editor.dir/src/main.cpp.obj.d"
+  "J:/code/videoeditor/editor/src/opengl.cpp" "CMakeFiles/editor.dir/src/opengl.cpp.obj" "gcc" "CMakeFiles/editor.dir/src/opengl.cpp.obj.d"
+  "J:/code/videoeditor/editor/src/shadercomponent.cpp" "CMakeFiles/editor.dir/src/shadercomponent.cpp.obj" "gcc" "CMakeFiles/editor.dir/src/shadercomponent.cpp.obj.d"
+  "J:/code/videoeditor/editor/src/timeline.cpp" "CMakeFiles/editor.dir/src/timeline.cpp.obj" "gcc" "CMakeFiles/editor.dir/src/timeline.cpp.obj.d"
+  "J:/code/videoeditor/editor/vendor/stb.cpp" "CMakeFiles/editor.dir/vendor/stb.cpp.obj" "gcc" "CMakeFiles/editor.dir/vendor/stb.cpp.obj.d"
   )
 
 # Targets to which this target links which contain Fortran sources.

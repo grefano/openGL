@@ -1,7 +1,7 @@
 CMakeFiles/editor.dir/src/opengl.cpp.obj: \
- C:\Users\gabri\Documents\Code\videoeditor\editor\src\opengl.cpp \
- C:\Users\gabri\Documents\Code\videoeditor\editor\src\opengl.h \
- C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/glad.h \
+ J:\code\videoeditor\editor\src\opengl.cpp \
+ J:\code\videoeditor\editor\src\opengl.h \
+ J:/code/videoeditor/editor/vendor/glad.h \
  C:/msys64/ucrt64/include/KHR/khrplatform.h \
  C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/stdint.h \
  C:/msys64/ucrt64/include/stdint.h C:/msys64/ucrt64/include/crtdefs.h \

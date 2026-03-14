@@ -1,6 +1,6 @@
 CMakeFiles/editor.dir/vendor/stb.cpp.obj: \
- C:\Users\gabri\Documents\Code\videoeditor\editor\vendor\stb.cpp \
- C:\Users\gabri\Documents\Code\videoeditor\editor\vendor\stb_image.h \
+ J:\code\videoeditor\editor\vendor\stb.cpp \
+ J:\code\videoeditor\editor\vendor\stb_image.h \
  C:/msys64/ucrt64/include/stdio.h \
  C:/msys64/ucrt64/include/corecrt_stdio_config.h \
  C:/msys64/ucrt64/include/corecrt.h C:/msys64/ucrt64/include/_mingw.h \

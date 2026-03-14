@@ -1,8 +1,8 @@
 CMakeFiles/editor.dir/src/shadercomponent.cpp.obj: \
- C:\Users\gabri\Documents\Code\videoeditor\editor\src\shadercomponent.cpp \
- C:\Users\gabri\Documents\Code\videoeditor\editor\src\shadercomponent.hpp \
- C:\Users\gabri\Documents\Code\videoeditor\editor\src\opengl.h \
- C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/glad.h \
+ J:\code\videoeditor\editor\src\shadercomponent.cpp \
+ J:\code\videoeditor\editor\src\shadercomponent.hpp \
+ J:\code\videoeditor\editor\src\opengl.h \
+ J:/code/videoeditor/editor/vendor/glad.h \
  C:/msys64/ucrt64/include/KHR/khrplatform.h \
  C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/stdint.h \
  C:/msys64/ucrt64/include/stdint.h C:/msys64/ucrt64/include/crtdefs.h \
@@ -193,8 +193,8 @@ CMakeFiles/editor.dir/src/shadercomponent.cpp.obj: \
  C:/msys64/ucrt64/include/c++/15.2.0/backward/auto_ptr.h \
  C:/msys64/ucrt64/include/c++/15.2.0/pstl/glue_memory_defs.h \
  C:/msys64/ucrt64/include/c++/15.2.0/pstl/execution_defs.h \
- C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imgui.h \
- C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imconfig.h \
+ J:/code/videoeditor/editor/vendor/imgui/docking/imgui.h \
+ J:/code/videoeditor/editor/vendor/imgui/docking/imconfig.h \
  C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/float.h \
  C:/msys64/ucrt64/include/float.h \
  C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/stdarg.h \

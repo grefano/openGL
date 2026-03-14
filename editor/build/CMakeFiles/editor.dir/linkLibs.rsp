@@ -1,1 +1,1 @@
- C:/msys64/ucrt64/lib/libavcodec.dll.a C:/msys64/ucrt64/lib/libavformat.dll.a C:/msys64/ucrt64/lib/libavutil.dll.a C:/msys64/ucrt64/lib/libswscale.dll.a C:/msys64/ucrt64/lib/libglfw3.dll.a -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 
+ -lavformat -lavcodec -lswscale -lavutil -lglfw3 -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 
