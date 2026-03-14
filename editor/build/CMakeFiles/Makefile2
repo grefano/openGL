@@ -53,10 +53,10 @@ RM = "C:\Program Files\CMake\bin\cmake.exe" -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = J:\code\videoeditor\editor
+CMAKE_SOURCE_DIR = C:\Users\gabri\Documents\Code\videoeditor\editor
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = J:\code\videoeditor\editor\build
+CMAKE_BINARY_DIR = C:\Users\gabri\Documents\Code\videoeditor\editor\build
 
 #=============================================================================
 # Directory level rules for the build root directory
@@ -84,14 +84,14 @@ clean: CMakeFiles/editor.dir/clean
 CMakeFiles/editor.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=J:\code\videoeditor\editor\build\CMakeFiles --progress-num=1,2,3,4,5,6,7 "Built target editor"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\gabri\Documents\Code\videoeditor\editor\build\CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10 "Built target editor"
 .PHONY : CMakeFiles/editor.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/editor.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start J:\code\videoeditor\editor\build\CMakeFiles 7
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\gabri\Documents\Code\videoeditor\editor\build\CMakeFiles 10
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/editor.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start J:\code\videoeditor\editor\build\CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\gabri\Documents\Code\videoeditor\editor\build\CMakeFiles 0
 .PHONY : CMakeFiles/editor.dir/rule
 
 # Convenience name for target.
@@ -101,7 +101,7 @@ editor: CMakeFiles/editor.dir/rule
 # codegen rule for target.
 CMakeFiles/editor.dir/codegen:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\editor.dir\build.make CMakeFiles/editor.dir/codegen
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=J:\code\videoeditor\editor\build\CMakeFiles --progress-num=1,2,3,4,5,6,7 "Finished codegen for target editor"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=C:\Users\gabri\Documents\Code\videoeditor\editor\build\CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10 "Finished codegen for target editor"
 .PHONY : CMakeFiles/editor.dir/codegen
 
 # clean rule for target.

@@ -11,57 +11,93 @@
 #include "ui.h"
 #include "implimgui.h"
 #include "implglfw.h"
+#include "mediapool.h"
+#include "render.hpp"
 
-// preview (codec, processar e mostrar proximo frame, cache de timelines) - figma
-Timeline tl = Timeline(640, 360);
-void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods){
-    tl.key_callback(key, action);
-}
+/*
+clipvideo tem o videoreader -> clipvideo nao deve herdar o clip, e sim ter como membro -> mas onde armazenar o clipvideo?
+/ registro (clip-videoref-videostate) -> clipvideo não é um objeto, só lê o videoref com base
+``` tl.add_clip(t0, t1); render{ get_clip_tex(&clip, ) }
 
-void log(const char* str){
-    std::cout << str << "\0";
-}
-void* operator new(size_t size){
-    log("alocou " + size);
-    return malloc(size);
-}
+problema: 
+/ clipvideo herdar clip e ter videostate -> como separar  
+/ clipvideo references clip e ter videostate -> 
 
-void operator delete(void* memory, size_t size) noexcept{
-    log("liberou " + size);
-    free(memory);
+*/
+namespace TL_APPLICATION{
+    Mediapool* mediapool;
+    Timeline* tl;
+    Clip* add_clip(size_t track, ImVec2 time_tl, const char* filepath){
+        MediaSource* file1 = (*mediapool).add_file(filepath);
+        printf(file1->filepath);
+        Clip* clip = (*tl).add_clip(track, time_tl.x, time_tl.y);
+        float scale = 2;
+        // auto comp = clip->add_component<Transform>();
+        // comp->scale = {scale, scale};
+        // comp->position = {.5,.5};
+        clip->masterclip = new VideoClip(filepath);
+        clip->masterclip->source = file1;
+        return clip;
+    }
+
 }
+using namespace TL_APPLICATION;
 
 TimelineUI UItl;
 PreviewUI UIpreview;
 // PreviewUI UIpreview2("preview2");
 int main(){
     if (!glfwInit()){
-        log("falha inicializando glfw");
+        printf("%s\n", "falha inicializando glfw");
         return -1;
     }
-
-    Clip* clip = tl.add_clip_video(0, "teste.mp4", 0, 30);
-    Overlap* comp= clip->add_component<Overlap>();
-    comp->position = {.5, .5};
-    comp->scale = {1, 1};
     
-    Clip* clip2 = tl.add_clip_video(1, "video3.mp4", 5, 10);
-    Transform* comp2= clip2->add_component<Transform>();
-    comp2->position = {.5, .5};
-    comp2->scale = {1, 1};
-    
-
     Glfw glfw;
     Imgui imgui(glfw.window_);
-    glfwSetKeyCallback(glfw.window_, key_callback);
-
+    
     gladLoadGL();
+
+    Timeline tl;
+    TL_APPLICATION::tl = &tl;
+    glfwSetWindowUserPointer(glfw.window_, &tl);
+    glfwSetKeyCallback(glfw.window_, [](GLFWwindow* window, int key, int scancode, int action, int mods){
+        auto tl = static_cast<Timeline*>(glfwGetWindowUserPointer(window));
+        tl->key_callback(key, action);
+    });
+    Render render(ImVec2(640, 360));
+    printf("render");
+    Mediapool mediapool;
+    TL_APPLICATION::mediapool = &mediapool;
+    printf("mediapool");
     
-    tl.init_shader();
-    comp->bind_shader(vs, fs);
-    comp2->bind_shader(vs, fs);
+    Clip* clip = add_clip(0, {5, 20}, "teste.mp4");
+    Transform* comp = clip->add_component<Transform>();
+    comp->position = {0, 0};
+    comp->scale = {2, 2};
+
+    clip = add_clip(1, {0, 10}, "video3.mp4");
+    comp = clip->add_component<Transform>();
+    comp->position = {0, 0};
+    comp->scale = {1, 1};
+    printf("clip");
+
+
+    /*
+    mediapool.addfile("wadoiwajd.mp4")
+    tl.add(videoref, trackid=0, t0=5, t1=10)
+    */
+
+
+    // Transform* comp2= clip2->add_component<Transform>();
+    // comp2->position = {.5, .2};
+    // comp2->scale = {.8, 1};
+
+    // Clip* clip = tl.add_clip_video(1, "teste.mp4", 0, 30);
+    // Transform* comp= clip->add_component<Transform>();
+    // comp->position = {0, 0};
+    // comp->scale = {1,1};
     
-    
+
     double lasttime = glfwGetTime();
     while (!glfwWindowShouldClose(glfw.window_)) {
         double now = glfwGetTime();
@@ -71,16 +107,23 @@ int main(){
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
         ImGui::DockSpaceOverViewport(0, ImGui::GetMainViewport());
+        // comp2->position.x -= dt*.001;
+    printf("update");
 
         tl.update(dt);
+        render.update_preview_tex(&tl);
+
+    printf("draw tl");
 
         UItl.draw(&tl);
-        UIpreview.draw(&tl, tl.playhead_tex, tl.frame_dimensions);
-        printf("DIM %d %d", clip->w, clip->h);
-        ImGui::Image(clip->get_tex(), ImVec2(clip->w, clip->h));
-        ImGui::Image(clip2->get_tex(), ImVec2(clip2->w, clip2->h));
-        // ImGui::Image(overlap_textures(clip->tex, clip->tex, tl.shd_overlap), ImVec2(640, 360));
-        
+        // printf("tex = %d\n", tl.playhead_tex);
+    printf("draw preview");
+        UIpreview.draw(&tl, render.playhead_tex, render.preview_dimensions);
+        // printf("DIM %d %d", clip->, clip->h);
+        ImGui::Image( render.clip_tex, ImVec2(640, 360));
+        ImGui::Image( render.clip_result_tex, ImVec2(640, 360));
+
+
         ImGui::Render();
         ImGui::UpdatePlatformWindows();
         ImGui::RenderPlatformWindowsDefault();
@@ -91,13 +134,9 @@ int main(){
         
 
         glfwSwapBuffers(glfw.window_);
-        
-        // glfwWaitEvents();
         glfwPollEvents();
         
     }
-    // delete[] data;
-    
 
     return 0;
 }

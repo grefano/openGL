@@ -1,5 +1,5 @@
 CMakeFiles/editor.dir/src/main.cpp.obj: \
- J:\code\videoeditor\editor\src\main.cpp \
+ C:\Users\gabri\Documents\Code\videoeditor\editor\src\main.cpp \
  C:/msys64/ucrt64/include/c++/15.2.0/iostream \
  C:/msys64/ucrt64/include/c++/15.2.0/bits/requires_hosted.h \
  C:/msys64/ucrt64/include/c++/15.2.0/x86_64-w64-mingw32/bits/c++config.h \
@@ -178,9 +178,9 @@ CMakeFiles/editor.dir/src/main.cpp.obj: \
  C:/msys64/ucrt64/include/c++/15.2.0/backward/auto_ptr.h \
  C:/msys64/ucrt64/include/c++/15.2.0/pstl/glue_memory_defs.h \
  C:/msys64/ucrt64/include/c++/15.2.0/pstl/execution_defs.h \
- J:/code/videoeditor/editor/vendor/glad.h \
+ C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/glad.h \
  C:/msys64/ucrt64/include/KHR/khrplatform.h \
- J:\code\videoeditor\editor\src\ffmpeg.h \
+ C:/Users/gabri/Documents/Code/videoeditor/editor/src/infrastructure/ffmpeg.h \
  C:/msys64/ucrt64/include/GLFW/glfw3.h \
  C:/msys64/ucrt64/include/libavcodec/avcodec.h \
  C:/msys64/ucrt64/include/libavutil/samplefmt.h \
@@ -259,20 +259,27 @@ CMakeFiles/editor.dir/src/main.cpp.obj: \
  C:/msys64/ucrt64/include/libswscale/swscale.h \
  C:/msys64/ucrt64/include/libswscale/version_major.h \
  C:/msys64/ucrt64/include/libswscale/version.h \
- J:\code\videoeditor\editor\src\timeline.hpp \
- J:\code\videoeditor\editor\src\opengl.h \
+ C:/Users/gabri/Documents/Code/videoeditor/editor/src/infrastructure/mediapool.h \
+ C:/msys64/ucrt64/include/c++/15.2.0/vector \
+ C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_vector.h \
+ C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_bvector.h \
+ C:/msys64/ucrt64/include/c++/15.2.0/bits/vector.tcc \
+ C:/Users/gabri/Documents/Code/videoeditor/editor/src/domain/timeline.hpp \
+ C:/Users/gabri/Documents/Code/videoeditor/editor/src/infrastructure/opengl.h \
  C:/msys64/ucrt64/include/c++/15.2.0/iterator \
  C:/msys64/ucrt64/include/c++/15.2.0/bits/stream_iterator.h \
- J:\code\videoeditor\editor\src\shadercomponent.hpp \
+ C:/Users/gabri/Documents/Code/videoeditor/editor/src/domain/shadercomponent.hpp \
  C:/msys64/ucrt64/include/c++/15.2.0/list \
  C:/msys64/ucrt64/include/c++/15.2.0/bits/stl_list.h \
  C:/msys64/ucrt64/include/c++/15.2.0/bits/list.tcc \
- J:/code/videoeditor/editor/vendor/imgui/docking/imgui.h \
- J:/code/videoeditor/editor/vendor/imgui/docking/imconfig.h \
+ C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imgui.h \
+ C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imconfig.h \
  C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/float.h \
  C:/msys64/ucrt64/include/float.h C:/msys64/ucrt64/include/assert.h \
- J:\code\videoeditor\editor\src\ui.h \
- J:\code\videoeditor\editor\src\implimgui.h \
- J:/code/videoeditor/editor/vendor/imgui/docking/imgui_impl_glfw.h \
- J:/code/videoeditor/editor/vendor/imgui/docking/imgui_impl_opengl3.h \
- J:\code\videoeditor\editor\src\implglfw.h
+ C:\Users\gabri\Documents\Code\videoeditor\editor\src\ui.h \
+ C:/Users/gabri/Documents/Code/videoeditor/editor/src/infrastructure/implimgui.h \
+ C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imgui_impl_glfw.h \
+ C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imgui_impl_opengl3.h \
+ C:/Users/gabri/Documents/Code/videoeditor/editor/src/infrastructure/implglfw.h \
+ C:/Users/gabri/Documents/Code/videoeditor/editor/src/application/render.hpp \
+ C:/Users/gabri/Documents/Code/videoeditor/editor/src/infrastructure/timelinewalker.hpp

@@ -1,1 +1,1 @@
--IJ:/code/videoeditor/editor/vendor -IJ:/code/videoeditor/editor/vendor/imgui/docking
+-IC:/Users/gabri/Documents/Code/videoeditor/editor/src -IC:/Users/gabri/Documents/Code/videoeditor/editor/src/domain -IC:/Users/gabri/Documents/Code/videoeditor/editor/src/application -IC:/Users/gabri/Documents/Code/videoeditor/editor/src/infrastructure -IC:/Users/gabri/Documents/Code/videoeditor/editor/vendor -IC:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking

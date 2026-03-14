@@ -74,8 +74,8 @@ struct PreviewUI{
         this->name = name; 
     }
     void draw(Timeline* tl, GLuint tex, ImVec2 dim){
-        printf("draw preview\n");
-
+        printf("draw preview %d\n", tex);
+        assert(tex != 0);
         static double lasttime = 0;
         double now = glfwGetTime();
         double dt = now - lasttime;        
