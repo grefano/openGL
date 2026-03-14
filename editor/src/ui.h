@@ -1,22 +1,46 @@
 #pragma once
 #include "imgui.h"
 #include "timeline.hpp"
+#include <functional>
+#include <cstring>
+
 struct TimelineUI{
+    Timeline* tl;
     ImVec2 view_time_window;
     ImVec2 view_track_window;
     float px_per_sec;
     float px_per_track;
     
     ImVec2 size;
-    TimelineUI(){
+
+    Clip* selected_clip = nullptr;
+    size_t selected_clip_hover_track = -1;
+    float selected_clip_hover_rel_t0 = 0;
+    float selected_clip_hover_t0 = 0;
+    
+    float get_x(float time){
+        return (time - view_time_window.x) * px_per_sec;
+    }  
+    struct ClipState{
+        Clip* clip;
+        ImVec2 pos;
+        ImVec2 pos2;
+         
+
+
+    };
+
+    std::list<ClipState> clips; // !!! preciso modificar domain clip a partir da interação com usuario. usuario muda uiclip -> 
+
+    TimelineUI(Timeline* tl) : tl(tl){
         this->view_time_window = ImVec2(0, 100);
         this->view_track_window = ImVec2(0, 2);
         this->px_per_sec = 20;
+
+       
     }
 
-    float get_x(float time){
-        return (time - view_time_window.x) * px_per_sec;
-    }   
+
     ImVec2 get_track_pos(int id){
         return ImVec2(0, id*px_per_track);
     }
@@ -36,9 +60,40 @@ struct TimelineUI{
         this->px_per_track = h / (view_track_window.y+1 - view_track_window.x);
     }
 
-    void draw(Timeline* tl){
+    //interaction
+    bool isHoveringClipSide(ImVec2 pos, float y2, ImVec2 cursorpos){
+
+        if (cursorpos.x > pos.x-10 && cursorpos.x < pos.x+10 && cursorpos.y > pos.y+3 && cursorpos.y < y2-3){
+            return true;
+        }
+        return false;
+    }
+
+    void drawClipSide(ImVec2 pos, ImVec2 pos2, ImVec2 cursorpos, ImDrawList* drawlist){
+        auto col = IM_COL32(255, 0, 0, 255);
+        if (isHoveringClipSide(pos, pos2.y, cursorpos)){
+            drawlist->AddRectFilled({pos.x-2, pos.y+2}, {pos.x+2, pos2.y-2}, col);
+        }
+        // if (isHoveringClipSide({pos2.x, pos.y}, pos2.y, cursorpos)){
+        //     drawlist->AddRectFilled({pos.x-2, pos.y+2}, {pos2.x+2, pos2.y-2}, col);
+        // }
+
+    }
+
+    void update_interaction(){
+        if (ImGui::IsMouseReleased(ImGuiMouseButton_Left)){
+            selected_clip = nullptr;
+        }
+        return;
+        if (ImGui::IsMouseDragging(ImGuiMouseButton_Left)){
+            
+        }
+    }
+
+
+    void draw(){
         printf("draw timeline\n");
-        ImGui::Begin("tl");                          // Create a window called "Hello, world!" and append into it.
+        ImGui::Begin("tl");                          
         ImDrawList* drawlist = ImGui::GetWindowDrawList();
         ImVec2 screenpos = ImGui::GetCursorScreenPos();
         ImVec2 cursorpos = ImGui::GetMousePos();
@@ -56,7 +111,29 @@ struct TimelineUI{
                 printf("clip t0 %f t1 %f\n", (*clip).tl_time0, (*clip).tl_time1);
                 ImVec2 pos = this->get_clip_pos(clip.get(), &track, tl);
                 ImVec2 size = this->get_clip_size(clip.get(), &track, tl);
-                drawlist->AddRectFilled(ImVec2(screenpos.x+pos.x, screenpos.y+pos.y), ImVec2(screenpos.x+pos.x+size.x,screenpos.y+pos.y+size.y), IM_COL32(0, 0, 255, 255));
+                ImVec2 realpos = ImVec2(screenpos.x+pos.x, screenpos.y+pos.y);
+                ImVec2 realpos2 = ImVec2(realpos.x+size.x,realpos.y+size.y);
+                auto col = IM_COL32(0, 0, 255, 255);
+                if(ImGui::IsMouseHoveringRect(realpos, realpos2)){
+                    col = IM_COL32(100,0,255,255);
+                    int growstroke = 5;
+                    realpos.x -= growstroke;
+                    realpos.y -= growstroke;
+                    realpos2.x += growstroke;
+                    realpos2.y += growstroke;
+                    if(ImGui::IsMouseClicked(ImGuiMouseButton_Left)){
+                        selected_clip = clip.get();
+                        selected_clip_hover_rel_t0 = selected_clip->tl_time0;
+                    }
+                }
+                if (selected_clip == clip.get()){
+                    col = IM_COL32(0,100,100,255);
+                }
+                drawlist->AddRectFilled(realpos, realpos2, col);
+                drawClipSide(realpos, realpos2, cursorpos, drawlist);
+                drawClipSide({realpos2.x, realpos.y}, realpos2, cursorpos, drawlist);
+                // drawClipSide({realpos2.x, realpos.y}, realpos2, cursorpos, drawlist);
+                
             }
         }
         float headx = screenpos.x + get_x(tl->playhead_time);
@@ -70,7 +147,7 @@ struct TimelineUI{
 
 struct PreviewUI{
     const char* name;
-    PreviewUI(const char* name = "awdawdawd"){
+    PreviewUI(const char* name = "preview"){
         this->name = name; 
     }
     void draw(Timeline* tl, GLuint tex, ImVec2 dim){
@@ -80,7 +157,7 @@ struct PreviewUI{
         double now = glfwGetTime();
         double dt = now - lasttime;        
         lasttime = now;
-        ImGui::Begin(this->name);                          // Create a window called "Hello, world!" and append into it.
+        ImGui::Begin(this->name);                          
         auto drawlist = ImGui::GetWindowDrawList();
         ImVec2 screenpos = ImGui::GetCursorScreenPos();
         ImVec2 cursorpos = ImGui::GetMousePos();
@@ -97,3 +174,57 @@ struct PreviewUI{
 
     }
 };
+
+struct ImportUI{
+    std::function<void(char*)> cb_import;
+    void draw(){
+        char* filepath;
+
+        ImGui::Begin("import");                          
+        ImGui::InputText("filepath", filepath, 10, ImGuiInputTextFlags_CharsNoBlank | ImGuiInputTextFlags_EscapeClearsAll);
+        if (ImGui::Button("import file", {50, 50})){
+            assert(cb_import);
+            cb_import(filepath);
+        }
+        ImGui::End();
+    }
+};
+
+struct MediapoolUI{
+    void draw(Mediapool* pool){
+        assert(pool != nullptr);
+        int source_size = 200;
+        int source_sep = 20;
+        
+        ImGui::Begin("mediapool");  
+        ImVec2 screenpos = ImGui::GetCursorScreenPos();
+        ImVec2 regionavail = ImGui::GetContentRegionAvail();
+        int qtd_sources =  (regionavail.x-source_sep) / (source_sep+source_size);
+        if (qtd_sources < 1) qtd_sources = 1;
+
+        auto drawlist = ImGui::GetWindowDrawList();
+
+        int i = 0;
+        for(auto& source : pool->get_pool()){
+            const char* path = source.get()->filepath;
+            printf("path %p %p\n", path, path + std::strlen(path));
+            
+            ImVec2 ipos = {i % qtd_sources, (int)(i / qtd_sources)};
+            ImVec2 pos = {screenpos.x + ipos.x * (source_sep + source_size), screenpos.y + ipos.y * (source_sep + source_size)};
+            ImVec2 pos2 = {pos.x + source_size, pos.y + source_size};
+            drawlist->AddRectFilled(pos, pos2, IM_COL32(200, 230, 220, 255));
+            ImVec2 textsize = ImGui::CalcTextSize(path);
+            // float textident = (regionavail.x + textsize.x) / 2;
+            ImVec2 ident = {-(textsize.x)/2, -(textsize.y)/2};
+            drawlist->AddText({(pos.x + pos2.x) / 2 + ident.x, (pos.y + pos2.y)/2 + ident.y} , IM_COL32(0,0,0,255), path);
+            // interaction
+            if (ImGui::IsMouseHoveringRect(pos, pos2)){
+                printf("HOVERING\n");
+            }
+            i++;
+        }
+
+        ImGui::End();
+    }
+};
+/* import domain */

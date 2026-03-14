@@ -13,7 +13,7 @@
 #include "implglfw.h"
 #include "mediapool.h"
 #include "render.hpp"
-
+#include "import.hpp"
 /*
 clipvideo tem o videoreader -> clipvideo nao deve herdar o clip, e sim ter como membro -> mas onde armazenar o clipvideo?
 / registro (clip-videoref-videostate) -> clipvideo não é um objeto, só lê o videoref com base
@@ -43,8 +43,8 @@ namespace TL_APPLICATION{
 }
 using namespace TL_APPLICATION;
 
-TimelineUI UItl;
-PreviewUI UIpreview;
+
+
 // PreviewUI UIpreview2("preview2");
 int main(){
     if (!glfwInit()){
@@ -56,7 +56,6 @@ int main(){
     Imgui imgui(glfw.window_);
     
     gladLoadGL();
-
     Timeline tl;
     TL_APPLICATION::tl = &tl;
     glfwSetWindowUserPointer(glfw.window_, &tl);
@@ -68,8 +67,20 @@ int main(){
     printf("render");
     Mediapool mediapool;
     TL_APPLICATION::mediapool = &mediapool;
+    Import import = {&mediapool};
+    
     printf("mediapool");
     
+    /*
+    botao importar
+    ~ pegar filepath
+    validar filepath
+    validar arquivo
+    decidir qual mediasource concreto vai ser usado
+    source = create_mediasource(filepath)
+
+
+    */
     Clip* clip = add_clip(0, {5, 20}, "teste.mp4");
     Transform* comp = clip->add_component<Transform>();
     comp->position = {0, 0};
@@ -96,7 +107,13 @@ int main(){
     // Transform* comp= clip->add_component<Transform>();
     // comp->position = {0, 0};
     // comp->scale = {1,1};
-    
+    TimelineUI UItl(&tl);
+    PreviewUI UIpreview;
+    ImportUI UIimport;
+    MediapoolUI UImediapool;
+
+
+    UIimport.cb_import = [&import](char* filepath){ import.import_filepath(filepath); };
 
     double lasttime = glfwGetTime();
     while (!glfwWindowShouldClose(glfw.window_)) {
@@ -112,10 +129,10 @@ int main(){
 
         tl.update(dt);
         render.update_preview_tex(&tl);
-
-    printf("draw tl");
-
-        UItl.draw(&tl);
+        printf("draw tl");
+        UIimport.draw();
+        UImediapool.draw(&mediapool);
+        UItl.draw();
         // printf("tex = %d\n", tl.playhead_tex);
     printf("draw preview");
         UIpreview.draw(&tl, render.playhead_tex, render.preview_dimensions);

@@ -21,6 +21,7 @@ class ImageSource : public MediaSource{
 class Mediapool{
   public:
   MediaSource* add_file(const char* filepath); // escolhe ref concreta baseado no filepath, adiciona ref na pool, retorna ref
+  const std::vector<std::unique_ptr<MediaSource>>& get_pool();
   private:
   std::vector<std::unique_ptr<MediaSource>> pool_;
 };

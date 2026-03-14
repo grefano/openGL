@@ -277,9 +277,21 @@ CMakeFiles/editor.dir/src/main.cpp.obj: \
  C:/msys64/ucrt64/lib/gcc/x86_64-w64-mingw32/15.2.0/include/float.h \
  C:/msys64/ucrt64/include/float.h C:/msys64/ucrt64/include/assert.h \
  C:\Users\gabri\Documents\Code\videoeditor\editor\src\ui.h \
+ C:/msys64/ucrt64/include/c++/15.2.0/functional \
+ C:/msys64/ucrt64/include/c++/15.2.0/unordered_map \
+ C:/msys64/ucrt64/include/c++/15.2.0/bits/unordered_map.h \
+ C:/msys64/ucrt64/include/c++/15.2.0/bits/hashtable.h \
+ C:/msys64/ucrt64/include/c++/15.2.0/bits/hashtable_policy.h \
+ C:/msys64/ucrt64/include/c++/15.2.0/bits/enable_special_members.h \
+ C:/msys64/ucrt64/include/c++/15.2.0/bits/node_handle.h \
+ C:/msys64/ucrt64/include/c++/15.2.0/bits/erase_if.h \
+ C:/msys64/ucrt64/include/c++/15.2.0/array \
+ C:/msys64/ucrt64/include/c++/15.2.0/compare \
+ C:/msys64/ucrt64/include/c++/15.2.0/cstring \
  C:/Users/gabri/Documents/Code/videoeditor/editor/src/infrastructure/implimgui.h \
  C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imgui_impl_glfw.h \
  C:/Users/gabri/Documents/Code/videoeditor/editor/vendor/imgui/docking/imgui_impl_opengl3.h \
  C:/Users/gabri/Documents/Code/videoeditor/editor/src/infrastructure/implglfw.h \
  C:/Users/gabri/Documents/Code/videoeditor/editor/src/application/render.hpp \
- C:/Users/gabri/Documents/Code/videoeditor/editor/src/infrastructure/timelinewalker.hpp
+ C:/Users/gabri/Documents/Code/videoeditor/editor/src/infrastructure/timelinewalker.hpp \
+ C:/Users/gabri/Documents/Code/videoeditor/editor/src/application/import.hpp

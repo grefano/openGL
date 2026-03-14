@@ -68,7 +68,7 @@ Render::~Render(){
   glDeleteProgram(this->shd_overlap);
 }
 void Render::update_preview_tex(Timeline* tl){
-
+  
   // walker -> lista de clipes na ordem certa -> chamar clip.get_image pra todos -> imagem final
   std::list<Clip*> clips;
   WalkerTimeline::walk(tl, &clips);
