@@ -1,3 +1,0 @@
-J:/code/videoeditor/editor/build/CMakeFiles/editor.dir
-J:/code/videoeditor/editor/build/CMakeFiles/edit_cache.dir
-J:/code/videoeditor/editor/build/CMakeFiles/rebuild_cache.dir

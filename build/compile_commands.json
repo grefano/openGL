@@ -1,8 +1,0 @@
-[
-{
-  "directory": "C:/Users/gabri/Documents/Code/videoeditor/build/glm",
-  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/glm.dir/includes_CXX.rsp -g -o CMakeFiles\\glm.dir\\detail\\glm.cpp.obj -c C:\\Users\\gabri\\Documents\\Code\\videoeditor\\include\\glm-1.0.2\\glm\\detail\\glm.cpp",
-  "file": "C:/Users/gabri/Documents/Code/videoeditor/include/glm-1.0.2/glm/detail/glm.cpp",
-  "output": "glm/CMakeFiles/glm.dir/detail/glm.cpp.obj"
-}
-]

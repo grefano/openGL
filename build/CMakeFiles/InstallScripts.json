@@ -1,8 +1,0 @@
-{
-	"InstallScripts" : 
-	[
-		"C:/Users/gabri/Documents/Code/videoeditor/build/cmake_install.cmake",
-		"C:/Users/gabri/Documents/Code/videoeditor/build/glm/cmake_install.cmake"
-	],
-	"Parallel" : false
-}

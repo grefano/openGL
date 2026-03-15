@@ -1,8 +1,4 @@
 
-a pasta editor/ é onde está o projeto do editor de vídeo
-
-o executável está localizado em editor/build/editor.exe
-
 # Dependências
 ImGui, 
 ffmpeg (libavformat, libavcodec, libavutil, libswscale)
